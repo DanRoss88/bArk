@@ -5,6 +5,6 @@ CREATE TABLE stories (
   user_id INTEGER REFERENCES users(id),
   title VARCHAR(255) NOT NULL;
   content TEXT NOT NULL,
-  published_status BOOLEAN NOT NULL DEFAULT false,
+  published_status BOOLEAN NOT NULL DEFAULT FALSE,
   date_created TIMESTAMP
 );

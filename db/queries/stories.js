@@ -4,7 +4,7 @@ const express = require('express');
 
 
 const getStories = () => {
-  return db.query('SELECT * FROM stories ORDER BY date_created DESC LIMIT 10;')
+  return db.query(`SELECT * FROM stories ORDER BY date_created DESC LIMIT 10;`)
     .then(data => {
       return data.rows;
     })
@@ -58,9 +58,10 @@ const editStory = (story_id) => {
 const addContributionToStory = (story_id) => {
 
   const queryString = `UPDATE stories SET stories.content = CONCAT(stories.content + contributions.content)
-  FROM contributions on story_id = stories.id;`;
+  JOIN contributions on story_id = stories.id;`;
+  const queryString2 = `UPDATE contributions SET accepted_status = TRUE;`;
 
-  return db.query(queryString, values)
+  return db.query(queryString, queryString2, values)
   .then(data => {
     return data.rows
   })
@@ -83,6 +84,20 @@ const deleteStories = (story_id) => {
     });
 };
 
+const seeStories = () => {
+const queryString = `SELECT * FROM stories WHERE users.id = $1 ORDER BY date_created DESC;`;
+  const values = [users.id];
+
+  return db.query(queryString, values)
+    .then(data => {
+      return data.rows;
+    })
+    .catch(err => {
+      return console.error(err.stack);
+    })
+}
+
+
 const publishStory = (story_id) => {
 
   const queryString = `UPDATE stories SET published_status = TRUE WHERE stories.id = $1`;
@@ -97,4 +112,4 @@ const publishStory = (story_id) => {
   });
 }
 
-module.exports = { getStories, addStories, editStory, addContributionToStory, deleteStories, publishStory };
+module.exports = { getStories, addStories, editStory, addContributionToStory, deleteStories, seeStories, publishStory };
