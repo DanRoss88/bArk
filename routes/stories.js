@@ -4,22 +4,6 @@ const storiesQueries = require('../db/queries/stories');
 const router = express.Router();
 
 
-/// *** BROWSE *** /// HOME ////
-router.get('/', (req, res) => {
-  storiesQueries.getStories()
-    .then((data) => {
-      const templateVars = { stories: data };
-      res.render('home', templateVars);
-    });
-});
-
-router.get('/', (req, res) => {
-  storiesQueries.seeStories(req.params.id)
-    .then((data) => {
-      const templateVars = { stories: data };
-      res.render('my_stories', templateVars);
-    });
-});
 
 /// ** ADD (NEW) *** ///
 router.get('/:id', (req, res) => {
@@ -35,23 +19,30 @@ router.get('/:id', (req, res) => {
 router.post('/:id', (req, res) => {
 
 
-    storiesQueries.addStories(req.params.id)
-    .then(story => res.send(story));
+  storiesQueries.addStories(req.params.id)
+    .then(data => {
+
+      return res.send(data);
+    });
 });
 
 /// ** EDIT ** ///
-router.get('/:id', (req, res) => {
+router.post('/:id', (req, res) => {
 
   storiesQueries.addContributionsToStory(req.params.id)
-    .then(story => res.send(story));
-
+    .then((data) => {
+      const templateVars = { stories: data };
+      res.send(templateVars);
+    });
 });
 
 /// ** DELETE ** //
 router.post('/:id/delete', (req, res) => {
- 
-  storiesQueries.deleteStories(req.params.id);
-  return res.redirect('/my-stories');
-});
 
+  storiesQueries.deleteStories(req.params.id)
+  .then((data) => {
+  res.send(data);
+  return res.redirect('/my-stories');
+})
+});
 module.exports = router;
