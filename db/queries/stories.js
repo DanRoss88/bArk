@@ -50,9 +50,7 @@ const editStory = (story_id) => {
   .catch(err => {
    return console.error(err.stack)
  });
-
 }
-
 
 
 const addContributionToStory = (story_id) => {

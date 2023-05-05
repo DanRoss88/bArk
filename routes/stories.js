@@ -41,22 +41,15 @@ router.post('/:id', (req, res) => {
 
 /// ** EDIT ** ///
 router.get('/:id', (req, res) => {
-  const userId = req.session['user_id'];
-  if (!userId) {
-    return res.send({ error: "error" });
-  }
-  database
-    .addContributionsToStory(userId)
+
+  storiesQueries.addContributionsToStory(req.params.id)
     .then(story => res.send(story));
 
 });
 
 /// ** DELETE ** //
 router.post('/:id/delete', (req, res) => {
-  const userId = req.session.userId;
-  if (!userId) {
-    return res.send({ error: "error" });
-  }
+ 
   storiesQueries.deleteStories(req.params.id);
   return res.redirect('/my-stories');
 });
