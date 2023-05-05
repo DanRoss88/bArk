@@ -38,6 +38,8 @@ const usersRoutes = require('./routes/users');
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
+app.use('/api/stories', storiesApiRoutes);
+app.use('/stories', storiesRoutes);
 // Note: mount other resources here, using the same pattern above
 
 // Home page

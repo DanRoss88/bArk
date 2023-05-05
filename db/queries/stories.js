@@ -6,8 +6,8 @@ const getStories = () => {
       return data.rows[0];
     })
     .catch(err => {
-      return new Error('Error');
+      return err('Error');
     })
 };
 
-module.exports = { getUsers };
+module.exports = { getStories };

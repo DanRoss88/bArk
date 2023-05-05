@@ -1,9 +1,11 @@
-
+const express = require('express');
+const router  = express.Router();
+const storiesQueries = require('../db/queries/stories');
 
 router.get('/', (req, res) => {
-  userQueries.getUsers()
-    .then(users => {
-      res.json({ users });
+  userQueries.getStories()
+    .then(story => {
+      res.json({ story });
     })
     .catch(err => {
       res
