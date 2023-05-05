@@ -1,7 +1,4 @@
 const db = require('../connection');
-const express = require('express');
-
-
 
 const getStories = () => {
   return db.query(`SELECT * FROM stories ORDER BY date_created DESC LIMIT 10;`)

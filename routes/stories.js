@@ -1,8 +1,6 @@
 const express = require('express');
-const storiesQueries = require('../db/queries/stories');
-
 const router = express.Router();
-
+const storiesQueries = require('../db/queries/stories');
 
 
 /// ** ADD (NEW) *** ///
@@ -12,6 +10,9 @@ router.get('/:id', (req, res) => {
     .then((data) => {
       const templateVars = { stories: data };
       res.render('stories', templateVars);
+    })
+    .catch(e => {
+      console.error(e)
     });
 });
 
@@ -23,6 +24,9 @@ router.post('/:id', (req, res) => {
     .then(data => {
 
       return res.send(data);
+    })
+    .catch(e => {
+      console.error(e)
     });
 });
 
@@ -33,6 +37,9 @@ router.post('/:id', (req, res) => {
     .then((data) => {
       const templateVars = { stories: data };
       res.send(templateVars);
+    })
+    .catch(e => {
+      console.error(e)
     });
 });
 
@@ -44,5 +51,8 @@ router.post('/:id/delete', (req, res) => {
   res.send(data);
   return res.redirect('/my-stories');
 })
+.catch(e => {
+  console.error(e)
+});
 });
 module.exports = router;
