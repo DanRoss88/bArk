@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
   contributionsQueries.getContributions()
     .then((data) => {
       const templateVars = { contributions: data };
-      res.render('home', templateVars);
+      res.render('index', templateVars);
     });
 });
 
