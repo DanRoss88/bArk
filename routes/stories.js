@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
   storiesQueries.getStories()
     .then((data) => {
       const templateVars = { stories: data };
-      res.render('home', templateVars);
+      res.render('index', templateVars);
     });
 });
 
@@ -49,7 +49,7 @@ router.get('/:id', (req, res) => {
 
 /// ** DELETE ** //
 router.post('/:id/delete', (req, res) => {
- 
+
   storiesQueries.deleteStories(req.params.id);
   return res.redirect('/my-stories');
 });
