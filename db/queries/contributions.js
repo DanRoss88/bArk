@@ -1,4 +1,4 @@
-const db = require('../conection');
+const db = require('../connection');
 const express = require('express');
 
 // Add new contribution

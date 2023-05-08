@@ -48,6 +48,9 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+const contributionsRouter = require('./routes/contributions');
+app.use('/stories', contributionsRouter)
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
