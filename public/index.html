@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bArk Home Page</title>
+
+  <!-- APP CSS -->
+  <!-- APP JS -->
+
+</head>
+
+<body>
+<main>
+<h2 class="contributions">What happens next?</h2>
+<form id="new-contribution" action="/contributions" method="POST">
+  <textarea name="text" id="contribution-text"></textarea>
+  <div class="contribution-button-counter">
+    <button class="contribution-button" type="submit">bArk!</button>
+    <output name="counter" class="upvote-counter" for="contribution-text"></output>
+  </div>
+</form>
+  <section id="contributions-container">
+    <article>
+      <header class="contribution-header">
+        <div class="handle">
+          <p>@dobermann</p>
+        </div>
+      </header>
+      <p class="contribution-body">'Because he was so fluffy, Sam was considered to be the best snuggler and the goodest boy.'</p>
+      <footer class="contribution-footer">
+        <div class="days-ago">Posted 2 days ago</div>
+        <div class="upvote-emojis">
+          <i class="fa-sharp fa-solid fa-arrow-up"></i>
+          <i class="fa-sharp fa-solid fa-arrow-down"></i>
+        </div>
+      </footer>
+    </article>
+  </section>
+</main>
+</body>
+</html>
