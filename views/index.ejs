@@ -18,6 +18,8 @@
 </head>
 
 <body>
+
+  <h1>Have fun!</h1>
   <h1>Have fun! 🥔</h1>
   <nav>
     <span>bArk</span>
@@ -48,6 +50,31 @@
       <div class="contributions-container" id="contributions">
 </div>
     </section>
+
+    <h2 class="contributions">What happens next?</h2>
+    <form id="new-contribution" action="/contributions" method="POST">
+      <textarea name="text" id="contribution-text"></textarea>
+        <div class="contribution-button-counter">
+        <button class="contribution-button" type="submit">bArk!</button>
+        <output name="counter" class="upvote-counter" for="contribution-text"></output>
+
+        <section id="contributions-container">
+          <article>
+            <header class="contribution-header">
+              <div class="handle">
+                <p>@dobermann</p>
+              </div>
+            </header>
+            <p class="contribution-body">'Because he was so fluffy, Sam was considered to be the best snuggler and the goodest boy.'</p>
+            <footer class="contribution-footer">
+              <div class="days-ago">Posted 2 days ago</div>
+              <div class="upvote-emoji">
+                <i class="fa-sharp fa-solid fa-arrow-up"></i>
+              </div>
+            </footer>
+          </article>
+        </section>
+
   </main>
 
 </body>
