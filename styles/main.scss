@@ -1,8 +1,9 @@
-header {
-  background: image('https://github.com/DanRoss88/bArk/blob/master/styles/images/bark_header.png');
-}
+$font-stack: Helvetica, sans-serif;
+$font-colour: #ffff
 
-body {
+body { 
+  font: 100% $font-stack;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,4 +12,16 @@ body {
 
   background: #d8caee;
   background: image('https://github.com/DanRoss88/bArk/blob/master/styles/images/wallpaper.png');
+}
+
+.nav-bar {
+  font: 100% $font-stack;
+  display: flex;
+  flex-direction: row;
+  background: image('https://github.com/DanRoss88/bArk/blob/master/styles/images/bark_header.png');
+}
+
+.story-section {
+  border: 3px solid #9484d4;
+  border-radius: 15px;
 }
