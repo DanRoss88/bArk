@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const storiesQueries = require('../db/queries/stories');
 
-/// **** BROWSE *** ////
-router.get('/', (req, res) => {
+/// **** BROWSE *** //// 
+/*router.get('/', (req, res) => {
   storiesQueries.seeStories(req.params.id)
     .then((data) => {
       const templateVars = {user : data.id,
@@ -15,6 +15,6 @@ router.get('/', (req, res) => {
         console.error(e)
       });
 
-});
+}); */
 
 module.exports = router;
