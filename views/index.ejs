@@ -19,36 +19,39 @@
 
 <body>
 
-  <h1>Have fun!</h1>
-  <h1>Have fun! 🥔</h1>
+  <nav class="nav-bar">
+    <span id="bark-button">bArk</span>
+
+
+  
   <nav>
     <span>bArk</span>
 
     <div class="nav-bar">
+
       <span id="login">Login</span>
       <span id="register">Register</span>
-    </div>
   </nav>
 
-  <main class="container">
-    <section class="stories">
+  <main class="main-container">
+    <section class="stories-container">
 
       <!-- Errors Here-->
       <div id="error-msg-guest" class="error"><i class="fa-solid fa-circle-exclamation"></i> Please Sign In</div>
 
 
       <form id="stories-form" class="story-form" action="/stories" method="POST">
-        <textarea name="story" id="story"></textarea>
+        <textarea name="story" id="story-content" placeholder="bArk here"></textarea>
         <div>
           <button type="submit">bArk</button>
-          <output name="counter" class="counter" for="story">
+          <output name="story" class="story-form" for="story">
             <i id="upvote-button"class="fa-solid fa-angles-down"></i>
               </output>
         </div>
       </form>
 
-      <div class="contributions-container" id="contributions">
-</div>
+        <div class="contributions-container" id="contributions">
+      </div>
     </section>
 
     <h2 class="contributions">What happens next?</h2>

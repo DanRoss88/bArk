@@ -1,7 +1,4 @@
 const db = require('../connection');
-const express = require('express');
-
-
 
 const getStories = () => {
   return db.query(`SELECT * FROM stories ORDER BY date_created DESC LIMIT 10;`)
@@ -9,104 +6,115 @@ const getStories = () => {
       return data.rows;
     })
     .catch(err => {
-      return console.error(err.stack);
+     console.error(err.stack);
+     throw err;
     })
 };
 
 const addStories = () => {
 
-  const queryString = `INSERT INTO stories (stories.id as story_id, user_id, title, content, published_status, date_created)
- VALUES ($1, $2, $3, $4, $5, $6)
+  const queryString = `INSERT INTO stories (user_id, title, content, published_status, date_created)
+ VALUES ($1, $2, $3, $4, $5)
  RETURNING *;
-`
+`;
 const values = [
-  story_id,
-  user_id,
+ stories.user_id,
   stories.title,
  stories.content,
  stories.published_status,
- stories.date_created
+ new Date()
 ];
 
 return db.query(queryString, values)
  .then(data => {
-  return data.rows
+  return data.rows[0];
 })
  .catch(err => {
-  return console.error(err.stack)
+  console.error(err.stack);
+  throw err;
 });
-
 };
 
 const editStory = (story_id) => {
 
-  const queryString = `UPDATE stories SET (stories.title, stories.content, stories.published_status) = VALUES($1, $2, $3) RETURNING *;`;
-  const values = [stories.title, stories.content, stories.published_status];
+  const queryString = `UPDATE stories SET title = $2, content = $3, published_status = $4 WHERE id = $1 RETURNING *;`;
+  const values = [stories.user_id, stories.title, stories.content, stories.published_status];
 
   return db.query(queryString, values)
   .then(data => {
-   return data.rows
+   return data.rows[0];
  })
   .catch(err => {
-   return console.error(err.stack)
+   console.error(err.stack);
+   throw err;
  });
 }
 
 
-const addContributionToStory = (story_id) => {
+const addContributionToStory = (story_id, contribution) => {
 
-  const queryString = `UPDATE stories SET stories.content = CONCAT(stories.content + contributions.content)
-  JOIN contributions on story_id = stories.id;`;
-  const queryString2 = `UPDATE contributions SET accepted_status = TRUE;`;
+  const queryString = `UPDATE stories
+  SET stories.content = stories.content || (SELECT contributions.content FROM contributions WHERE story_id = $1 AND accepted_status = FALSE)
+  WHERE contributions.id = $1;
+  
+  UPDATE contributions
+  SET accepted_status = TRUE
+  WHERE story_id = $1;`;
+  
+  const values = [story_id, contribution];
 
-  return db.query(queryString, queryString2, values)
+  return db.query(queryString, values)
   .then(data => {
-    return data.rows
+    return data.rows[0];
   })
   .catch(err => {
-    return console.error(err.stack)
+     console.error(err.stack);
+     throw err;
   });
 }
 
 
 const deleteStories = (story_id) => {
-  const queryString = `DELETE FROM stories WHERE stories.id = $1;`;
-  const values = [stories.id];
+  const queryString = `DELETE FROM stories WHERE id = $1;`;
+  const values = [story_id];
 
   return db.query(queryString, values)
     .then(data => {
-      return data.rows
+      return data.rows[0];
     })
     .catch(err => {
-      return console.error(err.stack)
+      console.error(err.stack);
+      throw err;
     });
 };
 
-const seeStories = () => {
+const seeStories = (user_id) => {
 const queryString = `SELECT * FROM stories WHERE users.id = $1 ORDER BY date_created DESC;`;
-  const values = [users.id];
+  const values = [user_id];
 
   return db.query(queryString, values)
     .then(data => {
       return data.rows;
     })
     .catch(err => {
-      return console.error(err.stack);
+      console.error(err.stack);
+      throw err;
     })
 }
 
 
 const publishStory = (story_id) => {
 
-  const queryString = `UPDATE stories SET published_status = TRUE WHERE stories.id = $1`;
-  const values = [stories.id, published_status];
+  const queryString = `UPDATE stories SET published_status = TRUE WHERE id = $1 RETURNING *;`;
+  const values = [story_id];
 
   return db.query(queryString, values)
   .then(data => {
-    return data.rows
+    return data.rows[0];
   })
   .catch(err => {
-    return console.error(err.stack)
+    console.error(err.stack);
+    throw err;
   });
 }
 
