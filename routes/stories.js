@@ -37,10 +37,12 @@ router.post('/stories', async (req, res) => {
   try {
     const newStory = await addStories(user_id, title, content, published_status, date_created);
     res.status(201).json(newStory);
+
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
   }
+  res.redirect('/');
 });
 
 // EDIT STORY //
@@ -51,10 +53,12 @@ router.put('/stories/:id', async (req, res) => {
   try {
     const updatedStory = await editStory(story_id, title, content, published_status);
     res.status(200).json(updatedStory);
+
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
   }
+  res.redirect('/');
 });
 
 // ADD TO STORY //
@@ -65,10 +69,12 @@ router.post('/stories/:id/contributions', async (req, res) => {
   try {
     const newContribution = await addContributionToStory(story_id, user_id, content, accepted_status);
     res.status(201).json(newContribution);
+
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
   }
+  res.redirect('/');
 });
 
 // DELETE STORY //
@@ -78,10 +84,12 @@ router.delete('/stories/:id', async (req, res) => {
   try {
     const deletedStory = await deleteStory(story_id);
     res.status(200).json(deletedStory);
+
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
   }
+  res.redirect('/');
 });
 
 // GET USERS STORIES //
