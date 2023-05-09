@@ -5,7 +5,11 @@ const router = express.Router();
 
 
 /// *** BROWSE *** /// HOME ////
+
 router.get('/', async (req, res) => {
+  const userID = 1;
+  req.session.user_id = userID;
+  
   try {
     const contributions = await getContributions();
     const templateVars = { contributions };
@@ -14,6 +18,7 @@ router.get('/', async (req, res) => {
     console.log(err);
     res.status(500).send("Unable to retrieve contributions");
     }
+
 });
 
 // ALL CONTRIBUTIONS
