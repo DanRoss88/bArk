@@ -34,7 +34,8 @@ $(document).ready(function() {
               <footer>
               <span class="stories-created-at">${dateCreated}</span>
               <div class="actions">
-              <button><i class="fa-sharp fa-solid fa-arrow-up"></i></button>
+              <button class="upvote"><i class="fa-sharp fa-solid fa-arrow-up"></i></button>
+              <p id="count">0</p>
             </div>
           </footer>
         </article>
