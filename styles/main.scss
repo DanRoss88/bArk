@@ -3,6 +3,7 @@ $font-colour: #ffff
 
 body { 
   font: 100% $font-stack;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
