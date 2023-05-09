@@ -38,6 +38,8 @@ const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 const storiesRoutes = require('./routes/stories');
 const homeRoute = require('./routes/home-route');
+const contributionsRouter = require('./routes/contributions');
+
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
@@ -46,6 +48,7 @@ app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/', homeRoute);
 app.use('/stories', storiesRoutes);
+app.use('/stories/contributions', contributionsRouter);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -57,8 +60,8 @@ app.use('/stories', storiesRoutes);
   res.render('index');
 }); */
 
-const contributionsRouter = require('./routes/contributions');
-app.use('/stories', contributionsRouter)
+
+
 
 app.listen(PORT, () => {
   console.log(`bArk app listening on port ${PORT}`);

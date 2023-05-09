@@ -4,14 +4,16 @@ const { getStories, addStories, editStory, addContributionToStory, deleteStories
 
 
 
-
-/// *** BROWSE *** /// HOME ////
-router.get('/', (req, res) => {
-  storiesQueries.getStories()
-    .then((data) => {
-      const templateVars = { stories: data };
-      res.render('index', templateVars);
-    });
+/// BROWSE ///
+router.get('/', async (req, res) => {
+  try {
+    const stories = await getStories();
+    const templateVars = { stories };
+    res.render('index', templateVars);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Unable to retrieve stories.");
+  }
 });
 
 
@@ -108,13 +110,7 @@ router.put('/stories/:id/publish', async (req, res) => {
     console.error(err);
     res.status(500).send('Server error');
   }
-
-/// ** DELETE ** //
-router.post('/:id/delete', (req, res) => {
-
-  storiesQueries.deleteStories(req.params.id);
-  return res.redirect('/my-stories');
-
 });
+
 
 module.exports = router;
