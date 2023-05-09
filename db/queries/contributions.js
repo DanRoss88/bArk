@@ -3,11 +3,11 @@ const express = require('express');
 
 // Add new contribution
 
-const newContribution = () => {
-  return db.query(`INSERT INTO contributions
+const newContribution = (user_id, story_id, content, accepted_status, num_of_upvotes) => {
+  return db.query(`INSERT INTO contributions (user_id, story_id, content, accepted_status, num_of_upvotes)
   VALUES ($1, $2, $3, $4, $5) RETURNING *`, [user_id, story_id, content, accepted_status, num_of_upvotes])
     .then(data => {
-      return data.rows;
+      return data.rows[0];
     })
     .catch(err => {
       return console.error(err.stack);
@@ -16,11 +16,11 @@ const newContribution = () => {
 
 // Edit contribution
 
-const editContribution = () => {
+const editContribution = (id, user_id, content) => {
   return db.query(`UPDATE contributions
-  SET content = $1 RETURNING *`, [content])
+  SET content = $1 RETURNING *`, [id, user_id, content])
     .then(data => {
-      return data.rows;
+      return data.rows[0];
     })
     .catch(err => {
       return console.error(err.stack);
@@ -29,7 +29,7 @@ const editContribution = () => {
 
 // Delete contribution
 
-const deleteContribution = () => {
+const deleteContribution = (id, user_id) => {
   return db.query(`DELETE FROM contributions WHERE id = $1 AND user_id = $2`, [id, user_id])
     .then(data => {
       return data.rows;
@@ -41,8 +41,8 @@ const deleteContribution = () => {
 
 // Delete contribution when accepted
 
-const deleteWhenAccepted = () => {
-  return db.query(`DELETE FROM contributions WHERE accepted_status = true AND user_id = $1`, [user_id])
+const deleteWhenAccepted = (user_id, story_id) => {
+  return db.query(`DELETE FROM contributions JOIN stories ON stories(id) = story_id WHERE accepted_status = true AND user_id = $1 AND story_id = $2`, [user_id, story_id])
     .then(data => {
       return data.rows;
     })

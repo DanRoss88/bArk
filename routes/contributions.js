@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/', (req, res) => {
+router.get('/my-stories/:user_id', (req, res) => {
   contributionsQueries.getContributions(req.params.id)
     .then((data) => {
       const templateVars = { contributions: data };
@@ -30,9 +30,13 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/:id', (req, res) => {
-  contributionsQueries.newContribution(req.params.id)
-    .then(contribution => res.send(contribution));
+router.post('/:id', (req, res, next) => {
+
+  const { user_id, story_id, content, accepted_status, num_of_upvotes } = req.body;
+
+  contributionsQueries.newContribution(user_id, story_id, content, accepted_status, num_of_upvotes)
+    .then(contribution => res.send(contribution))
+    .catch(error => next(error));
 });
 
 /// ** EDIT ** ///

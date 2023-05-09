@@ -18,7 +18,62 @@
 </head>
 
 <body>
-  <h1>Have fun! 🥔</h1>
+  <h1>Welcome to Dog Tales!</h1>
+  <nav>
+    <span>bArk</span>
+
+    <div class="nav-bar">
+      <span id="login">Login</span>
+      <span id="register">Register</span>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="stories">
+
+      <!-- Errors Here-->
+      <div id="error-msg-guest" class="error"><i class="fa-solid fa-circle-exclamation"></i> Please Sign In</div>
+
+
+      <form id="stories-form" class="story-form" action="/stories" method="POST">
+        <textarea name="story" id="story"></textarea>
+        <div>
+          <button type="submit">bArk</button>
+          <output name="counter" class="counter" for="story">
+            <i id="upvote-button"class="fa-solid fa-angles-down"></i>
+              </output>
+        </div>
+      </form>
+      <div class="contributions-container" id="contributions">
+</div>
+    </section>
+
+    <h2 class="contributions">What happens next?</h2>
+    <form id="new-contribution" action="/contributions" method="POST">
+      <textarea name="text" id="contribution-text"></textarea>
+        <div class="contribution-button-counter">
+        <button class="contribution-button" type="submit">bArk!</button>
+        <output name="counter" class="upvote-counter" for="contribution-text"></output>
+
+        <section id="contributions-container">
+          <article>
+            <header class="contribution-header">
+              <div class="handle">
+                <p>@dobermann</p>
+              </div>
+            </header>
+            <p class="contribution-body">'Because he was so fluffy, Sam was considered to be the best snuggler and the goodest boy.'</p>
+            <footer class="contribution-footer">
+              <div class="days-ago">Posted 2 days ago</div>
+              <div class="upvote-emojis">
+                <i class="fa-sharp fa-solid fa-arrow-up"></i>
+                <i class="fa-sharp fa-solid fa-arrow-down"></i>
+              </div>
+            </footer>
+          </article>
+        </section>
+  </main>
+
 </body>
 
 </html>
