@@ -51,6 +51,9 @@ app.use('/stories', storiesRoutes);
   res.render('index');
 }); */
 
+const contributionsRouter = require('./routes/contributions');
+app.use('/stories', contributionsRouter)
+
 app.listen(PORT, () => {
   console.log(`bArk app listening on port ${PORT}`);
 });

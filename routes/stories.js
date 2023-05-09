@@ -4,6 +4,17 @@ const { getStories, addStories, editStory, addContributionToStory, deleteStories
 
 
 
+
+/// *** BROWSE *** /// HOME ////
+router.get('/', (req, res) => {
+  storiesQueries.getStories()
+    .then((data) => {
+      const templateVars = { stories: data };
+      res.render('index', templateVars);
+    });
+});
+
+
 // ALL STORIES //
 router.get('/stories', async (req, res) => {
   try {
@@ -84,6 +95,7 @@ router.get('/users/:id/stories', async (req, res) => {
   }
 });
 
+
 // PUBLISH STORY //
 router.put('/stories/:id/publish', async (req, res) => {
   const story_id = req.params.id;
@@ -96,6 +108,13 @@ router.put('/stories/:id/publish', async (req, res) => {
     console.error(err);
     res.status(500).send('Server error');
   }
+
+/// ** DELETE ** //
+router.post('/:id/delete', (req, res) => {
+
+  storiesQueries.deleteStories(req.params.id);
+  return res.redirect('/my-stories');
+
 });
 
 module.exports = router;
