@@ -11,28 +11,28 @@ const getStories = () => {
     })
 };
 
-const addStories = () => {
+const addStories = (stories) => {
+  const queryString = `
+    INSERT INTO stories (user_id, title, content, published_status, date_created)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING stories.id, user_id, title, content, published_status, date_created;
+  `;
+  const values = [
+    stories.user_id,
+    stories.title,
+    stories.content,
+    stories.published_status,
+    new Date()
+  ];
 
-  const queryString = `INSERT INTO stories (user_id, title, content, published_status, date_created)
- VALUES ($1, $2, $3, $4, $5)
- RETURNING *;
-`;
-const values = [
- stories.user_id,
-  stories.title,
- stories.content,
- stories.published_status,
- new Date()
-];
-
-return db.query(queryString, values)
- .then(data => {
-  return data.rows[0];
-})
- .catch(err => {
-  console.error(err.stack);
-  throw err;
-});
+  return db.query(queryString, values)
+    .then(data => {
+      return data.rows[0];
+    })
+    .catch(err => {
+      console.error(err.stack);
+      throw err;
+    });
 };
 
 const editStory = (story_id) => {
@@ -56,11 +56,11 @@ const addContributionToStory = (story_id, contribution) => {
   const queryString = `UPDATE stories
   SET stories.content = stories.content || (SELECT contributions.content FROM contributions WHERE story_id = $1 AND accepted_status = FALSE)
   WHERE contributions.id = $1;
-  
+
   UPDATE contributions
   SET accepted_status = TRUE
   WHERE story_id = $1;`;
-  
+
   const values = [story_id, contribution];
 
   return db.query(queryString, values)

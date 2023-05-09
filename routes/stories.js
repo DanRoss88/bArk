@@ -7,7 +7,7 @@ const { getStories, addStories, editStory, addContributionToStory, deleteStories
 
 /// *** BROWSE *** /// HOME ////
 router.get('/', (req, res) => {
-  storiesQueries.getStories()
+  getStories()
     .then((data) => {
       const templateVars = { stories: data };
       res.render('index', templateVars);
@@ -116,5 +116,6 @@ router.post('/:id/delete', (req, res) => {
   return res.redirect('/my-stories');
 
 });
+});
 
-module.exports = router;
+module.exports =  router;
