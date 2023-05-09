@@ -6,6 +6,8 @@ const router = express.Router();
 
 /// *** BROWSE *** /// HOME ////
 router.get('/', (req, res) => {
+  const userID = 1;
+  req.session.user_id = userID;
   contributionsQueries.getContributions()
     .then((data) => {
       const templateVars = { contributions: data };
