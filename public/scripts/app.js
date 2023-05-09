@@ -34,9 +34,7 @@ $(document).ready(function() {
               <footer>
               <span class="stories-created-at">${dateCreated}</span>
               <div class="actions">
-              <i class="fa fa-flag"></i>
-              <i class="fa fa-retweet"></i>
-              <i class="fa fa-heart"></i>
+              <button><i class="fa-sharp fa-solid fa-arrow-up"></i></button>
             </div>
           </footer>
         </article>
