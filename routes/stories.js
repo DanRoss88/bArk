@@ -3,7 +3,6 @@ const router = express.Router();
 const { getStories, addStories, editStory, addContributionToStory, deleteStories, seeStories, publishStory } = require('../db/queries/stories');
 
 
-
 /// BROWSE ///
 router.get('/', async (req, res) => {
   try {
@@ -111,6 +110,7 @@ router.put('/stories/:id/publish', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-
+});
 
 module.exports = router;
+

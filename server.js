@@ -61,6 +61,9 @@ app.use('/stories/contributions', contributionsRouter);
 }); */
 
 
+const contributionsRouter = require('./routes/contributions');
+app.use('/stories/contributions', contributionsRouter);
+app.use('/contributions', contributionsRouter);
 
 
 app.listen(PORT, () => {
