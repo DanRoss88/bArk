@@ -25,7 +25,7 @@
 
     <main>
 
-      <div class="browse-stories">
+       <div class="browse-stories"> -->
         <% for(let story of stories) { %>
           <div class="story-box">
             <div class="user-avatar">
@@ -45,11 +45,23 @@
                 <p class="story-status">PUBLISHED</p>
                 <% } %>
 
+                <% for (let contribution of contributions) { %>
+                  <div class="contribution-box">
+                    <div class="user-avatar">
+                      <i></i>
+                    </div>
+                    <div class="contribution-info">
+                      <p>
+                        <%= contribution.content %>
+                      </p>
+                    </div>
+                  </div>
+               <% } %>
           </div>
 
       </div>
       <% } %>
-        </div>
+        </div> -->
         <article>
           <div id="stories-form">
             <!-- Errors Here-->
