@@ -2,16 +2,17 @@
 $(document).ready(function() {
 
   //// VARIABLES ////
-  const $errorGuest = $('#error-msg-guest').hide();
+ /* const $errorGuest = $('#error-msg-guest').hide();
   const $errorNull = $('#error-msg-null').hide();
   const $form = $('#story-form').hide();
-
+*/
   //////// NAVBAR BUTTON //////
   $("#bark-button").click(() => {
-    $form.slideToggle().find('textArea').focus();
-  });
-  /////////
-  const createStoryElement = function(stories) {
+    $('#stories-form').slideToggle().find('textArea').focus();
+
+});
+  //////////*
+  /*const createStoryElement = function(stories) {
     //TIMEAGO//
     const dateCreated = timeago.format(stories.created_at);
     //ESCAPE//
@@ -53,8 +54,9 @@ $(document).ready(function() {
       $storiesContainer.append($story);
     }
   };
+});
 ////************* LOAD STORIES **************////
-  const loadStories = function() {
+ /* const loadStories = function() {
 
     $.ajax({
       url: '/stories',
@@ -76,7 +78,7 @@ $(document).ready(function() {
 
 
 ///////////*************  POST FORM *************//////////////////
-  $form.submit(function(event) {
+ /* $form.submit(function(event) {
 
     event.preventDefault();
     const storyContent = $('#story-content');
