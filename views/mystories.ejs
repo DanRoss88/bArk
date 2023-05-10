@@ -23,6 +23,9 @@
 
 <% include('partials/_header') %>
 
-
+<% if(story.published_status) {%>
+  <h2><%= story.title %></h2>
+  <h3>By: <%= story.users_id =%></h3>
+  <p><%= story.content %></p>
 </body>
 </html>
