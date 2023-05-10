@@ -39,6 +39,7 @@ const usersRoutes = require('./routes/users');
 const storiesRoutes = require('./routes/stories');
 const homeRoute = require('./routes/home-route');
 const contributionsRouter = require('./routes/contributions');
+const loginRouter = require('./routes/login-route');
 
 
 // Mount all resource routes
@@ -51,22 +52,17 @@ app.use('/users', usersRoutes);
 app.use('/', homeRoute);
 app.use('/stories', storiesRoutes);
 app.use('/stories/contributions', contributionsRouter);
+app.use('/contributions', contributionsRouter);
+app.use('/login', loginRouter);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
- /* app.get('/', (req, res) => {
-  req.session.user_id = userID;
-  res.render('index');
-}); */
-
-
-const contributionsRouter = require('./routes/contributions');
-app.use('/stories/contributions', contributionsRouter);
-app.use('/contributions', contributionsRouter);
-
+//  app.get('/', (req, res) => {
+//   res.render('login');
+// });
 
 app.listen(PORT, () => {
   console.log(`bArk app listening on port ${PORT}`);

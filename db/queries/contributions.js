@@ -4,8 +4,12 @@ const express = require('express');
 // Create new contribution
 
 const newContribution = (user_id, story_id, content, accepted_status, num_of_upvotes) => {
-  return db.query(`INSERT INTO contributions (user_id, story_id, content, accepted_status, num_of_upvotes)
-  VALUES ($1, $2, $3, $4, $5) RETURNING *`, [contributions.user_id, contributions.story_id, contributions.content, contributions.accepted_status, contributions.num_of_upvotes])
+
+  const queryString = `INSERT INTO contributions (user_id, story_id, content, accepted_status, num_of_upvotes)
+  VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+  const values = [contributions.user_id, contributions.story_id, contributions.content, contributions.accepted_status, contributions.num_of_upvotes];
+
+  return db.query(queryString, values)
     .then(data => {
       return data.rows[0];
     })
@@ -17,22 +21,30 @@ const newContribution = (user_id, story_id, content, accepted_status, num_of_upv
 // Add contribution
 
 const addContributions = () => {
-  return db.query(`INSERT INTO contributions (user_id, story_id, content, accepted_status, num_of_upvotes) VALUES ($1, $2, $3, $4, $5) RETURNING *;`, [contributions.user_id, contributions.story_id, contributions.content, contributions.accepted_status, contributions.num_of_upvotes])
-  .then(data => {
-    return data.rows[0];
-  })
-  .catch(err => {
-    console.error(err.stack);
-    throw err;
-  });
+
+  const queryString = `INSERT INTO contributions (user_id, story_id, content, accepted_status, num_of_upvotes) VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
+  const values = [contributions.user_id, contributions.story_id, contributions.content, contributions.accepted_status, contributions.num_of_upvotes];
+
+  return db.query(queryString, values)
+    .then(data => {
+      return data.rows[0];
+    })
+    .catch(err => {
+      console.error(err.stack);
+      throw err;
+    });
 };
 
 
 // Edit contribution
 
 const editContribution = (contribution_id) => {
-  return db.query(`UPDATE contributions
-  SET contributions.content = $1 RETURNING *`, [contributions.id, contributions.user_id, contributions.content])
+
+  const queryString = `UPDATE contributions
+  SET contributions.content = $1 RETURNING *`;
+  const values = [contributions.id, contributions.user_id, contributions.content];
+
+  return db.query(queryString, values)
     .then(data => {
       return data.rows[0];
     })
@@ -44,7 +56,11 @@ const editContribution = (contribution_id) => {
 // Delete contribution
 
 const deleteContribution = (contribution_id, user_id) => {
-  return db.query(`DELETE FROM contributions WHERE id = $1 AND user_id = $2`, [contributions.id, contributions.user_id])
+
+  const queryString = `DELETE FROM contributions WHERE id = $1 AND user_id = $2`;
+  const values = [contributions.id, contributions.user_id];
+
+  return db.query(queryString, values)
     .then(data => {
       return data.rows;
     })
@@ -56,7 +72,11 @@ const deleteContribution = (contribution_id, user_id) => {
 // Delete contribution when accepted
 
 const deleteWhenAccepted = (user_id, story_id) => {
-  return db.query(`DELETE FROM contributions JOIN stories ON stories.id = story_id WHERE accepted_status = true AND user_id = $1 AND story_id = $2`, [contributions.user_id, contributions.story_id])
+
+  const queryString = `DELETE FROM contributions JOIN stories ON stories.id = story_id WHERE accepted_status = true AND user_id = $1 AND story_id = $2`;
+  const values = [contributions.user_id, contributions.story_id];
+
+  return db.query(queryString, values)
     .then(data => {
       return data.rows;
     })
@@ -68,8 +88,13 @@ const deleteWhenAccepted = (user_id, story_id) => {
 //Increment upvotes
 
 const upvoteContribution = () => {
-  return db.query(`UPDATE contributions
-  SET num_of_upvotes = num_of_upvotes + 1 WHERE user_id = $1`, [contributions.user_id])
+
+  const queryString = `UPDATE contributions
+  SET num_of_upvotes = num_of_upvotes + 1 WHERE user_id = $1`;
+  const values = [contributions.user_id];
+
+
+  return db.query(queryString, values)
     .then(data => {
       return data.rows;
     })
@@ -81,7 +106,10 @@ const upvoteContribution = () => {
 //See contributions
 
 const getContributions = () => {
-  return db.query(`SELECT * FROM contributions JOIN stories ON stories.id = story_id GROUP BY stories.id, contributions.id LIMIT 10;`)
+
+  const queryString = `SELECT * FROM contributions JOIN stories ON stories.id = story_id GROUP BY stories.id, contributions.id LIMIT 10;`
+
+  return db.query(queryString)
     .then(data => {
       return data.rows;
     })

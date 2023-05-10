@@ -7,9 +7,9 @@ const router = express.Router();
 /// *** BROWSE *** /// HOME ////
 
 router.get('/', async (req, res) => {
-  const userID = 1;
-  req.session.user_id = userID;
-  
+  // const userID = 1;
+  // req.session.user_id = userID;
+
   try {
     const contributions = await getContributions();
     const templateVars = { contributions };
@@ -53,7 +53,7 @@ router.post('/stories/contributions', async (req, res, next) => {
   const { user_id, story_id, content, accepted_status, num_of_upvotes } = req.body;
 
   try {
-    const newContribution = await addContributions(user_id, story_id, content, accepted_status, num_of_upvotes);
+    const newContribution = await newContribution(user_id, story_id, content, accepted_status, num_of_upvotes);
     res.status(201).json(newContribution);
   } catch (err) {
     console.error(err);
