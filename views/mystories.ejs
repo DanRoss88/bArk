@@ -2,21 +2,20 @@
 <html lang="en">
 
 <head>
+  <title>My Stories</title>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/users.js"></script>
 
-  <script defer src="/scripts/app.js"></script>
-  <title>My Stories</title>
 </head>
 <body>
 
@@ -36,13 +35,13 @@
   <p><%= story.content %></p>
   <p><%= story.created_at %></p>
 <div class="append">
-<% for(let contributon of contributions) { %>
+<% for(let contribution of contributions) { %>
   <% if (contribution.accepted_status) { %>
   <p><%= contribution.content %></p>
   <% } %>
    <% } %>
 </div>
-<% if(users.id === story.user_id) {%>
+<% if(story.user_id) {%>
   <form class="publish" action='/stories/<%= story.id %>/publish' method='POST'>
     <button class='btn' class="publish" type="submit">PUBLISH</button>
   </form>
@@ -50,7 +49,7 @@
 
 <div class="contribution-add-delete">
   <% for(let contributon of contributions) { %>
-    <% if (contribution.accepted_status === FALSE) { %>
+    <% if (contribution.accepted_status = FALSE) { %>
       <form class='contribution' action='/stories/<%= story.id %>' method='POST'>
         <label for="contribution">Contribution</label>
         <textarea type="text" id="contribution" name="contribution"></textarea>
@@ -62,10 +61,10 @@
 <br></br>
 <div id="delete">
       <form class="delete-contribution" action='/stories/<%= story.id %>' method='POST'>
-        <button class='btn' class="delete" type="sumbit">Delete Contribution</button>
+        <button class='btn' class="delete" type="submit">Delete Contribution</button>
       </form>
       <form class="delete-story" action='/stories/<%= story.id %>' method='POST'>
-        <button class='btn' class="delete" type="sumbit">Delete Story</button>
+        <button class='btn' class="delete" type="submit">Delete Story</button>
       </form></div>
 </div>
 

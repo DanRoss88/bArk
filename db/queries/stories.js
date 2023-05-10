@@ -10,12 +10,15 @@ const getStories = () => {
      throw err;
     })
 };
-const getUserStoriesByUserId = (user_id) => {
-  const queryString = `SELECT stories.*
+const getUserStoriesByUserId = (user_id, story) => {
+  const queryString = `SELECT stories
   FROM stories
   JOIN users ON users.id = stories.user_id
-  WHERE users.id = $1`;
-  const values = [user_id];
+  WHERE users.id = $1
+  ORDER BY stories.id
+  LIMIT 1;`
+  ;
+  const values = [user_id, story];
 
   return db.query(queryString, values)
     .then(data => {
@@ -46,7 +49,7 @@ return db.query(queryString, values)
 const editStory = (stories) => {
 
   const queryString = `UPDATE stories SET title = $1, content = $2 WHERE user_id = $3 RETURNING *;`;
-  const values = [stories.title, stories.content, req.session.id]
+  const values = [stories.title, stories.content, stories.user_id]
   return db.query(queryString, values)
   .then(data => {
    return data.rows[0];
@@ -55,33 +58,35 @@ const editStory = (stories) => {
    console.error("Error on editStory" ,err);
    throw err;
  });
-}
+};
 
 
-const addContributionToStory = (story_id, contribution) => {
+// const addContributionToStory = (story_id, contribution) => {
 
-  const queryString1 = `UPDATE stories
-    SET content = content || (SELECT content FROM contributions WHERE story_id = $1 AND accepted_status = FALSE)
-    WHERE id = $1;`;
+//   const queryString1 = `UPDATE stories
+//     SET content = content || (SELECT content FROM contributions WHERE story_id = $1 AND accepted_status = FALSE)
+//     WHERE id = $1;`;
 
-  const queryString2 = `UPDATE contributions
-    SET accepted_status = TRUE
-    WHERE story_id = $1;`;
+//   const queryString2 = `UPDATE contributions
+//     SET accepted_status = TRUE
+//     WHERE story_id = $1;`;
 
-  const values = [story_id];
+//   const values = [story_id, contribution];
 
-  return db.query(queryString1, values)
-    .then(() => {
-      return db.query(queryString2, values);
-    })
-    .then(() => {
-      return { success: true };
-    })
-    .catch(err => {
-      console.error('Error on addContributionToStory', err);
-      throw err;
-    });
-}
+//   return db.query(queryString1, values)
+//     .then(() => {
+//       return db.query(queryString2, values);
+//     })
+//     .then(() => {
+//       return { success: true };
+//     })
+//     .catch(err => {
+//       console.error('Error on addContributionToStory', err);
+//       throw err;
+//     });
+// }
+
+
 
 
 const deleteStories = (story_id) => {
@@ -98,19 +103,19 @@ const deleteStories = (story_id) => {
     });
 };
 
-const seeStories = (user_id) => {
-const queryString = `SELECT * FROM stories WHERE users.id = $1 ORDER BY date_created DESC;`;
-  const values = [user_id];
+// const seeStories = (user_id) => {
+// const queryString = `SELECT * FROM stories WHERE users.id = $1 ORDER BY date_created DESC;`;
+//   const values = [user_id];
 
-  return db.query(queryString, values)
-    .then(data => {
-      return data.rows;
-    })
-    .catch(err => {
-      console.error("Error for seeStories", err);
-      throw err;
-    })
-}
+//   return db.query(queryString, values)
+//     .then(data => {
+//       return data.rows;
+//     })
+//     .catch(err => {
+//       console.error("Error for seeStories", err);
+//       throw err;
+//     })
+// }
 
 
 const publishStory = (story_id) => {
@@ -128,4 +133,6 @@ const publishStory = (story_id) => {
   });
 }
 
-module.exports = { getStories, getUserStoriesByUserId, addStories, editStory, addContributionToStory, deleteStories, seeStories, publishStory };
+module.exports = { getStories, getUserStoriesByUserId, addStories, editStory, //addContributionToStory,//
+deleteStories, //seeStories,
+ publishStory };
