@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { getStories, addStories, editStory, addContributionToStory, deleteStories, seeStories, publishStory } = require('../db/queries/stories');
-
+const bodyParser = require('body-parser');
 
 /// BROWSE ///
 router.get('/', async (req, res) => {
   try {
     const stories = await getStories();
-    const templateVars = { stories };
-    res.render('index', templateVars);
+    res.render('index', stories);
   } catch (err) {
     console.log(err);
     res.status(500).send("Unable to retrieve stories.");
@@ -18,27 +17,25 @@ router.get('/', async (req, res) => {
 
 // ALL STORIES //
 router.get('/stories', async (req, res) => {
+
   try {
-    const stories = await getStories();
-    res.status(200).json(stories);
+    const stories = await getStories(req.session.userid);
+    const templateVars = { stories : stories, user: req.session.userid };
+    res.status(200).render('index', templateVars);
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
   }
 });
 
-// CREATE NEW STORY //
+// CREATE NEW USER STORY //
 router.post('/stories', async (req, res) => {
-  const { user_id, title, content } = req.body;
-  const published_status = false;
-  const date_created = new Date();
-
   try {
-    const newStory = await addStories(user_id, title, content, published_status, date_created);
-    res.status(201).json(newStory);
+    const newStory = await addStories({ ...req.body, user_id: req.session.userid });
+    res.status(200).json(newStory);
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server error');
+    res.status(500).send('Server error for addStories');
   }
 });
 
@@ -50,10 +47,12 @@ router.put('/stories/:id', async (req, res) => {
   try {
     const updatedStory = await editStory(story_id, title, content, published_status);
     res.status(200).json(updatedStory);
+
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
   }
+  res.redirect('/');
 });
 
 // ADD TO STORY //
@@ -64,10 +63,12 @@ router.post('/stories/:id/contributions', async (req, res) => {
   try {
     const newContribution = await addContributionToStory(story_id, user_id, content, accepted_status);
     res.status(201).json(newContribution);
+
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
   }
+  res.redirect('/');
 });
 
 // DELETE STORY //
@@ -75,12 +76,14 @@ router.delete('/stories/:id', async (req, res) => {
   const story_id = req.params.id;
 
   try {
-    const deletedStory = await deleteStory(story_id);
+    const deletedStory = await deleteStories(story_id);
     res.status(200).json(deletedStory);
+
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
   }
+  res.redirect('/');
 });
 
 // GET USERS STORIES //

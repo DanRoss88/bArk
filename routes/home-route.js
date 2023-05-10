@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const storiesQueries = require('../db/queries/stories');
+const cookieSession = require('cookie-session');
 
 /// *** BROWSE *** /// HOME ////
 router.get('/', (req, res) => {

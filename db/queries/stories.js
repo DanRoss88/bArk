@@ -6,45 +6,53 @@ const getStories = () => {
       return data.rows;
     })
     .catch(err => {
-     console.error(err.stack);
+     console.error("Error for getStories", err);
      throw err;
     })
 };
+const getUserStoriesByUserId = (user_id) => {
+  const queryString = `SELECT stories.*
+  FROM stories
+  JOIN users ON users.id = stories.user_id
+  WHERE users.id = $1`;
+  const values = [user_id];
 
+  return db.query(queryString, values)
+    .then(data => {
+      return data.rows;
+    });
+};
 const addStories = (stories) => {
 
   const queryString = `INSERT INTO stories (user_id, title, content, published_status, date_created)
-  VALUES ($1, $2, $3, $4, $5)
-  RETURNING stories.id, user_id, title, content, published_status, date_created;`
+  VALUES ($1, $2, $3, FALSE, NOW())
+  RETURNING *;`;
 const values = [
- stories.user_id,
+  stories.user_id,
   stories.title,
- stories.content,
- stories.published_status,
- new Date()
+ stories.content
 ];
-
+console.log(values);
 return db.query(queryString, values)
  .then(data => {
   return data.rows[0];
 })
  .catch(err => {
-  console.error(err.stack);
+  console.error("Error for addStories", err);
   throw err;
 });
 };
 
-const editStory = (story_id, stories) => {
+const editStory = (stories) => {
 
-  const queryString = `UPDATE stories SET title = $2, content = $3, published_status = $4 WHERE id = $1 RETURNING *;`;
-  const values = [story_id, stories.title, stories.content, stories.published_status];
-
+  const queryString = `UPDATE stories SET title = $1, content = $2 WHERE user_id = $3 RETURNING *;`;
+  const values = [stories.title, stories.content, req.session.id]
   return db.query(queryString, values)
   .then(data => {
    return data.rows[0];
  })
   .catch(err => {
-   console.error(err.stack);
+   console.error("Error on editStory" ,err);
    throw err;
  });
 }
@@ -70,7 +78,7 @@ const addContributionToStory = (story_id, contribution) => {
       return { success: true };
     })
     .catch(err => {
-      console.error(err.stack);
+      console.error('Error on addContributionToStory', err);
       throw err;
     });
 }
@@ -85,7 +93,7 @@ const deleteStories = (story_id) => {
       return data.rows[0];
     })
     .catch(err => {
-      console.error(err.stack);
+      console.error("Error on deleteStories", err);
       throw err;
     });
 };
@@ -99,7 +107,7 @@ const queryString = `SELECT * FROM stories WHERE users.id = $1 ORDER BY date_cre
       return data.rows;
     })
     .catch(err => {
-      console.error(err.stack);
+      console.error("Error for seeStories", err);
       throw err;
     })
 }
@@ -115,9 +123,9 @@ const publishStory = (story_id) => {
     return data.rows[0];
   })
   .catch(err => {
-    console.error(err.stack);
+    console.error("Error on publishStory", err);
     throw err;
   });
 }
 
-module.exports = { getStories, addStories, editStory, addContributionToStory, deleteStories, seeStories, publishStory };
+module.exports = { getStories, getUserStoriesByUserId, addStories, editStory, addContributionToStory, deleteStories, seeStories, publishStory };

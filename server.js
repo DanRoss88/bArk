@@ -6,7 +6,7 @@ const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
 const cookieSession = require('cookie-session');
-
+const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
@@ -41,9 +41,11 @@ const homeRoute = require('./routes/home-route');
 const contributionsRouter = require('./routes/contributions');
 const loginRouter = require('./routes/login-route');
 
+
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
+
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
