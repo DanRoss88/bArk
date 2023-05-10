@@ -2,15 +2,15 @@
 $(document).ready(function() {
 
   //// VARIABLES ////
- /* const $errorGuest = $('#error-msg-guest').hide();
-  const $errorNull = $('#error-msg-null').hide();
-  const $form = $('#story-form').hide();
-*/
+  /* const $errorGuest = $('#error-msg-guest').hide();
+   const $errorNull = $('#error-msg-null').hide();
+   const $form = $('#story-form').hide();
+ */
   //////// NAVBAR BUTTON //////
   $("#bark-button").click(() => {
     $('#stories-form').slideToggle().find('textArea').focus();
 
-});
+  });
   //////////*
   /*const createStoryElement = function(stories) {
     //TIMEAGO//
@@ -50,64 +50,79 @@ $(document).ready(function() {
     const $storiesContainer = $('#stories-container').empty();
 
     for (const story of stories) {
-    const $story = createStoryElement(story);
+      const $story = createStoryElement(story);
       $storiesContainer.append($story);
     }
   };
-});
-////************* LOAD STORIES **************////
- /* const loadStories = function() {
 
-    $.ajax({
-      url: '/stories',
-      method: 'GET',
-      dataType: 'json'
-    })
-      .then(response => {
 
-        renderStories(response);
-      })
-      .catch(error => {
-        console.log('Error', error);
-      });
+  // RENDER Contributions
+
+  const renderContributions = function(contributions) {
+    const $contributionsContainer = $('#contributions-container').empty();
+
+    for (const contribution of contributions) {
+      const $contribution = createContributionElement(contribution);
+      $contributionsContainer.append($contribution);
+    }
   };
 
-  loadStories();
+});
 
-  $errorGuest.slideUp();
+
+////************* LOAD STORIES **************////
+/* const loadStories = function() {
+
+   $.ajax({
+     url: '/stories',
+     method: 'GET',
+     dataType: 'json'
+   })
+     .then(response => {
+
+       renderStories(response);
+     })
+     .catch(error => {
+       console.log('Error', error);
+     });
+ };
+
+ loadStories();
+
+ $errorGuest.slideUp();
 
 
 ///////////*************  POST FORM *************//////////////////
- /* $form.submit(function(event) {
+/* $form.submit(function(event) {
 
-    event.preventDefault();
-    const storyContent = $('#story-content');
+   event.preventDefault();
+   const storyContent = $('#story-content');
 
-    ///Error validations///
-    if (!storyContent) {
-      $errorNull.slideDown();
-      return;
-    }
-    if (!storyContent.user) {
-      $errorGuest.slideDown();
-      return;
-    }
+   ///Error validations///
+   if (!storyContent) {
+     $errorNull.slideDown();
+     return;
+   }
+   if (!storyContent.user) {
+     $errorGuest.slideDown();
+     return;
+   }
 
-    const formData = $(this).serialize();
+   const formData = $(this).serialize();
 
-    $.ajax({
-      url: '/stories',
-      method: 'POST',
-      data: formData
-    })
-      .then(loadStories);
+   $.ajax({
+     url: '/stories',
+     method: 'POST',
+     data: formData
+   })
+     .then(loadStories);
 
-    //Error notifications, text value//
-      $errorNull.slideUp();
-      $errorGuest.slideUp();
-    $('#story-content').val('');
+   //Error notifications, text value//
+     $errorNull.slideUp();
+     $errorGuest.slideUp();
+   $('#story-content').val('');
 
 
-  });
+ });
 
 });

@@ -1,7 +1,7 @@
 const express = require('express');
-const { newContribution, addContributions, editContribution, getContributions, deleteContribution, deleteWhenAccepted, upvoteContribution } = require('../db/queries/contributions');
-
+const { addContributions, editContribution, getContributions, deleteContribution, deleteWhenAccepted, upvoteContribution } = require('../db/queries/contributions');
 const router = express.Router();
+const bodyParser = require('body-parser');
 
 
 /// *** BROWSE *** /// HOME ////
@@ -48,16 +48,16 @@ router.get('/users/:id/contributions', async (req, res) => {
 });
 
 /// ** CREATE NEW CONTRIBUTION *** ///
-router.post('/stories/contributions', async (req, res, next) => {
+router.post('/stories/contributions', async (req, res) => {
 
-  const { user_id, story_id, content, accepted_status, num_of_upvotes } = req.body;
+  console.log('REQ BODY:', req.body);
 
   try {
-    const newContribution = await newContribution(user_id, story_id, content, accepted_status, num_of_upvotes);
-    res.status(201).json(newContribution);
+    const newContribution = await addContributions(user_id, story_id, content, accepted_status, num_of_upvotes);
+    res.status(200).json(newContribution);
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server error');
+    res.status(500).send('Server error adding a contribution');
   }
 });
 
