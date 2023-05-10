@@ -22,8 +22,8 @@ const express = require('express');
 
 const addContributions = (contributions) => {
 
-  const queryString = `INSERT INTO contributions (user_id, story_id, content, accepted_status, num_of_upvotes) VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
-  const values = [contributions.user_id, contributions.story_id, contributions.content, contributions.accepted_status, contributions.num_of_upvotes];
+  const queryString = `INSERT INTO contributions (user_id, story_id, content, accepted_status, num_of_upvotes) VALUES ($1, $2, $3, FALSE, 0) RETURNING *;`;
+  const values = [contributions.user_id, contributions.story_id, contributions.content];
 
   return db.query(queryString, values)
     .then(data => {

@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  req.session.userid = req.body.userid;
+  req.session.email = req.body.email;
   res.redirect('/stories')
 });
 

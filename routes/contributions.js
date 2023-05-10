@@ -1,5 +1,6 @@
 const express = require('express');
 const { addContributions, editContribution, getContributions, deleteContribution, deleteWhenAccepted, upvoteContribution } = require('../db/queries/contributions');
+const { getUsers, getUsersById, getUsersByEmail } = require('../db/queries/users');
 const router = express.Router();
 const bodyParser = require('body-parser');
 
@@ -7,13 +8,10 @@ const bodyParser = require('body-parser');
 /// *** BROWSE *** /// HOME ////
 
 router.get('/', async (req, res) => {
-  // const userID = 1;
-  // req.session.user_id = userID;
 
   try {
     const contributions = await getContributions();
-    const templateVars = { contributions };
-    res.render('index', templateVars);
+    res.render('index', contributions);
   } catch (err) {
     console.log(err);
     res.status(500).send("Unable to retrieve contributions");
@@ -21,17 +19,18 @@ router.get('/', async (req, res) => {
 
 });
 
-// ALL CONTRIBUTIONS
 
-router.get('/contributions', async (req, res) => {
-  try {
-    const contributions = await getContributions();
-    res.status(200).json(contributions);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error');
-  }
-});
+// // ALL CONTRIBUTIONS
+
+// router.get('/contributions', async (req, res) => {
+//   try {
+//     const contributions = await getContributions();
+//     res.status(200).json(contributions);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Server error');
+//   }
+// });
 
 // GET USER'S PERSONAL CONTRIBUTIONS
 
@@ -48,12 +47,21 @@ router.get('/users/:id/contributions', async (req, res) => {
 });
 
 /// ** CREATE NEW CONTRIBUTION *** ///
-router.post('/stories/contributions', async (req, res) => {
+router.post('/', async (req, res) => {
 
-  console.log('REQ BODY:', req.body);
+  const user_email = req.session.email;
+  const { id } = await getUsersByEmail(user_email);
+  const story_id= req.session.storyid;
+  const content = req.body.content;
+
+  const contributions = {
+    user_id: id,
+    story_id,
+    content
+  };
 
   try {
-    const newContribution = await addContributions(user_id, story_id, content, accepted_status, num_of_upvotes);
+    const newContribution = await addContributions(contributions)
     res.status(200).json(newContribution);
   } catch (err) {
     console.error(err);

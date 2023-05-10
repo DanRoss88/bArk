@@ -30,6 +30,7 @@ router.get('/stories', async (req, res) => {
 
 // CREATE NEW USER STORY //
 router.post('/stories', async (req, res) => {
+
   try {
     const newStory = await addStories({ ...req.body, user_id: req.session.userid });
     res.status(200).json(newStory);
