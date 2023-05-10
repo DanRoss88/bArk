@@ -21,7 +21,54 @@
 <body>
 
 
-<% include('partials/_header') %>
+<%- include('partials/_header') %>
+<div class="published-story">
+<% if(story.published_status) {%>
+  <h2><%= story.title %></h2>
+  <h3>By: <%= story.users_id =%></h3>
+  <p><%= story.content %></p>
+  <p><%= story.created_at %></p>
+</div>
+<div class="publish-story">
+<% }else{ %>
+  <h2><%= story.title %></h2>
+  <h3>By: <%= story.users_id =%></h3>
+  <p><%= story.content %></p>
+  <p><%= story.created_at %></p>
+<div class="append">
+<% for(let contributon of contributions) { %>
+  <% if (contribution.accepted_status) { %>
+  <p><%= contribution.content %></p>
+  <% } %>
+   <% } %>
+</div>
+<% if(users.id === story.user_id) {%>
+  <form class="publish" action='/stories/<%= story.id %>/publish' method='POST'>
+    <button class='btn' class="publish" type="submit">PUBLISH</button>
+  </form>
+</div>
+
+<div class="contribution-add-delete">
+  <% for(let contributon of contributions) { %>
+    <% if (contribution.accepted_status === FALSE) { %>
+      <form class='contribution' action='/stories/<%= story.id %>' method='POST'>
+        <label for="contribution">Contribution</label>
+        <textarea type="text" id="contribution" name="contribution"></textarea>
+        <button class='btn' type="submit" value="submit">Contribute</button>
+        <br><br>
+      </form>
+      <% } %>
+      <% } %>
+<br></br>
+<div id="delete">
+      <form class="delete-contribution" action='/stories/<%= story.id %>' method='POST'>
+        <button class='btn' class="delete" type="sumbit">Delete Contribution</button>
+      </form>
+      <form class="delete-story" action='/stories/<%= story.id %>' method='POST'>
+        <button class='btn' class="delete" type="sumbit">Delete Story</button>
+      </form></div>
+</div>
+
 
 
 </body>

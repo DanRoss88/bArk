@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   req.session.userid = req.body.userid;
-  res.redirect('/stories')
+  res.redirect('/')
 });
 
 // router.get('/login/:id', (req, res) => {

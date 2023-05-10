@@ -4,17 +4,17 @@ const { getStories, addStories, editStory, addContributionToStory, deleteStories
 const bodyParser = require('body-parser');
 
 /// BROWSE ///
-router.get('/', async (req, res) => {
-  try {
-    const stories = await getStories();
-    res.render('index', stories);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Unable to retrieve stories.");
-  }
-});
+// router.get('/', async (req, res) => {
+//   try {
+//     const stories = await getStories();
+//     res.render('index', stories);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).send("Unable to retrieve stories.");
+//   }
+// });
 
-
+///BROWSE///
 // ALL STORIES //
 router.get('/stories', async (req, res) => {
 
@@ -31,8 +31,9 @@ router.get('/stories', async (req, res) => {
 // CREATE NEW USER STORY //
 router.post('/stories', async (req, res) => {
   try {
-    const newStory = await addStories({ ...req.body, user_id: req.session.userid });
-    res.status(200).json(newStory);
+     const newStory = await addStories({ ...req.body, user_id: req.session.userid });
+   res.status(200).json(newStory);
+   res.redirect('/my-stories');
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error for addStories');
@@ -113,7 +114,7 @@ router.put('/stories/:id/publish', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-});
+
 
 module.exports = router;
 
