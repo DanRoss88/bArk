@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-  <title>Home Page</title>
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,121 +12,91 @@
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="/vendor/jquery-3.0.0.js"></script>
 
   <script defer src="/scripts/app.js"></script>
+  <title>Home Page</title>
 </head>
 
 <body>
 
-  <nav class="nav-bar">
-    <span id="bark-button">bArk</span>
+  <% include('partials/_header') %>
 
+    <main>
 
+      <div class="browse-stories">
+        <% for(let story of stories) { %>
+          <div class="story-box">
+            <div class="user-avatar">
+              <i></i>
+            </div>
+            <div class="story-info">
+              <h2>
+                <%= story.title %>
+              </h2>
+              <p>
+                <%= story.content %>
+              </p>
+            </div>
+            <% if(story.published_status === false) { %>
+              <p class="story-status">POSTED</p>
+              <% } else { %>
+                <p class="story-status">PUBLISHED</p>
+                <% } %>
 
-
-    <nav>
-      <span>bArk</span>
-
-      <div class="nav-bar">
-
-        <span id="login">Login</span>
-        <span id="register">Register</span>
-    </nav>
-
-    <main class="main-container">
-      <section class="stories-container">
-
-        <!-- Errors Here-->
-        <div id="error-msg-guest" class="error"><i class="fa-solid fa-circle-exclamation"></i> Please Sign In </div>
-
-
-        <form id="stories-form" class="story-form" action="/stories/stories" method="POST">
-          <textarea name="story" id="story-content" placeholder="bArk here"></textarea>
-          <div>
-            <button type="submit">bArk</button>
-            <output name="story-output" class="story-form" for="story">
-              <i id="upvote-button" class="fa-solid fa-angles-down"></i>
-            </output>
           </div>
-        </form>
-
-        <div class="contributions-container" id="contributions">
+      </div>
+      <% } %>
         </div>
-      </section>
-
-    <span>bArk</span>
-    <div class="nav-bar">
-      <span id="login">Login</span>
-      <span id="register">Register</span>
-  </nav>
-
-  <main class="main-container">
-    <section class="stories-container">
-      <!-- Errors Here-->
-      <div id="error-msg-guest" class="error"><i class="fa-solid fa-circle-exclamation"></i> Please Sign In</div>
-      <form id="stories-form" class="story-form" action="/stories" method="POST">
-        <textarea name="story" id="story-content" placeholder="bArk here"></textarea>
-        <div>
-          <button type="submit">bArk</button>
-          <output name="story" class="story-form" for="story">
-            <i id="upvote-button"class="fa-solid fa-angles-down"></i>
+        <article>
+          <div id="stories-form">
+            <!-- Errors Here-->
+            <div id="error-msg-guest" class="error"><i class="fa-solid fa-circle-exclamation"></i> Please Sign In </div>
+            <form action="/stories/stories" method="POST">
+              <label for="title">title</label>
+              <textarea type="text" id="story-title" name="title"></textarea>
+              <br></br>
+              <label for="content">story</label>
+              <textarea type="text" id="story-content" name="content"></textarea>
+              <br></br>
+              <button type="submit" value="'submit">bArk</button>
+              <output name="story-output" for="story">
+                <i id="upvote-button" class="fa-solid fa-angles-down"></i>
               </output>
-        </div>
-      </form>
-        <div class="contributions-container" id="contributions"></div>
-    </section>
-
-
-      <h2 class="contributions">What happens next?</h2>
-      <form id="new-contribution" action="/contributions" method="POST">
-        <textarea name="text" id="contribution-text"></textarea>
-        <div class="contribution-button-counter">
-
-          <button class="contribution-button" type="submit">bArk!</button>
-          <output name="counter" class="upvote-counter" for="contribution-text"></output>
-
-          <section id="contributions-container">
-            <article>
-              <header class="contribution-header">
-                <div class="handle">
-                  <p>@dobermann</p>
-                </div>
-              </header>
-              <p class="contribution-body">'Because he was so fluffy, Sam was considered to be the best snuggler and the
-                goodest boy.'</p>
-              <footer class="contribution-footer">
-                <div class="days-ago">Posted 2 days ago</div>
-                <div class="upvote-emoji">
-                  <i class="fa-sharp fa-solid fa-arrow-up"></i>
-                </div>
-              </footer>
-            </article>
-          </section>
-
-    </main>
-
-
-        <button class="contribution-button" type="submit">bArk!</button>
-        <output name="counter" class="upvote-counter" for="contribution-text"></output>
+          </div>
+          </form>
+        </article>
 
         <section id="contributions-container">
-          <article>
-            <header class="contribution-header">
-              <div class="handle">
-                <p>@dobermann</p>
-              </div>
-            </header>
-            <p class="contribution-body">'Because he was so fluffy, Sam was considered to be the best snuggler and the goodest boy.'</p>
-            <footer class="contribution-footer">
-              <div class="days-ago">Posted 2 days ago</div>
-              <div class="upvote-emoji">
-                <button class="upvote"><i class="fa-sharp fa-solid fa-arrow-up"></i></button>
-              </div>
-            </footer>
-          </article>
-        </section>
-  </main>
+          <h2 class="contributions">What happens next?</h2>
+          <form id="new-contribution" action="/stories/stories/contributions" method="POST">
+            <textarea name="text" id="contribution-text"></textarea>
+            <div class="contribution-button-counter">
 
+              <button class="contribution-button" type="submit">bArk!</button>
+              <output name="counter" class="upvote-counter" for="contribution-text"></output>
+
+
+                <article>
+                  <header class="contribution-header">
+                    <div class="handle">
+                      <p>@dobermann</p>
+                    </div>
+                  </header>
+                  <p class="contribution-body">'Because he was so fluffy, Sam was considered to be the best snuggler and
+                    the
+                    goodest boy.'</p>
+                  <footer class="contribution-footer">
+                    <div class="days-ago">Posted 2 days ago</div>
+                    <div class="upvote-emoji">
+                      <i class="fa-sharp fa-solid fa-arrow-up"></i>
+                    </div>
+                  </footer>
+                </article>
+              </section>
+
+      </main>
 </body>
+
 </html>
