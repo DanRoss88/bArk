@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const storiesQueries = require('../db/queries/stories');
 
-/// **** BROWSE *** //// 
+/// **** BROWSE *** ////
 /*router.get('/', (req, res) => {
   storiesQueries.seeStories(req.params.id)
     .then((data) => {
