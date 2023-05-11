@@ -12,12 +12,13 @@ const bodyParser = require('body-parser');
 router.get('/', async (req, res) => {
 
   const userId = req.session.userid;
-  console.log('##0 USER:', userId);
+
 
   try {
     const stories = await getStories(userId);
-    const storiesWithContributions = await Promise.all(stories.map(async story => ({ ...story, contributions: await getContributions(story.id) })));
-    console.log('#1 STORIES:', stories);
+
+    const storiesWithContributions = await Promise.all(stories.map(async story => ({...story, contributions: await getContributions(story.id)})));
+
     const templateVars = { stories: storiesWithContributions, user: userId };
 
     res.status(200).render('index', templateVars);
