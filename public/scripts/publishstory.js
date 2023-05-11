@@ -5,7 +5,8 @@ const storyID = req.params.id;
   if (!storyID) {
     res.status().send('Story does not exist');
   }
-  publishStory(storyID).text('PUBLISHED');
+  publishStory(storyID)
+  $(this).siblings(".published").text("PUBLISHED");
 
 });
 
