@@ -62,16 +62,43 @@ body {
   align-items: center;
   background: #d8caee;
   background-image: url("/images/wallpaper.png");
+  background-size:180px;
+  font-family: 'Oswald', sans-serif;
 }
+
+main {
+  width: 95%;
+}
+
 
 nav {
   display: flex;
   flex-direction: row;
+  height: 80px;
+  width: 100%;
+  padding: 30px;
+  align-items: center;
+  justify-content: space-between;
   border: 3px solid #9A8BD9;
+  font-weight: 1200;
+  font-size: larger;
+  font-family: 'Oswald', sans-serif;
   border-radius: 15px;
   background-color: #D8CAEE;
-  background-image: url('https://github.com/DanRoss88/bArk/blob/master/styles/images/bark_header.png');
+  background-image: url("/images/bark_header.png");
+  background-size: 135px;
 }
+
+  #bark-button  {
+  cursor: pointer;
+  transition: color cubic-bezier(0.19, 1, 0.22, 1);
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+#bark-button:hover {
+  color: rgb(90, 3, 51);
+}
+
 
 .story-section {
   border: 3px solid #9484d4;
