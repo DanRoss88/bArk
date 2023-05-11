@@ -4,6 +4,8 @@ const { getStories, addStories, editStory, addContributionToStory, deleteStory, 
 const { getContributions } = require('../db/queries/contributions');
 
 
+const bodyParser = require('body-parser');
+
 
 ///BROWSE///
 // ALL STORIES //
@@ -16,7 +18,8 @@ router.get('/', async (req, res) => {
     const stories = await getStories(userId);
     const storiesWithContributions = await Promise.all(stories.map(async story => ({ ...story, contributions: await getContributions(story.id) })));
     console.log('#1 STORIES:', stories);
-    const templateVars = { stories: storiesWithContributions, user: userId, id: req.params.id};
+    const templateVars = { stories: storiesWithContributions, user: userId };
+
     res.status(200).render('index', templateVars);
   } catch (err) {
     console.error(err);

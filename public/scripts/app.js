@@ -21,42 +21,42 @@ $(document).ready(function () {
   ///// UPDATE //////
 });
 
-const { editStory } = require("../../db/queries/stories");
-$(document).on('click', '.update-button', function (event) {
-  event.preventDefault();
+// const { editStory } = require("../../db/queries/stories");
+// $(document).on('click', '.update-button', function (event) {
+//   event.preventDefault();
 
-  const storyID = $(this).data('story-id');
-  const title = $('#edit-story-title').val();
-  const content = $('#edit-story-content').val();
+//   const storyID = $(this).data('story-id');
+//   const title = $('#edit-story-title').val();
+//   const content = $('#edit-story-content').val();
 
-  const data = { title, content };
+//   const data = { title, content };
 
-  $.ajax({
-    url: `/stories/${storyID}`,
-    method: 'PUT',
-    data: data,
-    success: function (response) {
-      console.log('Story updated successfully', response);
-      // Retrieve the updated stories and replace the existing story with the updated one
-      $.ajax({
-        url: '/stories',
-        method: 'GET',
-        success: function (response) {
-          const stories = response;
-          const updatedStory = stories.find(story => story.id === storyID);
-          const updatedStoryHTML = editStory(updatedStory);
-          $(`#story-${storyID}`).replaceWith(updatedStoryHTML);
-        },
-        error: function (error) {
-          console.error('Error retrieving stories:', error);
-        }
-      });
-    },
-    error: function (error) {
-      console.error('Error updating story:', error);
-    }
-  });
-});
+//   $.ajax({
+//     url: `/stories/${storyID}`,
+//     method: 'PUT',
+//     data: data,
+//     success: function (response) {
+//       console.log('Story updated successfully', response);
+//       // Retrieve the updated stories and replace the existing story with the updated one
+//       $.ajax({
+//         url: '/stories',
+//         method: 'GET',
+//         success: function (response) {
+//           const stories = response;
+//           const updatedStory = stories.find(story => story.id === storyID);
+//           const updatedStoryHTML = editStory(updatedStory);
+//           $(`#story-${storyID}`).replaceWith(updatedStoryHTML);
+//         },
+//         error: function (error) {
+//           console.error('Error retrieving stories:', error);
+//         }
+//       });
+//     },
+//     error: function (error) {
+//       console.error('Error updating story:', error);
+//     }
+//   });
+// });
 
 ///// DELETE //////
 // // DELETE STORY
@@ -194,21 +194,13 @@ $(document).on('click', '.publish-button', function (event) {
 //     content: content
 //   };
 
-//   // Send an AJAX request to the server
-//   $.ajax({
-//     url: '/stories',
-//     method: 'POST',
-//     data: data,
-//     success: function(response) {
-//       // Handle the success response
-//       console.log('Story submitted successfully');
-//       // You can perform additional actions, such as redirecting to a different page
-//     },
-//     error: function(error) {
-//       // Handle the error response
-//       console.error('Error submitting story:', error);
-//     }
-//   });
-// });
-//
+
+
+
+///////// EDIT SLIDE DOWN //////
+$("#edit-slide-button").click(() => {
+  $('.editing-form').slideToggle('slow','swing').focus();
+});
+
+
 
