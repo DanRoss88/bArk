@@ -1,11 +1,11 @@
-  const storyID = req.params.id;
+const { publishStory } = require('../db/queries/stories');
+$(document).ready(function() {
+$(".publish-button").on('click', function() {
+const storyID = req.params.id;
   if (!storyID) {
-    res.status().send('error no story');
+    res.status().send('Story does not exist');
   }
-  try {
-    await publishStory(storyID);
-    res.redirect('/stories');
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error');
-  }
+  publishStory(storyID).text('PUBLISHED');
+
+});
+
