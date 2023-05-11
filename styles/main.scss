@@ -3,25 +3,45 @@ $font-colour: #ffff;
 
 body {
   font: 100% $font-stack;
-  padding: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
 
   background: #d8caee;
   background: image('https://github.com/DanRoss88/bArk/blob/master/styles/images/wallpaper.png');
 }
 
-.nav-bar {
+nav {
   font: 100% $font-stack;
   display: flex;
   flex-direction: row;
+  border: 3px solid #9A8BD9;
+  border-radius: 15px;
+  background-color: #D8CAEE;
   background: image('https://github.com/DanRoss88/bArk/blob/master/styles/images/bark_header.png');
 }
 
 .story-section {
   border: 3px solid #9484d4;
   border-radius: 15px;
+}
+
+button {
+  border: 3px solid #76C82E;
+  border-width: 15px;
+  background-color: #C9EBAC;
+  color: white;
+}
+
+h2 {
+  background-color: #9A8BD9;
+}
+
+form { 
+  width: auto;
+  box-shadow: 2px 2px 5px white;
+  border: 3px solid #9A8BD9;
+  border-radius: 15px;
+  background-color: #D8CAEE;
 }
