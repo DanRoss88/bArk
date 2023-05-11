@@ -3,22 +3,25 @@
 $(document).ready(function () {
 
 
-  //////// NAVBAR BUTTON //////
-  $("#bark-button").click(() => {
-    $('#stories-form').slideToggle().find('textArea').focus();
-
-  });
-  const loginButton = document.getElementById('login-button');
-
-loginButton.addEventListener('click', () => {
-  window.location.href = '/login';
-});
   ///////// EDIT SLIDE DOWN //////
   let $editForm = $('.editing-form').hide();
 
   $('#edit-slide-button').click(() => {
     $editForm.slideToggle("slow", "swing").focus();
   });
+
+
+  //////// NAVBAR BUTTON //////
+  $("#bark-button").click(() => {
+    $('#stories-form').slideToggle().find('textArea').focus();
+
+  });
+  ///// LOGIN REDIRECT/////
+  const loginButton = document.getElementById('login-button');
+
+loginButton.addEventListener('click', () => {
+  window.location.href = '/login';
+});
 
   ////// ACCEPT CONTRIBUTION //////////
   $('.accept-btn').on('click', function (event) {
@@ -38,6 +41,29 @@ loginButton.addEventListener('click', () => {
       }
     });
   });
+
+
+  ///////// PUBLISH STORY ///////////
+  $('.publish-button').on('click', function (event) {
+    event.preventDefault();
+
+    const storyId = $(this).data('story-id');
+
+    $.ajax({
+      method: 'POST',
+      url: `/stories/${storyId}/publish`,
+      success: function () {
+        location.reload();
+      },
+      error: function () {
+        console.error('Error publishing story:');
+        alert('There was an error publishing this story.');
+      }
+    });
+  });
+
+
+
 
 });
 
