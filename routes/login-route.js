@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getUsers, getUsersById } = require('../db/queries/users');
+// const { getUsers, getUsersById } = require('../db/queries/users');
 
 // GET LOGIN ROUTE
 
@@ -9,8 +9,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  
-  req.session.email = req.body.email;
+
+  req.session.userid = 1;
   res.redirect('/stories')
 
 });

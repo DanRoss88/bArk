@@ -6,8 +6,8 @@ const getStories = () => {
       return data.rows;
     })
     .catch(err => {
-     console.error("Error for getStories", err);
-     throw err;
+      console.error("Error for getStories", err);
+      throw err;
     })
 };
 const getUserStoriesByUserId = (user_id, story) => {
@@ -17,14 +17,35 @@ const getUserStoriesByUserId = (user_id, story) => {
   WHERE users.id = $1
   ORDER BY stories.id
   LIMIT 1;`
-  ;
+    ;
   const values = [user_id, story];
 
   return db.query(queryString, values)
     .then(data => {
+      console.log(data);
       return data.rows;
     });
 };
+// const addStories = (stories) => {
+
+//   const queryString = `INSERT INTO stories (title, content, published_status, date_created)
+//   VALUES ($1, $2, FALSE, NOW())
+//   RETURNING *;`;
+//   const values = [
+//     stories.title,
+//     stories.content
+//   ];
+//   console.log(values);
+//   return db.query(queryString, values)
+//     .then(data => {
+//       return data.rows[0];
+//     })
+//     .catch(err => {
+//       console.error("Error for addStories", err);
+//       throw err;
+//     });
+// };
+
 const addStories = (stories) => {
 
   const queryString = `INSERT INTO stories (user_id, title, content, published_status, date_created)
@@ -46,26 +67,38 @@ return db.query(queryString, values)
 });
 };
 
-const editStory = (stories) => {
+const editStory = (story) => {
 
-  const queryString = `UPDATE stories SET title = $1, content = $2 WHERE user_id = $3 RETURNING *;`;
-  const values = [stories.title, stories.content, stories.user_id]
+  const queryString = `UPDATE stories SET title = $1, content = $2 WHERE id = $3 RETURNING *;`;
+  const values = [story.title, story.content, story.id]
   return db.query(queryString, values)
-  .then(data => {
-   return data.rows[0];
- })
-  .catch(err => {
-   console.error("Error on editStory" ,err);
-   throw err;
- });
+    .then(data => {
+      console.log(data);
+      return data.rows[0];
+    })
+    .catch(err => {
+      console.error("Error on editStory", err);
+      throw err;
+    });
 };
-
+const getStoryById = (storyId) => {
+  const queryString = 'SELECT * FROM stories WHERE id = $1;';
+  const values = [storyId];
+  return db.query(queryString, values)
+    .then((result) => {
+      return result.rows[0];
+    })
+    .catch((err) => {
+      console.error('Error getting story by ID', err);
+      throw err;
+    });
+};
 
 // const addContributionToStory = (story_id, contribution) => {
 
 //   const queryString1 = `UPDATE stories
 //     SET content = content || (SELECT content FROM contributions WHERE story_id = $1 AND accepted_status = FALSE)
-//     WHERE id = $1;`;
+//     WHERE id = 1;`;
 
 //   const queryString2 = `UPDATE contributions
 //     SET accepted_status = TRUE
@@ -95,6 +128,7 @@ const deleteStory = (storyId) => {
 
   return db.query(queryString, values)
     .then(data => {
+      console.log(data);
       return data.rows[0];
     })
     .catch(err => {
@@ -116,7 +150,7 @@ const seeStory = (storyId) => {
       return result.rows[0];
     })
     .catch((err) => {
-      throw new Error('Unable to fetch the story');
+      throw new Error("Error on seeStory", err);
     });
 };
 
@@ -124,19 +158,22 @@ const seeStory = (storyId) => {
 
 const publishStory = (story_id) => {
 
-  const queryString = `UPDATE stories SET published_status = TRUE WHERE id = $1 RETURNING *;`;
+  const queryString = `UPDATE stories SET published_status = TRUE WHERE id = 1 RETURNING *;`;
   const values = [story_id];
 
   return db.query(queryString, values)
-  .then(data => {
-    return data.rows[0];
-  })
-  .catch(err => {
-    console.error("Error on publishStory", err);
-    throw err;
-  });
+    .then(data => {
+      console.log(data);
+      return data.rows[0];
+    })
+    .catch(err => {
+      console.error("Error on publishStory", err);
+      throw err;
+    });
 }
 
-module.exports = { getStories, getUserStoriesByUserId, addStories, editStory, //addContributionToStory,//
- seeStory, deleteStory,
- publishStory };
+module.exports = {
+   getStories, getUserStoriesByUserId, addStories, editStory, //addContributionToStory,
+  seeStory, deleteStory, getStoryById,
+  publishStory
+};
