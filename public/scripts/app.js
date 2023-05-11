@@ -15,9 +15,12 @@ $(document).ready(function() {
   });
 
 ///////// EDIT SLIDE DOWN //////
-$("#edit-slide-button").click(() => {
-  $('.editing-form').slideToggle('slow','swing').focus();
+let $editButton = $('.editing-form').hide();
+
+$('#edit-slide-button').click(() => {
+  $editButton.slideToggle('slow','swing').focus();
 });
+
 
 
 
