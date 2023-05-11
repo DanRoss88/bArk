@@ -63,28 +63,27 @@
                 <% } %>
 
 
-                  <% for (let contribution of story.contributions) { %>
-                    <div class="contribution-box">
-                      <div class="user-avatar">
-                        <i></i>
-                      </div>
-                      <div class="contribution-info">
-                        <p>
-                          <%= contribution.content %>
-                        </p>
-                        <button class="upvote-button">Upvote</button>
-                        <i class="fa-sharp fa-solid fa-arrow-up"></i>
-                        <p class="numofupvotes">0</p>
-                        <button class="accept-btn" data-contribution-id="1">Accept Contribution</button>
-                      </div>
+                <% for (let contribution of story.contributions) { %>
+                  <div class="contribution-box">
+                    <div class="user-avatar">
+                      <i></i>
                     </div>
-                    <% } %>
-          </div>
-      </div>
-      <% } %>
+                    <div class="contribution-info">
+                      <p>
+                        <%= contribution.content %>
+                      </p>
+                      <button class="upvote-button">Upvote</button>
+                      <i class="fa-sharp fa-solid fa-arrow-up"></i>
+                      <p class="numofupvotes">0</p>
+                    </div>
+                  </div>
+               <% } %>
+               </div>
+             </div>
+             <% } %>
 
 
-        </div>
+                </div>
 
         </div>
         <article>
@@ -101,7 +100,6 @@
                 <i id="upvote-button" class="fa-solid fa-angles-down"></i>
               </output>
         </article>
-
 
         <section id="editing-container">
           <% for (let story of stories) { %>
@@ -133,4 +131,4 @@
 
 </body>
 
-</html>
+  </html>

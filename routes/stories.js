@@ -91,6 +91,7 @@ router.post('/edit/:id', async (req, res) => {
   }
 });
 
+
 // // DELETE STORY //
 router.post('/:id/delete', async (req, res) => {
   const storyID = req.params.id;
@@ -108,7 +109,6 @@ router.post('/:id/delete', async (req, res) => {
 // PUBLISH STORY //
 router.post('/:story_id/publish', async (req, res) => {
   const storyId = req.params.story_id;
-
   try {
     const publishedStory = await publishStory(storyId);
     res.status(200).json(publishedStory);
@@ -117,7 +117,6 @@ router.post('/:story_id/publish', async (req, res) => {
     res.status(500).send('Server error publishing story');
   }
 });
-
 
 
 module.exports = router;
