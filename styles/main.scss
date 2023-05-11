@@ -80,13 +80,18 @@ nav {
   align-items: center;
   justify-content: space-between;
   border: 3px solid #9A8BD9;
-  font-weight: 1200;
-  font-size: larger;
-  font-family: 'Oswald', sans-serif;
+
   border-radius: 15px;
   background-color: #D8CAEE;
   background-image: url("/images/bark_header.png");
   background-size: 135px;
+}
+
+nav.nav-bar {
+font-family: 'Oswald', sans-serif;
+font-weight: bold;
+font-size: 30px;
+opacity: 0.8;
 }
 
   #bark-button  {
@@ -121,6 +126,7 @@ textarea {
 h2 {
   background-color: #9A8BD9;
   border-radius: 10px;
+  align-items: center;
 }
 
 form {
@@ -132,6 +138,10 @@ form {
   border: 3px solid #9A8BD9;
   border-radius: 15px;
   background-color: #D8CAEE;
+}
+form.button {
+margin-left: 20%;
+margin-right: 20%;
 }
 
 input {
