@@ -135,17 +135,17 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST - Add a contribution to a user story
-// router.post('/:id/contributions', async (req, res) => {
-//   try {
-//     const storyID = req.params.id;
-//     const { content } = req.body;
-//     await addContributionToStory(storyID, content);
-//     res.redirect(`/stories/${storyID}`);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Server error');
-//   }
-// });
+ router.post('/', async (req, res) => {
+   try {
+     const storyID = req.params.id;
+     const { content } = req.body;
+     await addContributionToStory(storyID, content);
+     res.redirect(`/stories/${storyID}`);
+   } catch (err) {
+     console.error(err);
+     res.status(500).send('Server error');
+   }
+ });
 
 // // PUBLISH STORY //
 // router.put('/stories/:id/publish', async (req, res) => {
