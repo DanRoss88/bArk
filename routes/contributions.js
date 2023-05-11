@@ -1,7 +1,7 @@
 const express = require('express');
 const { addContributions, editContribution, getContributions, deleteContribution, deleteWhenAccepted, upvoteContribution } = require('../db/queries/contributions');
-const { getUsersByEmail } = require('../db/queries/users');
 const router = express.Router();
+const { getStories, addStories, editStory, addContributionToStory, deleteStories, seeStories, publishStory, getUserStoriesByUserId } = require('../db/queries/stories');
 
 
 
@@ -36,11 +36,12 @@ router.get('/contributions', async (req, res) => {
 // GET USER'S PERSONAL CONTRIBUTIONS
 
 router.get('/users/:id/contributions', async (req, res) => {
-  const user_id = req.params.id;
+  const userId = req.session.userid;
 
   try {
-    const contributions = await getContributions(user_id);
-    res.status(200).render('contributions', contributions);
+
+    const contributions = await getContributions(userId);
+    res.status(200).json(contributions);
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
@@ -50,15 +51,14 @@ router.get('/users/:id/contributions', async (req, res) => {
 /// ** CREATE NEW CONTRIBUTION *** ///
 router.post('/', async (req, res) => {
 
-  const user_email = req.session.email;
-  const { id } = await getUsersByEmail(user_email);
-  console.log('USER:', user_email);
-  const story_id= req.session.storyid;
+  const userId = req.session.userid;
+  const storyId = req.body.story_id
+  console.log('##0 STORYID:', storyId);
   const content = req.body.content;
 
   const contributions = {
-    user_id: id,
-    story_id,
+    user_id: userId,
+    story_id: storyId,
     content
   };
 
