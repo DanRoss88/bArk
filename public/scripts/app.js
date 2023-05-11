@@ -1,4 +1,6 @@
 // Client facing scripts here
+
+
 $(document).ready(function() {
 
   //// VARIABLES ////
@@ -7,9 +9,14 @@ $(document).ready(function() {
   const $form = $('#story-form').hide();
 */
   //////// NAVBAR BUTTON //////
+
+
   $("#bark-button").click(() => {
     $('#stories-form').slideToggle().find('textArea').focus();
   });
-}
-)
-;
+});
+
+///////// EDIT SLIDE DOWN //////
+$("#edit-slide-button").click(() => {
+  $('.editing-form').slideToggle('slow','swing').focus();
+});

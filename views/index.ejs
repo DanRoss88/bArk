@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="/styles/layout.css" />
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="/vendor/jquery-3.0.0.js"></script>
+
 
   <script defer src="/scripts/app.js"></script>
   <title>Home Page</title>
@@ -39,7 +39,7 @@
                 <%= story.content %>
               </p>
             </div>
-            <% if(story.published_status === false) { %>
+            <% if(story.published_status===false) { %>
               <p class="story-status">POSTED</p>
               <% } else { %>
                 <p class="story-status">PUBLISHED</p>
@@ -64,9 +64,34 @@
               <output name="story-output" for="story">
                 <i id="upvote-button" class="fa-solid fa-angles-down"></i>
               </output>
-          </div>
-          </form>
         </article>
+        <section id="editing-container">
+          <button type="button" name="edit-form" id="edit-slide-button">Edit Story</button>
+            <article>
+              <div class="editing-form">
+                <form action="/:id" method="GET">
+                  <% for(let story of stories) { %>
+                    <form action="/stories" method="POST">
+                      <label for="story_id">
+                        <% story.id %>
+                      </label>
+
+                      <label for="title">Edit Story Title</label>
+                      <textarea type="text" id="edit-story-title" name="edit-title"><%=story.title%></textarea>
+                      <br></br>
+                      <label for="content">Edit Story</label>
+                      <textarea type="text" id="edit-story-content" name="edit-content"><%=story.content%></textarea>
+                      <br></br>
+                      <button type="submit" value="'submit">Re-Post</button>
+                      <output name="edit-story-output" for="edit-story"></output>
+                    </form>
+                </form>
+                <% } %>
+              </div>
+              </div>
+            </article>
+
+        </section>
 
         <section id="contributions-container">
           <h2 class="contributions">What happens next?</h2>
@@ -78,50 +103,24 @@
               <output name="counter" class="upvote-counter" for="contribution-text"></output>
 
 
-                <article>
-                  <header class="contribution-header">
-                    <div class="handle">
-                      <p>@dobermann</p>
-                    </div>
-                  </header>
-                  <p class="contribution-body">'Because he was so fluffy, Sam was considered to be the best snuggler and
-                    the
-                    goodest boy.'</p>
-                  <footer class="contribution-footer">
-                    <div class="days-ago">Posted 2 days ago</div>
-                    <div class="upvote-emoji">
-                      <i class="fa-sharp fa-solid fa-arrow-up"></i>
-                    </div>
-                  </footer>
-                </article>
-              </section>
-<section id="editing-container">
-          <article>
-          <div id="editing-form">
-            <!-- Errors Here-->
-            <div id="error-msg-guest" class="error"><i class="fa-solid fa-circle-exclamation"></i></div>
-              <form action="/:id" method="GET">
-                <% for(let story of stories) { %>
-            <form action="/stories" method="POST">
-              <label for="story_id"><% story.id %></label>
-
-              <label for="title">Edit Story Title</label>
-              <textarea type="text" id="edit-story-title" name="edit-title"><%=story.title%></textarea>
-              <br></br>
-              <label for="content">Edit Story</label>
-              <textarea type="text" id="edit-story-content" name="edit-content"><%=story.content%></textarea>
-              <br></br>
-              <button type="submit" value="'submit">Edit</button>
-              <output name="edit-story-output" for="edit-story"></output>
-
-          </form>
-      </form>
-      <% } %>
-    </div>
-        </article>
-</section>
-
-      </main>
+              <article>
+                <header class="contribution-header">
+                  <div class="handle">
+                    <p>@dobermann</p>
+                  </div>
+                </header>
+                <p class="contribution-body">'Because he was so fluffy, Sam was considered to be the best snuggler and
+                  the
+                  goodest boy.'</p>
+                <footer class="contribution-footer">
+                  <div class="days-ago">Posted 2 days ago</div>
+                  <div class="upvote-emoji">
+                    <i class="fa-sharp fa-solid fa-arrow-up"></i>
+                  </div>
+                </footer>
+              </article>
+        </section>
+    </main>
 </body>
 
 </html>
