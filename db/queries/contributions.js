@@ -105,17 +105,17 @@ const upvoteContribution = () => {
 
 //See contributions
 
-const getContributions = () => {
+const getContributions = (storyId, limit=5) => {
 
-  const queryString = `SELECT * FROM contributions JOIN stories ON stories.id = story_id GROUP BY stories.id, contributions.id LIMIT 10;`
+  const queryString = `SELECT contributions.content FROM contributions WHERE story_id = $1 ORDER BY contributions.id DESC LIMIT $2;`
 
-  return db.query(queryString)
+  return db.query(queryString, [storyId, limit])
     .then(data => {
       return data.rows;
     })
     .catch(err => {
       return console.error(err.stack);
     })
-}
+};
 
 module.exports = { addContributions, editContribution, getContributions, deleteContribution, deleteWhenAccepted, upvoteContribution };

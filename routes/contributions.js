@@ -10,8 +10,9 @@ const bodyParser = require('body-parser');
 router.get('/', async (req, res) => {
 
   try {
-    const contributions = await getContributions();
-    res.render('index', contributions);
+    const contributions = await getContributions(); // pass
+    console.log('CONTRIBUTIONS:', contributions);
+    res.render('index', { contributions, stories:[] });
   } catch (err) {
     console.log(err);
     res.status(500).send("Unable to retrieve contributions");
