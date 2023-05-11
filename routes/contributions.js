@@ -40,7 +40,7 @@ router.get('/users/:id/contributions', async (req, res) => {
 
   try {
     const contributions = await getContributions(user_id);
-    res.status(200).json(contributions);
+    res.status(200).render('contributions', contributions);
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');

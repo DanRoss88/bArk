@@ -105,7 +105,7 @@ const createContributionElement = (contribution) => {
     }
   };
 
-});
+
 
 // LOAD Contributions
 const loadContributions = () => {
@@ -117,6 +117,9 @@ const loadContributions = () => {
   });
 };
 loadContributions();
+});
+
+
 
 
 ////************* LOAD STORIES **************////
