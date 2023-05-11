@@ -1,5 +1,5 @@
 // Client facing scripts here
-const { publishStory } = require('../db/queries/stories');
+
 
 $(document).ready(function() {
 
@@ -17,11 +17,13 @@ $(document).ready(function() {
     $('#stories-form').slideToggle().find('textArea').focus();
 
   });
+
   ///// LOGIN REDIRECT/////
   const loginButton = document.getElementById('login-button');
 
 loginButton.addEventListener('click', () => {
   window.location.href = '/login';
+});
 });
 
   ////// ACCEPT CONTRIBUTION //////////
@@ -44,21 +46,21 @@ loginButton.addEventListener('click', () => {
   });
 
 ////// PUBLISH STORY \\\\\\
-    $(".publish-button").on('click', function() {
-      const storyID = req.params.id;
-      if (!storyID) {
-        res.status().send('Story does not exist');
-      }
-      publishStory(storyID)
-      $(this).siblings(".published").text("PUBLISHED");
+    // $(".publish-button").on('click', function() {
+    //   const storyID = req.params.id;
+    //   if (!storyID) {
+    //     res.status().send('Story does not exist');
+    //   }
+    //   publishStory(storyID)
+    //   $(this).siblings(".published").text("PUBLISHED");
 
-    });
+    // });
 
 
   ///////// PUBLISH STORY ///////////
   $('.publish-button').on('click', function (event) {
     event.preventDefault();
-
+console.log("click publish")
     const storyId = $(this).data('story-id');
 
     $.ajax({
@@ -77,7 +79,7 @@ loginButton.addEventListener('click', () => {
 
 
 
-});
+
 
 
 
