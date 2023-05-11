@@ -52,6 +52,20 @@ form {
   background-color: #D8CAEE;
 }
 
+input {
+  border-radius: 10px;
+  margin: 5px;
+  background-color: #D8CAEE;
+}
+
+form.form-inline {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
+
 .editing-form form { 
   width: auto;
   padding: 10px;
