@@ -66,10 +66,9 @@ router.post('/', async (req, res) => {
 
 //EDIT STORY by story id//
 router.get('/edit/:id', async (req, res) => {
-
   try {
     const storyID = req.params.id;
-    const story = await getUserStoriesByUserId(storyID);
+    const story = await getStoryById(storyID);
     const templateVars = { story, user: req.session.userid };
     res.status(200).render('edit', templateVars);
   } catch (err) {
@@ -78,17 +77,14 @@ router.get('/edit/:id', async (req, res) => {
   }
 });
 
-
-router.put('/edit/:id', async (req, res) => {
-
+router.post('/edit/:id', async (req, res) => {
   try {
-    await editStory({ ...req.body, story_id : req.params.id });
-res.redirect('/stories');
+    await editStory({ ...req.body, id: req.params.id });
+    res.redirect('/stories');
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
   }
-
 });
 
 // // ADD TO STORY //
@@ -107,10 +103,11 @@ res.redirect('/stories');
 //   res.redirect('/');
 // });
 
-// // DELETE STORY //
-router.delete('/:id', async (req, res) => {
+//  // DELETE STORY //
+router.post('/:id/delete', async (req, res) => {
+  const storyID = req.params.id;
+
   try {
-    const storyID = req.params.id;
     const story = await deleteStory(storyID);
     const templateVars = { story, user: req.session.userid };
     res.status(200).render('story', templateVars);
@@ -119,6 +116,7 @@ router.delete('/:id', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
+
 
 // GET USER STORY //
 router.get('/:id', async (req, res) => {

@@ -60,12 +60,9 @@
               <% } else { %>
                 <p class="story-status">PUBLISHED</p>
                 <% } %>
-                <% } %>
-               </div>
-             </div>
 
-                  <div class="browse-contributions">
-                <% for (let contribution in locals.contributions) { %>
+
+                <% for (let contribution of story.contributions) { %>
                   <div class="contribution-box">
                     <div class="user-avatar">
                       <i></i>
@@ -80,13 +77,16 @@
                     </div>
                   </div>
                <% } %>
+               </div>
+             </div>
+             <% } %>
+
+
                 </div>
 
         </div>
         <article>
           <div id="stories-form">
-            <!-- Errors Here-->
-            <div id="error-msg-guest" class="error"><i class="fa-solid fa-circle-exclamation"></i></div>
             <form action="/stories" method="POST">
               <label for="title">title</label>
               <textarea type="text" id="story-title" name="title"></textarea>
@@ -99,63 +99,33 @@
                 <i id="upvote-button" class="fa-solid fa-angles-down"></i>
               </output>
         </article>
-        <section id="editing-container">
-          <button type="button" name="edit-form" id="edit-slide-button">Edit Story</button>
-            <article>
-              <div class="editing-form">
-                <form action="/:id" method="GET">
-                  <% for(let story of stories) { %>
-                    <form action="/stories" method="POST">
-                      <label for="story_id">
-                        <% story.id %>
-                      </label>
 
-                      <label for="title">Edit Story Title</label>
-                      <textarea type="text" id="edit-story-title" name="edit-title"><%=story.title%></textarea>
-                      <br></br>
-                      <label for="content">Edit Story</label>
-                      <textarea type="text" id="edit-story-content" name="edit-content"><%=story.content%></textarea>
-                      <br></br>
-                      <button type="submit" value="'submit">Re-Post</button>
-                      <output name="edit-story-output" for="edit-story"></output>
-                    </form>
-                </form>
-                <% } %>
-              </div>
-              </div>
-            </article>
 
-        </section>
-
-<section id="editing-container">
+    <section id="editing-container">
+          <% for (let story of stories) { %>
           <article>
-          <div id="editing-form">
-            <!-- Errors Here-->
-            <div id="error-msg-guest" class="error"><i class="fa-solid fa-circle-exclamation"></i></div>
-              <form action="/:id" method="GET">
-                <% for(let story of stories) { %>
-            <form action="/stories" method="POST">
-              <label for="story_id"><% story.id %></label>
+            <button type="button" name="edit-form" id="edit-slide-button">Edit Story</button>
+            <div class="editing-form">
 
-              <label for="title">Edit Story Title</label>
-              <textarea type="text" id="edit-story-title" name="edit-title"><%=story.title%></textarea>
-              <br></br>
-              <label for="content">Edit Story</label>
-              <textarea type="text" id="edit-story-content" name="edit-content"><%=story.content%></textarea>
-              <br></br>
-              <button type="submit" value="'submit">Edit</button>
-              <output name="edit-story-output" for="edit-story"></output>
+              <form action="/stories/edit/<%= story.id %>" method="POST">
+                <label for="story_id"><%= story.id %></label>
+                <input type="hidden" id="story_id" name="story_id" value="<%= story.id %>">
+                <label for="title">Edit Story Title</label>
+                <textarea type="text" id="edit-story-title" name="edit-title"><%= story.title %></textarea>
+                <br></br>
+                <label for="content">Edit Story</label>
+                <textarea type="text" id="edit-story-content" name="edit-content"><%= story.content %></textarea>
+                <br></br>
+                <button type="submit" class="update-button" data-story-id="<%= story.id %>">Update</button>
+                <button type="submit" class="delete-button" data-story-id="<%= story.id %>">Delete Story</button>
+                <button type="submit" class="publish-button" data-story-id="<%= story.id %>">Publish Story</button>
+                <output name="edit-story-output" for="edit-story"></output>
+              </form>
+            </div>
+          </article>
+          </section>
+          <% } %>
+        </main>
 
-          </form>
-      </form>
-      <% } %>
-    </div>
-        </article>
-</section>
-
-
-      </main>
-
-</body>
-
-</html>
+  </body>
+  </html>

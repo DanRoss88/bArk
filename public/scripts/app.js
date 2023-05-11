@@ -69,13 +69,12 @@ $('#edit-slide-button').click(() => {
   //   }
   // };
 
-    for (const story of stories) {
-      const $story = createStoryElement(story);
-      $storiesContainer.append($story);
-    }
-  };
-});
-
+//     for (const story of stories) {
+//       const $story = createStoryElement(story);
+//       $storiesContainer.append($story);
+//     }
+//   };
+// });
 
 // CREATE Contribution Element
 
@@ -118,16 +117,15 @@ $('#edit-slide-button').click(() => {
 
 
 // LOAD Contributions
-const loadContributions = () => {
-  $.ajax({
-    method: 'GET',
-    url:'/contributions'
-  }).then ((contributions) => {
-    renderContributions(contributions);
-  });
-};
-loadContributions();
-});
+// const loadContributions = () => {
+//   $.ajax({
+//     method: 'GET',
+//     url:'/contributions'
+//   }).then ((contributions) => {
+//     renderContributions(contributions);
+//   });
+// };
+// loadContributions();
 
 
 
@@ -210,12 +208,7 @@ loadContributions();
 */
 
 
-///////// EDIT SLIDE DOWN //////
-$("#edit-slide-button").click(() => {
-  $('.editing-form').slideToggle('slow','swing').focus();
-});
-
-});
-)
-
-
+// /////// EDIT SLIDE DOWN //////
+// $("#edit-slide-button").click(() => {
+//   $('.editing-form').slideToggle('slow','swing').focus();
+// });
