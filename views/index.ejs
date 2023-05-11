@@ -16,8 +16,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
-
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lobster&family=Oswald&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Lobster&family=Oswald&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="/scripts/upvote_counter.js"></script>
   <script src="/scripts/publishstory.js"></script>
@@ -29,7 +33,7 @@
 
 <body>
   <nav class="nav-bar">
-    <span id="bark-button">bArk</span>
+    <button type="button" id="bark-button">bArk</button>
     <div class="right-side">
       <span id="login-button">Login</span>
       <span id="register">Register</span>
@@ -108,10 +112,10 @@
       <article>
         <div id="stories-form">
           <form action="/stories" method="POST">
-            <label for="title">title</label>
+            <label for="title">Your new story title...</label>
             <textarea type="text" id="story-title" name="title"></textarea>
             <br></br>
-            <label for="content">story</label>
+            <label for="content">Your new story...</label>
             <textarea type="text" id="story-content" name="content"></textarea>
             <br></br>
             <button type="submit" value="'submit">bArk</button>

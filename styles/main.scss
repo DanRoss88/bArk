@@ -8,9 +8,12 @@ body {
   align-items: center;
   background: #d8caee;
   background-image: url("/images/wallpaper.png");
+  font-size: 21px ;
+  font-weight: 500;
   opacity: 0.9;
   background-size:180px;
   font-family: 'Oswald', sans-serif;
+  margin-bottom: 80px;
 }
 
 main {
@@ -35,7 +38,7 @@ nav {
 }
 
 nav.nav-bar {
-font-family: 'Oswald', sans-serif;
+  font-family: 'Lobster', cursive;
 font-weight: bold;
 font-size: 30px;
 
@@ -47,7 +50,8 @@ padding-left: 15px;
   #bark-button  {
   cursor: pointer;
   transition: color cubic-bezier(0.19, 1, 0.22, 1);
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Amatic SC', cursive;
+  font-size: 45px;
 }
 
 #bark-button:hover {
@@ -59,15 +63,21 @@ padding-left: 15px;
   border: 3px solid #9484d4;
   border-radius: 15px;
 }
-
+textarea {
+  opacity: 0.6;
+  font-family: 'Oswald', sans-serif;
+}
 button {
   border: 3px solid #9A8BD9;
   border-radius: 15px;
   background-color: #9484d4;
   color: white;
+  font-family: 'Amatic SC', cursive;
+  font-size: 30px;
 }
 label.contribute-button {
   padding:15px;
+  font-family: 'Lobster', cursive;
 }
 textarea {
   border: none;
@@ -80,13 +90,22 @@ h2 {
   background-color: #9A8BD9;
   border-radius: 10px;
   justify-content: center;
+  font-family: 'Lobster', cursive;
 }
 
 div.story-box {
 display: flex;
 flex-direction: column;
 }
+p.published {
+  font-family: 'Lobster', cursive;
+  font-size: 22px;
+}
+p.story-status {
+  font-family: 'Lobster', cursive;
+  font-size: 30px;
 
+}
 
 div.story-info form {
   justify-content: space-between;
@@ -192,6 +211,20 @@ display: flex;
 flex-direction: column;
 }
 
-.hidden {
-  display:none;
+#edit-slide-button {
+  display: block;
+  margin: 0 auto;
+width: 90%;
+height:60px;
+padding-top: 15px;
+padding-bottom: 15px;;
+
+}
+
+textarea#edit-story-content {
+padding:10px;
+
+}
+textarea#edit-story-title {
+  padding:10px;
 }
