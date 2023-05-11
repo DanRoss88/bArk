@@ -1,6 +1,7 @@
 // Client facing scripts here
+const { publishStory } = require('../db/queries/stories');
 
-$(document).ready(function () {
+$(document).ready(function() {
 
 
   //////// NAVBAR BUTTON //////
@@ -16,8 +17,9 @@ $(document).ready(function () {
     $editForm.slideToggle("slow", "swing").focus();
   });
 
+
   ////// ACCEPT CONTRIBUTION //////////
-  $('.accept-btn').on('click', function (event) {
+  $(document).on('click', '.accept-contribution', function(event) {
     event.preventDefault();
 
     const contributionId = $(this).data('contribution-id');
@@ -25,15 +27,28 @@ $(document).ready(function () {
     $.ajax({
       method: 'POST',
       url: `/stories/contributions/${contributionId}/accept`,
-      success: function () {
+      success: function() {
         location.reload();
       },
-      error: function () {
+      error: function() {
         console.error('Error accepting contribution:');
         alert('There was an error accepting this contribution.');
       }
     });
   });
 
-});
+////// PUBLISH STORY \\\\\\
+    $(".publish-button").on('click', function() {
+      const storyID = req.params.id;
+      if (!storyID) {
+        res.status().send('Story does not exist');
+      }
+      publishStory(storyID)
+      $(this).siblings(".published").text("PUBLISHED");
+
+    });
+
+  });
+
+
 
