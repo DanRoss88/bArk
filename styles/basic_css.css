@@ -1,0 +1,31 @@
+body {
+  font-family: Helvetica;
+  color: white;
+  background-image: url("https://github.com/DanRoss88/bArk/blob/front-end/styles/images/wallpaper.png")
+}
+
+nav {
+  border: 3px solid #9A8BD9;
+  border-radius: 15px;
+  background-color: #D8CAEE;
+  background-image: url("https://github.com/DanRoss88/bArk/blob/front-end/styles/images/bark_header.png")
+}
+
+button {
+  border: 3px solid #76C82E;
+  border-width: 15px;
+  background-color: #C9EBAC;
+  color: white;
+}
+
+h2 {
+  background-color: #9A8BD9;
+}
+
+form { 
+  width: auto;
+  box-shadow: 2px 2px 5px white;
+  border: 3px solid #9A8BD9;
+  border-radius: 15px;
+  background-color: #D8CAEE;
+}
