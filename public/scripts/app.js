@@ -8,7 +8,11 @@ $(document).ready(function () {
     $('#stories-form').slideToggle().find('textArea').focus();
 
   });
+  const loginButton = document.getElementById('login-button');
 
+loginButton.addEventListener('click', () => {
+  window.location.href = '/login';
+});
   ///////// EDIT SLIDE DOWN //////
   let $editForm = $('.editing-form').hide();
 
