@@ -5,12 +5,10 @@ $(document).ready(function() {
 
 
   ///////// EDIT SLIDE DOWN //////
-  let $editForm = $('.editing-form').hide();
-
+  let $editForm = $('.editing-container').hide();
   $('#edit-slide-button').click(() => {
     $editForm.slideToggle("slow", "swing").focus();
   });
-
 
   //////// NAVBAR BUTTON //////
   $("#bark-button").click(() => {

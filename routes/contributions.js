@@ -45,11 +45,15 @@ router.post('/', async (req, res) => {
 
 
 /// ACCEPT CONTRIBUTION ///
-router.post('/contributions/:id/accept', async (req, res) => {
+router.post('/:id/accept', async (req, res) => {
   const contributionId = req.params.id;
+  const storyId = req.body.storyId;
+  const content = req.body.content;
+
   try {
-    const contribution = await acceptContribution(contributionId);
-    res.status(200).json(contribution);
+    await acceptContribution(contributionId);
+    await addContributionToStory(contributionId, storyId, content);
+    res.status(200).json({ message: 'Contribution accepted and added to the story' });
   } catch (err) {
     console.error('Error accepting contribution:', err);
     res.status(500).send('Server error accepting contribution');

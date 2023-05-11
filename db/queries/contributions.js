@@ -68,38 +68,35 @@ const acceptContribution = (contribution_id) => {
 }
 
 // add contribution to story
-  const addContributionToStory = (contribution) => {
-    const { contributionId, storyId } = contribution;
+const addContributionToStory = (contributionId, storyId) => {
 
-    const query = `
-      UPDATE stories
-      SET content = CONCAT(content, $1)
-      FROM contributions
-      WHERE contributions.id = $2
-      AND contributions.story_id = stories.id
-    `;
+  const query = `
+    UPDATE stories
+    SET content = CONCAT(stories.content,
+      (SELECT content FROM contributions WHERE id = $1))
+      WHERE id = $2
 
-    const values = [
-      contribution.content,
-      contributionId,
-      storyId
-    ];
+  `;
 
-    return db.query(query, values)
-      .then(res => {
-        console.log('Successfully added contribution to story');
-        return res.rows[0];
-      })
-      .catch(err => {
-        console.error('Error adding contribution to story:', err);
-        throw err;
-      });
-  };
+  const values = [
+    contributionId,
+    storyId
+  ];
 
+  return db.query(query, values)
+    .then(res => {
+      console.log('Successfully added contribution to story');
+      return res.rows[0];
+    })
+    .catch(err => {
+      console.error('Error adding contribution to story:', err);
+      throw err;
+    });
+};
 
 // Edit contribution
 
-const editContribution = (contribution) => {
+function editContribution(contribution) {
 
   const queryString = `UPDATE contributions
   SET contributions.content = $1 RETURNING *`;
@@ -111,7 +108,7 @@ const editContribution = (contribution) => {
     })
     .catch(err => {
       return console.error(err.stack);
-    })
+    });
 }
 
 // Delete contribution

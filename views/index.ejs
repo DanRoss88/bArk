@@ -2,22 +2,23 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/primary.css" />
   <!-- <link rel="stylesheet" href="/styles/layout.css" /> -->
   <link rel="stylesheet" href="/styles/main.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
 
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="/scripts/upvote_counter.js"></script>
   <script src="/scripts/publishstory.js"></script>
   <script src="/scripts/addcontributiontostory.js"></script>
@@ -27,54 +28,55 @@
 
 
 <body>
- <nav class="nav-bar">
-      <span id="bark-button">bArk</span>
-      <div class="right-side">
-        <span id="login-button" >Login</span>
-        <span id="register">Register</span>
-      </div>
-    </nav>
+  <nav class="nav-bar">
+    <span id="bark-button">bArk</span>
+    <div class="right-side">
+      <span id="login-button">Login</span>
+      <span id="register">Register</span>
+    </div>
+  </nav>
 
 
-    <main>
-      <div class="browse-stories">
-        <% for(let story of stories) { %>
-          <div class="story-box">
-            <div class="user-avatar">
-              <i></i>
-            </div>
-            <div class="story-info">
-              <h2>
-                <%= story.title %>
-              </h2>
-              <p>
-                <%= story.content %>
-              </p>
+  <main>
+    <div class="browse-stories">
+      <% for(let story of stories) { %>
+        <div class="story-box">
+          <div class="user-avatar">
+            <i></i>
+          </div>
+          <div class="story-info">
+            <h2>
+              <%= story.title %>
+            </h2>
+            <p>
+              <%= story.content %>
+            </p>
 
-              <label class="contribute-button" data-story-id="<%= story.id %>">What happens next? Add your
-                suggestion!</label>
-              <form action="/stories/<%= story.id %>/contributions" method="POST">
-                <input type="hidden" name="story_id" value="<%= story.id %>">
-                <textarea type="text" id="contribution-content" name="content"></textarea>
-                <br>
-                <button type="submit">bArk</button>
-                <output name="contribution-output" for="contribution">
-                </output>
-              </form>
+            <label class="contribute-button" data-story-id="<%= story.id %>">What happens next? Add your
+              suggestion!</label>
+            <form action="/stories/<%= story.id %>/contributions" method="POST">
+              <input type="hidden" name="story_id" value="<%= story.id %>">
+              <textarea type="text" id="contribution-content" name="content"></textarea>
+              <br>
+              <button type="submit">bArk</button>
+              <output name="contribution-output" for="contribution">
+              </output>
+            </form>
 
-              <section id="contributions-container"></section>
-
-
-            </div>
-            <% if(story.published_status===false) { %>
-              <p class="story-status">POSTED</p>
-              <button type="button" class="publish-button" data-story-id="<%= story.id %>">Publish Story</button>
-              <% } else { %>
-                <p class="story-status">PUBLISHED</p>
-                <% } %>
+            <section id="contributions-container"></section>
 
 
-                  <% for (let contribution of story.contributions) { %>
+          </div>
+          <% if(story.published_status===false) { %>
+            <p class="story-status">POSTED</p>
+            <button type="button" class="publish-button" data-story-id="<%= story.id %>">Publish Story</button>
+            <% } else { %>
+              <p class="story-status">PUBLISHED</p>
+              <% } %>
+
+
+                <% for (let contribution of story.contributions) { %>
+                  <% if (!contribution.accepted_status) { %>
                     <div class="contribution-box">
                       <div class="user-avatar">
                         <i></i>
@@ -86,63 +88,60 @@
                         <button class="upvote-button">Upvote</button>
                         <i class="fa-sharp fa-solid fa-arrow-up"></i>
                         <p class="numofupvotes">0</p>
-                        <button class="accept-contribution" data-contribution-id="<%= contribution.id %>">Accept
+
+                        <button class="accept-contribution" id="<%= contribution.id %>"
+                          data-contribution-id="<%= contribution.id %>" data-story-id="<%= story.id %>">Accept
                           contribution</button>
                         <p class="published">POSTED</p>
                       </div>
                     </div>
                     <% } %>
-          </div>
+		<% } %>
+        </div>
+    </div>
+    <% } %>
+
+
       </div>
-      <% } %>
 
+      </div>
+      <article>
+        <div id="stories-form">
+          <form action="/stories" method="POST">
+            <label for="title">title</label>
+            <textarea type="text" id="story-title" name="title"></textarea>
+            <br></br>
+            <label for="content">story</label>
+            <textarea type="text" id="story-content" name="content"></textarea>
+            <br></br>
+            <button type="submit" value="'submit">bArk</button>
+            <output name="story-output" for="story">
+              <i id="upvote-button" class="fa-solid fa-angles-down"></i>
+            </output>
+      </article>
 
-        </div>
+<button type="button" id="edit-slide-button">Edit Story</button>
+<% for (let story of stories) { %>
+  <section class="editing-container">
+    <article class="edit-article">
+      <form class="editing-form" action="/stories/edit/<%= story.id %>" method="POST">
+        <label for="story_id"> <b><%= story.id %></b></label>
+        <input type="hidden" id="story_id" name="story_id" value="<%= story.id %>">
+        <label for="title">Edit Story Title</label>
+        <textarea type="text" id="edit-story-title" name="edit-title"><%= story.title %></textarea>
+        <br></br>
+        <label for="content">Edit Story</label>
+        <textarea type="text" id="edit-story-content" name="edit-content"><%= story.content %></textarea>
+        <br></br>
+        <button type="submit" class="update-button" data-story-id="<%= story.id %>">Update</button>
+        <button type="submit" class="delete-button" data-story-id="<%= story.id %>">Delete Story</button>
+        <output name="edit-story-output" for="edit-story"></output>
+      </form>
+    </article>
+  </section>
+<% } %>
 
-        </div>
-        <article>
-          <div id="stories-form">
-            <form action="/stories" method="POST">
-              <label for="title">title</label>
-              <textarea type="text" id="story-title" name="title"></textarea>
-              <br></br>
-              <label for="content">story</label>
-              <textarea type="text" id="story-content" name="content"></textarea>
-              <br></br>
-              <button type="submit" value="'submit">bArk</button>
-              <output name="story-output" for="story">
-                <i id="upvote-button" class="fa-solid fa-angles-down"></i>
-              </output>
-        </article>
-
-        <% for (let story of stories) { %>
-           <article>
-            <button type="button" id="edit-slide-button">Edit Story</button>
-            <section id="editing-container">
-              <div class="editing-form">
-                <form action="/stories/edit/<%= story.id %>" method="POST">
-                  <label for="story_id"> <b>
-                      <%= story.id %>
-                    </b></label>
-
-
-                  <input type="hidden" id="story_id" name="story_id" value="<%= story.id %>">
-                  <label for="title">Edit Story Title</label>
-                  <textarea type="text" id="edit-story-title" name="edit-title"><%= story.title %></textarea>
-                  <br></br>
-                  <label for="content">Edit Story</label>
-                  <textarea type="text" id="edit-story-content" name="edit-content"><%= story.content %></textarea>
-                  <br></br>
-                  <button type="submit" class="update-button" data-story-id="<%= story.id %>">Update</button>
-                  <button type="submit" class="delete-button" data-story-id="<%= story.id %>">Delete Story</button>
-                  <output name="edit-story-output" for="edit-story"></output>
-                </form>
-              </div>
-            </section>
-          </article>
-          <% } %>
-
-    </main>
+  </main>
 </body>
 
 </html>
