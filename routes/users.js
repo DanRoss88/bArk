@@ -8,13 +8,12 @@
 const express = require('express');
 
 const router = express.Router();
-const getUsers = require('../db/queries/users');
-
+const { getUserStoriesById, getUsers} = require('../db/queries/users');
 
 router.get('/', (req, res) => {
   getUsers()
     .then((users) => {
-      res.render('users')
+      res.render('users', users)
 
     })
     .catch((err) => console.log("Error for getUsers", err));

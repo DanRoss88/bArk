@@ -40,6 +40,7 @@ const storiesRoutes = require('./routes/stories');
 const homeRoute = require('./routes/home-route');
 const contributionsRouter = require('./routes/contributions');
 const loginRouter = require('./routes/login-route');
+const mystoriesRouter = require('./routes/my-stories');
 
 
 // Mount all resource routes
@@ -53,6 +54,7 @@ app.use('/', homeRoute);
 app.use('/stories', storiesRoutes);
 app.use('/stories/contributions', contributionsRouter);
 app.use('/login', loginRouter);
+app.use('/my-stories', mystoriesRouter);
 // Note: mount other resources here, using the same pattern above
 
 // Home page

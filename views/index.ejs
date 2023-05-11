@@ -65,8 +65,8 @@
         <article>
           <div id="stories-form">
             <!-- Errors Here-->
-            <div id="error-msg-guest" class="error"><i class="fa-solid fa-circle-exclamation"></i> Please Sign In </div>
-            <form action="/stories/stories" method="POST">
+            <div id="error-msg-guest" class="error"><i class="fa-solid fa-circle-exclamation"></i></div>
+            <form action="/stories" method="POST">
               <label for="title">title</label>
               <textarea type="text" id="story-title" name="title"></textarea>
               <br></br>
@@ -93,6 +93,33 @@
             </form>
             <section id="contributions-container"></section>
           </div>
+    
+<section id="editing-container">
+          <article>
+          <div id="editing-form">
+            <!-- Errors Here-->
+            <div id="error-msg-guest" class="error"><i class="fa-solid fa-circle-exclamation"></i></div>
+              <form action="/:id" method="GET">
+                <% for(let story of stories) { %>
+            <form action="/stories" method="POST">
+              <label for="story_id"><% story.id %></label>
+
+              <label for="title">Edit Story Title</label>
+              <textarea type="text" id="edit-story-title" name="edit-title"><%=story.title%></textarea>
+              <br></br>
+              <label for="content">Edit Story</label>
+              <textarea type="text" id="edit-story-content" name="edit-content"><%=story.content%></textarea>
+              <br></br>
+              <button type="submit" value="'submit">Edit</button>
+              <output name="edit-story-output" for="edit-story"></output>
+
+          </form>
+      </form>
+      <% } %>
+    </div>
+        </article>
+</section>
+
 
       </main>
 </body>
