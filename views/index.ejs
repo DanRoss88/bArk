@@ -16,6 +16,8 @@
 
 
   <script defer src="/scripts/app.js"></script>
+  <script src="/scripts/upvote_counter.js"></script>
+
   <title>Home Page</title>
 </head>
 
@@ -38,6 +40,20 @@
               <p>
                 <%= story.content %>
               </p>
+
+              <label class="contribute-button" data-story-id="<%= story.id %>">What happens next? Add your suggestion!</label>
+              <form action="/stories/<%= story.id %>/contributions" method="POST">
+                <input type="hidden" name="story_id" value="<%= story.id %>">
+                <textarea type="text" id="contribution-content" name="content"></textarea>
+                <br>
+                <button type="submit">bArk</button>
+                <output name="contribution-output" for="contribution">
+                </output>
+              </form>
+
+                <section id="contributions-container"></section>
+
+
             </div>
             <% if(story.published_status===false) { %>
               <p class="story-status">POSTED</p>
@@ -55,6 +71,9 @@
                       <p>
                         <%= contribution.content %>
                       </p>
+                      <button class="upvote-button">Upvote</button>
+                      <i class="fa-sharp fa-solid fa-arrow-up"></i>
+                      <p class="numofupvotes">0</p>
                     </div>
                   </div>
                <% } %>
@@ -105,19 +124,6 @@
             </article>
 
         </section>
-
-          <div id="contributions-form">
-            <form action="/stories/contributions" method="POST">
-              <label for="contribution">What Happens Next?</label>
-              <textarea type="text" id="contribution-content" name="content"></textarea>
-              <br>
-              <button type="submit" value="submit">bArk</button>
-              <output name="contribution-output" for="contribution">
-                <i id="upvote-button" class="fa-solid fa-angles-down"></i>
-              </output>
-            </form>
-            <section id="contributions-container"></section>
-          </div>
 
 <section id="editing-container">
           <article>

@@ -20,12 +20,11 @@ const bodyParser = require('body-parser');
 router.get('/', async (req, res) => {
 
   const userId = req.session.userid;
-  console.log('##0 USER:', userId);
+
 
   try {
     const stories = await getStories(userId);
     const storiesWithContributions = await Promise.all(stories.map(async story => ({...story, contributions: await getContributions(story.id)})));
-    console.log('#1 STORIES:', stories);
     const templateVars = { stories: storiesWithContributions, user: userId };
     res.status(200).render('index', templateVars);
   } catch (err) {
@@ -37,10 +36,11 @@ router.get('/', async (req, res) => {
 // CREATE NEW USER STORY //
 
 router.post('/', async (req, res) => {
-  console.log("here");
+
+  const userId = req.session.userid;
 
   try {
-    await addStories({ ...req.body, user_id: req.session.userid });
+    await addStories({ ...req.body, user_id: userId });
     //res.status(200).json(newStory);
     res.redirect('/stories');
   } catch (err) {
