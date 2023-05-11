@@ -4,7 +4,7 @@ const storiesQueries = require('../db/queries/stories');
 const { getContributions } = require('../db/queries/contributions');
 
 
-/// *** BROWSE *** /// HOME ////
+// / *** BROWSE *** /// HOME ////
 router.get('/', async (req, res) => {
 
   try {
