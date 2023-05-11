@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getStories, addStories, editStory, addContributionToStory, deleteStories, seeStories, publishStory, getUserStoriesByUserId } = require('../db/queries/stories');
+const { getContributions } = require('../db/queries/contributions');
 const bodyParser = require('body-parser');
 
 /// BROWSE ///
@@ -18,9 +19,14 @@ const bodyParser = require('body-parser');
 // ALL STORIES //
 router.get('/', async (req, res) => {
 
+  const userId = req.session.userid;
+  console.log('##0 USER:', userId);
+
   try {
-    const stories = await getStories(req.session.userid);
-    const templateVars = { stories: stories, user: req.session.userid };
+    const stories = await getStories(userId);
+    const storiesWithContributions = await Promise.all(stories.map(async story => ({...story, contributions: await getContributions(story.id)})));
+    console.log('#1 STORIES:', stories);
+    const templateVars = { stories: storiesWithContributions, user: userId };
     res.status(200).render('index', templateVars);
   } catch (err) {
     console.error(err);
@@ -32,7 +38,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   console.log("here");
-  
+
   try {
     await addStories({ ...req.body, user_id: req.session.userid });
     //res.status(200).json(newStory);

@@ -9,8 +9,8 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  
-  req.session.email = req.body.email;
+
+  req.session.userid = 1;
   res.redirect('/stories')
 
 });
