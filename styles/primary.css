@@ -6,7 +6,7 @@ body {
   justify-content: center;
   align-items: center;
   background: #d8caee;
-  background-image: url('https://github.com/DanRoss88/bArk/blob/master/styles/images/wallpaper.png');
+  background-image: url('/images/wallpaper.png');
 }
 
 nav {
