@@ -1,7 +1,7 @@
 const express = require('express');
-const { addContributions, editContribution, getContributions, deleteContribution, deleteWhenAccepted, upvoteContribution } = require('../db/queries/contributions');
+const { addContributions, editContribution, addContributionToStory, acceptContribution, getContributions, deleteContribution, deleteWhenAccepted, upvoteContribution } = require('../db/queries/contributions');
 const router = express.Router();
-const { getStories, addStories, editStory, addContributionToStory, deleteStories, seeStories, publishStory, getUserStoriesByUserId } = require('../db/queries/stories');
+const { getStories, addStories, editStory, deleteStories, seeStories, publishStory, getUserStoriesByUserId } = require('../db/queries/stories');
 
 
 
@@ -70,6 +70,36 @@ router.post('/', async (req, res) => {
     res.status(500).send('Server error adding a contribution');
   }
 });
+
+/// ACCEPT CONTRIBUTION ///
+router.post('/contributions/:id/accept', async (req, res) => {
+  const contributionId = req.params.id;
+  try {
+    const contribution = await acceptContribution(contributionId);
+    res.status(200).json(contribution);
+  } catch (err) {
+    console.error('Error accepting contribution:', err);
+    res.status(500).send('Server error accepting contribution');
+  }
+});
+
+
+//// ADD CONTRIBUTION TO STORY /////
+router.post('/contributions', async (req, res) => {
+  const userId = req.session.userid;
+  const storyId = req.body.story_id;
+  const content = req.body.content;
+
+  try {
+    const result = await addContributionToStory(userId, storyId, content);
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
+
 
 
 /// ** EDIT ** ///
