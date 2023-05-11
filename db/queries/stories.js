@@ -89,9 +89,9 @@ const editStory = (stories) => {
 
 
 
-const deleteStories = (story_id) => {
+const deleteStory = (storyId) => {
   const queryString = `DELETE FROM stories WHERE id = $1;`;
-  const values = [story_id];
+  const values = [storyId];
 
   return db.query(queryString, values)
     .then(data => {
@@ -103,19 +103,23 @@ const deleteStories = (story_id) => {
     });
 };
 
-// const seeStories = (user_id) => {
-// const queryString = `SELECT * FROM stories WHERE users.id = $1 ORDER BY date_created DESC;`;
-//   const values = [user_id];
+const seeStory = (storyId) => {
+  const query = 'SELECT * FROM stories WHERE id = $1;';
+  const values = [storyId];
 
-//   return db.query(queryString, values)
-//     .then(data => {
-//       return data.rows;
-//     })
-//     .catch(err => {
-//       console.error("Error for seeStories", err);
-//       throw err;
-//     })
-// }
+  return db.query(query, values)
+    .then((result) => {
+      if (result.rows.length === 0) {
+        throw new Error('Story not found');
+      }
+
+      return result.rows[0];
+    })
+    .catch((err) => {
+      throw new Error('Unable to fetch the story');
+    });
+};
+
 
 
 const publishStory = (story_id) => {
@@ -134,5 +138,5 @@ const publishStory = (story_id) => {
 }
 
 module.exports = { getStories, getUserStoriesByUserId, addStories, editStory, //addContributionToStory,//
-deleteStories, //seeStories,
+ seeStory, deleteStory,
  publishStory };

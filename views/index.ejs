@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="stylesheet" type= "css" href="/public/styles/basic_css.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -60,9 +60,12 @@
               <% } else { %>
                 <p class="story-status">PUBLISHED</p>
                 <% } %>
+                <% } %>
+               </div>
+             </div>
 
-
-                <% for (let contribution of story.contributions) { %>
+                  <div class="browse-contributions">
+                <% for (let contribution in locals.contributions) { %>
                   <div class="contribution-box">
                     <div class="user-avatar">
                       <i></i>
@@ -77,9 +80,8 @@
                     </div>
                   </div>
                <% } %>
-          </div>
-      </div>
-      <% } %>
+                </div>
+
         </div>
         <article>
           <div id="stories-form">

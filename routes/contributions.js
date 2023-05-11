@@ -39,6 +39,7 @@ router.get('/users/:id/contributions', async (req, res) => {
   const userId = req.session.userid;
 
   try {
+
     const contributions = await getContributions(userId);
     res.status(200).json(contributions);
   } catch (err) {
