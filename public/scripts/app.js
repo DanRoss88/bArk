@@ -58,56 +58,57 @@ $(document).ready(function() {
       $storiesContainer.append($story);
     }
   };
+});
 
 // CREATE Contribution Element
 
-const createContributionElement = (contribution) => {
-  const $contributionElement = $(`
-  <article class="contributions-container">
-              <header class="contributions-header">
-                <div class="user-handle">
-                  <p>${contribution.user_id}</p>
-                </div>
-              </header>
-              <p class="contribution-content">${contribution.content}</p>
-              <footer class="contribution-footer">
-                <div class="accepted-status">
-                <p>${contribution.accepted_status} </p>
-                </div>
-                <div class="num-of-upvotes">${contribution.num_of_upvotes}</div>
-                  <i class="fa-solid fa-angles-down"></i>
-                </div>
-              </footer>
-            </article>
-  `);
+// const createContributionElement = (contribution) => {
+//   const $contributionElement = $(`
+//   <article class="contributions-container">
+//               <header class="contributions-header">
+//                 <div class="user-handle">
+//                   <p>${contribution.user_id}</p>
+//                 </div>
+//               </header>
+//               <p class="contribution-content">${contribution.content}</p>
+//               <footer class="contribution-footer">
+//                 <div class="accepted-status">
+//                 <p>${contribution.accepted_status} </p>
+//                 </div>
+//                 <div class="num-of-upvotes">${contribution.num_of_upvotes}</div>
+//                   <i class="fa-solid fa-angles-down"></i>
+//                 </div>
+//               </footer>
+//             </article>
+//   `);
 
-  return $contributionElement;
+//   return $contributionElement;
 }
 
   // RENDER Contributions
 
-  const renderContributions = (contributions) => {
+  // const renderContributions = (contributions) => {
 
-    const $contributionSection = $('#contributions-container').empty();
+  //   const $contributionSection = $('#contributions-container').empty();
 
-    for (const contribution of contributions) {
-      const $contributionElement = createContributionElement(contribution);
-      $contributionSection.prepend($contributionElement);
-    }
-  };
+  //   for (const contribution of contributions) {
+  //     const $contributionElement = createContributionElement(contribution);
+  //     $contributionSection.prepend($contributionElement);
+  //   }
+  // };
 
-});
+// });
 
-// LOAD Contributions
-const loadContributions = () => {
-  $.ajax({
-    method: 'GET',
-    url:'/contributions'
-  }).then ((contributions) => {
-    renderContributions(contributions);
-  });
-};
-loadContributions();
+// // LOAD Contributions
+// const loadContributions = () => {
+//   $.ajax({
+//     method: 'GET',
+//     url:'/contributions'
+//   }).then ((contributions) => {
+//     renderContributions(contributions);
+//   });
+// };
+// loadContributions();
 
 
 ////************* LOAD STORIES **************////
@@ -176,8 +177,6 @@ $("#edit-slide-button").click(() => {
   $('.editing-form').slideToggle('slow','swing').focus();
 });
 
-}
+});
 )
-;
-
 

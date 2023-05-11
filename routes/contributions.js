@@ -1,8 +1,8 @@
 const express = require('express');
 const { addContributions, editContribution, getContributions, deleteContribution, deleteWhenAccepted, upvoteContribution } = require('../db/queries/contributions');
-const { getUsers, getUsersById, getUsersByEmail } = require('../db/queries/users');
+const { getUsersByEmail } = require('../db/queries/users');
 const router = express.Router();
-const bodyParser = require('body-parser');
+
 
 
 /// *** BROWSE *** /// HOME ////
@@ -52,6 +52,7 @@ router.post('/', async (req, res) => {
 
   const user_email = req.session.email;
   const { id } = await getUsersByEmail(user_email);
+  console.log('USER:', user_email);
   const story_id= req.session.storyid;
   const content = req.body.content;
 
