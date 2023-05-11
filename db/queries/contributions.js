@@ -3,34 +3,34 @@ const express = require('express');
 
 // Create new contribution
 
-const newContribution = (user_id, story_id, content, accepted_status, num_of_upvotes) => {
+// const newContribution = (user_id, story_id, content, accepted_status, num_of_upvotes) => {
 
-  const queryString = `INSERT INTO contributions (user_id, story_id, content, accepted_status, num_of_upvotes)
-  VALUES ($1, $2, $3, $4, $5) RETURNING *`;
-  const values = [contributions.user_id, contributions.story_id, contributions.content, contributions.accepted_status, contributions.num_of_upvotes];
+//   const queryString = `INSERT INTO contributions (user_id, story_id, content, accepted_status, num_of_upvotes)
+//   VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+//   const values = [contributions.user_id, contributions.story_id, contributions.content, contributions.accepted_status, contributions.num_of_upvotes];
 
-  return db.query(queryString, values)
-    .then(data => {
-      return data.rows[0];
-    })
-    .catch(err => {
-      return console.error(err.stack);
-    })
-}
+//   return db.query(queryString, values)
+//     .then(data => {
+//       return data.rows[0];
+//     })
+//     .catch(err => {
+//       return console.error(err.stack);
+//     })
+// }
 
 // Add contribution
 
-const addContributions = () => {
+const addContributions = (contributions) => {
 
-  const queryString = `INSERT INTO contributions (user_id, story_id, content, accepted_status, num_of_upvotes) VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
-  const values = [contributions.user_id, contributions.story_id, contributions.content, contributions.accepted_status, contributions.num_of_upvotes];
+  const queryString = `INSERT INTO contributions (user_id, story_id, content, accepted_status, num_of_upvotes) VALUES ($1, $2, $3, FALSE, 0) RETURNING *;`;
+  const values = [contributions.user_id, contributions.story_id, contributions.content];
 
   return db.query(queryString, values)
     .then(data => {
       return data.rows[0];
     })
     .catch(err => {
-      console.error(err.stack);
+      console.error('Error for addContributions', err);
       throw err;
     });
 };
@@ -105,17 +105,17 @@ const upvoteContribution = () => {
 
 //See contributions
 
-const getContributions = () => {
+const getContributions = (storyId, limit=5) => {
 
-  const queryString = `SELECT * FROM contributions JOIN stories ON stories.id = story_id GROUP BY stories.id, contributions.id LIMIT 10;`
+  const queryString = `SELECT contributions.content FROM contributions WHERE story_id = $1 ORDER BY contributions.id DESC LIMIT $2;`
 
-  return db.query(queryString)
+  return db.query(queryString, [storyId, limit])
     .then(data => {
       return data.rows;
     })
     .catch(err => {
       return console.error(err.stack);
     })
-}
+};
 
-module.exports = { newContribution, addContributions, editContribution, getContributions, deleteContribution, deleteWhenAccepted, upvoteContribution };
+module.exports = { addContributions, editContribution, getContributions, deleteContribution, deleteWhenAccepted, upvoteContribution };

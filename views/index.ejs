@@ -25,7 +25,7 @@
 
     <main>
 
-      <div class="browse-stories">
+       <div class="browse-stories"> 
         <% for(let story of stories) { %>
           <div class="story-box">
             <div class="user-avatar">
@@ -45,6 +45,19 @@
                 <p class="story-status">PUBLISHED</p>
                 <% } %>
 
+
+                <% for (let contribution of story.contributions) { %>
+                  <div class="contribution-box">
+                    <div class="user-avatar">
+                      <i></i>
+                    </div>
+                    <div class="contribution-info">
+                      <p>
+                        <%= contribution.content %>
+                      </p>
+                    </div>
+                  </div>
+               <% } %>
           </div>
       </div>
       <% } %>
@@ -68,33 +81,19 @@
           </form>
         </article>
 
-        <section id="contributions-container">
-          <h2 class="contributions">What happens next?</h2>
-          <form id="new-contribution" action="/contributions" method="POST">
-            <textarea name="text" id="contribution-text"></textarea>
-            <div class="contribution-button-counter">
-
-              <button class="contribution-button" type="submit">bArk!</button>
-              <output name="counter" class="upvote-counter" for="contribution-text"></output>
-
-
-                <article>
-                  <header class="contribution-header">
-                    <div class="handle">
-                      <p>@dobermann</p>
-                    </div>
-                  </header>
-                  <p class="contribution-body">'Because he was so fluffy, Sam was considered to be the best snuggler and
-                    the
-                    goodest boy.'</p>
-                  <footer class="contribution-footer">
-                    <div class="days-ago">Posted 2 days ago</div>
-                    <div class="upvote-emoji">
-                      <i class="fa-sharp fa-solid fa-arrow-up"></i>
-                    </div>
-                  </footer>
-                </article>
-              </section>
+          <div id="contributions-form">
+            <form action="/stories/contributions" method="POST">
+              <label for="contribution">What Happens Next?</label>
+              <textarea type="text" id="contribution-content" name="content"></textarea>
+              <br>
+              <button type="submit" value="submit">bArk</button>
+              <output name="contribution-output" for="contribution">
+                <i id="upvote-button" class="fa-solid fa-angles-down"></i>
+              </output>
+            </form>
+            <section id="contributions-container"></section>
+          </div>
+    
 <section id="editing-container">
           <article>
           <div id="editing-form">
@@ -120,6 +119,7 @@
     </div>
         </article>
 </section>
+
 
       </main>
 </body>

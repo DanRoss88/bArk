@@ -14,4 +14,13 @@ const getUsersById = (id) => {
   });
 };
 
-module.exports = { getUsers, getUsersById };
+const getUsersByEmail = (email) => {
+  return db.query(`SELECT * FROM users WHERE email = $1`, [email])
+    .then((result) => {
+      return result.rows[0];
+    });
+};
+
+getUsersByEmail('bigdog1@example.com');
+
+module.exports = { getUsers, getUsersById, getUsersByEmail };
