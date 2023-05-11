@@ -9,7 +9,7 @@ body {
   align-items: center;
 
   background: #d8caee;
-  background: image('https://github.com/DanRoss88/bArk/blob/master/styles/images/wallpaper.png');
+  background-image: url('https://github.com/DanRoss88/bArk/blob/master/styles/images/wallpaper.png');
 }
 
 nav {
@@ -19,7 +19,7 @@ nav {
   border: 3px solid #9A8BD9;
   border-radius: 15px;
   background-color: #D8CAEE;
-  background: image('https://github.com/DanRoss88/bArk/blob/master/styles/images/bark_header.png');
+  background-image: url('https://github.com/DanRoss88/bArk/blob/master/styles/images/bark_header.png');
 }
 
 .story-section {
