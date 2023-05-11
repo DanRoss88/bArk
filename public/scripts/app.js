@@ -20,7 +20,7 @@ let $editButton = $('.editing-form').hide();
 $('#edit-slide-button').click(() => {
   $editButton.slideToggle('slow','swing').focus();
 });
-});
+// });
 
 
 
@@ -70,12 +70,12 @@ $('#edit-slide-button').click(() => {
   //   }
   // };
 
-//     for (const story of stories) {
-//       const $story = createStoryElement(story);
-//       $storiesContainer.append($story);
-//     }
-//   };
-// });
+    for (const story of stories) {
+      const $story = createStoryElement(story);
+      $storiesContainer.append($story);
+    }
+  };
+});
 
 
 ////************* LOAD STORIES **************////
