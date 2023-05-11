@@ -1,20 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { getStories, addStories, editStory, addContributionToStory, deleteStories, seeStories, publishStory, getUserStoriesByUserId } = require('../db/queries/stories');
+const { getStories, addStories, editStory, addContributionToStory, deleteStory, seeStory, publishStory, getUserStoriesById, getStoryById } = require('../db/queries/stories');
 const { getContributions } = require('../db/queries/contributions');
+
 
 const bodyParser = require('body-parser');
 
-/// BROWSE ///
-// router.get('/', async (req, res) => {
-//   try {
-//     const stories = await getStories();
-//     res.render('index', stories);
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).send("Unable to retrieve stories.");
-//   }
-// });
 
 ///BROWSE///
 // ALL STORIES //
@@ -25,7 +16,9 @@ router.get('/', async (req, res) => {
 
   try {
     const stories = await getStories(userId);
+
     const storiesWithContributions = await Promise.all(stories.map(async story => ({...story, contributions: await getContributions(story.id)})));
+
     const templateVars = { stories: storiesWithContributions, user: userId };
 
     res.status(200).render('index', templateVars);
@@ -35,14 +28,31 @@ router.get('/', async (req, res) => {
   }
 });
 
-// CREATE NEW USER STORY //
+//CREATE NEW USER STORY //
+
+// router.post('/', async (req, res) => {
+//   const { title, content } = req.body;
+
+//   if (!title || !content) {
+//     res.status().send('error no story/no title');
+//   }
+//   try {
+//     const story = { title, content, user_id: req.session.userid };
+
+//     await addStories(story);
+//     res.redirect('/stories');
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Server error for addStories');
+//   }
+// });
 
 router.post('/', async (req, res) => {
-
   console.log("here");
 
   try {
-    await addStories({ ...req.body, user: req.session.userid });
+    await addStories({ ...req.body, user_id: req.session.userid });
+    //res.status(200).json(newStory);
     res.redirect('/stories');
   } catch (err) {
     console.error(err);
@@ -50,26 +60,24 @@ router.post('/', async (req, res) => {
   }
 });
 
-/// **** BROWSE *** //// user-stories
-// router.get('/my-stories', async (req, res) => {
+
+//EDIT STORY by story id//
+// router.get('/edit/:id', async (req, res) => {
 
 //   try {
-//     const stories = await getUserStoriesByUserId(req.session.userid);
-//     const templateVars = { stories , user: req.session.userid };
-//     res.status(200).render('mystories', templateVars);
+//     const storyID = req.params.id;
+//     const story = await getUserStoriesByUserId(storyID);
+//     const templateVars = { story, user: req.session.userid };
+//     res.status(200).render('edit', templateVars);
 //   } catch (err) {
 //     console.error(err);
 //     res.status(500).send('Server error');
 //   }
 // });
-
-
-//EDIT STORY by story id//
 router.get('/edit/:id', async (req, res) => {
-
   try {
     const storyID = req.params.id;
-    const story = await getUserStoriesByUserId(storyID);
+    const story = await getStoryById(storyID);
     const templateVars = { story, user: req.session.userid };
     res.status(200).render('edit', templateVars);
   } catch (err) {
@@ -78,20 +86,28 @@ router.get('/edit/:id', async (req, res) => {
   }
 });
 
+// router.put('/edit/:id', async (req, res) => {
 
-router.put('/edit/:id', async (req, res) => {
+//   try {
 
+//     await editStory({ ...req.body, user_id: req.session.userid });
+//     res.redirect('/stories');
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Server error');
+//   }
+
+// });
+router.post('/edit/:id', async (req, res) => {
   try {
-    await editStory({ ...req.body, story_id : req.params.id });
-res.redirect('/stories');
+    await editStory({ ...req.body, id: req.params.id });
+    res.redirect('/stories');
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
   }
-
 });
-
-// // ADD TO STORY //
+// ADD TO STORY //
 // router.post('/:id/contributions', async (req, res) => {
 //   const { story_id, user_id, content } = req.body;
 //   const accepted_status = false;
@@ -108,9 +124,10 @@ res.redirect('/stories');
 // });
 
 // // DELETE STORY //
-router.delete('/:id', async (req, res) => {
+router.post('/:id/delete', async (req, res) => {
+  const storyID = req.params.id;
+
   try {
-    const storyID = req.params.id;
     const story = await deleteStory(storyID);
     const templateVars = { story, user: req.session.userid };
     res.status(200).render('story', templateVars);
@@ -133,7 +150,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST - Add a contribution to a user story
+// // POST - Add a contribution to a user story
 // router.post('/:id/contributions', async (req, res) => {
 //   try {
 //     const storyID = req.params.id;
@@ -146,19 +163,20 @@ router.get('/:id', async (req, res) => {
 //   }
 // });
 
-// // PUBLISH STORY //
-// router.put('/stories/:id/publish', async (req, res) => {
-//   const story_id = req.params.id;
-//   const published_status = true;
-
-//   try {
-//     const publishedStory = await publishStory(story_id, published_status);
-//     res.status(200).json(publishedStory);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Server error');
-//   }
-// });
+// PUBLISH STORY //
+router.post('/stories/:id/publish', async (req, res) => {
+  const storyID = req.params.id;
+  if (!storyID) {
+    res.status().send('error no story');
+  }
+  try {
+    await publishStory(storyID);
+    res.redirect('/stories');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
 
 
 module.exports = router;

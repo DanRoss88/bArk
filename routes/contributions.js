@@ -21,17 +21,17 @@ router.get('/', async (req, res) => {
 });
 
 
-// // ALL CONTRIBUTIONS
+// ALL CONTRIBUTIONS
 
-// router.get('/contributions', async (req, res) => {
-//   try {
-//     const contributions = await getContributions();
-//     res.status(200).json(contributions);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Server error');
-//   }
-// });
+router.get('/contributions', async (req, res) => {
+  try {
+    const contributions = await getContributions();
+    res.status(200).json(contributions);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
 
 // GET USER'S PERSONAL CONTRIBUTIONS
 
