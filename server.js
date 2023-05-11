@@ -40,13 +40,14 @@ const storiesRoutes = require('./routes/stories');
 const homeRoute = require('./routes/home-route');
 const contributionsRouter = require('./routes/contributions');
 const loginRouter = require('./routes/login-route');
-const mystoriesRouter = require('./routes/my-stories');
+
 
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
@@ -54,7 +55,6 @@ app.use('/', homeRoute);
 app.use('/stories', storiesRoutes);
 app.use('/stories/:id/contributions', contributionsRouter);
 app.use('/login', loginRouter);
-app.use('/my-stories', mystoriesRouter);
 // Note: mount other resources here, using the same pattern above
 
 // Home page

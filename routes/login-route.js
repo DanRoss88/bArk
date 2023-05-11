@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getUsers, getUsersById } = require('../db/queries/users');
+// const { getUsers, getUsersById } = require('../db/queries/users');
 
 // GET LOGIN ROUTE
 

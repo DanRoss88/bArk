@@ -35,14 +35,75 @@ const addContributions = (contributions) => {
     });
 };
 
+//// CHECK CONTRIBUTIONS ////
+const checkAllContributionsAccepted = async (story_id) => {
+  const queryString = `
+    SELECT COUNT(*) as num_contributions, SUM(accepted_status::int) as num_accepted_contributions
+    FROM contributions
+    WHERE story_id = $1;
+  `;
+  const values = [story_id];
+
+  const result = await db.query(queryString, values);
+  const numContributions = parseInt(result.rows[0].num_contributions);
+  const numAcceptedContributions = parseInt(result.rows[0].num_accepted_contributions);
+
+  return numContributions === numAcceptedContributions;
+}
+
+/// accept contribution////
+const acceptContribution = (contribution_id) => {
+  const queryString = `UPDATE contributions SET accepted_status = TRUE WHERE id = $1 RETURNING *;`;
+  const values = [contribution_id];
+
+  return db.query(queryString, values)
+    .then(data => {
+      console.log(data);
+      return data.rows[0];
+    })
+    .catch(err => {
+      console.error("Error on acceptContribution", err);
+      throw err;
+    });
+}
+
+// add contribution to story
+  const addContributionToStory = (contribution) => {
+    const { contributionId, storyId } = contribution;
+
+    const query = `
+      UPDATE stories
+      SET content = CONCAT(content, $1)
+      FROM contributions
+      WHERE contributions.id = $2
+      AND stories.id = $3
+    `;
+
+    const values = [
+      contribution.content,
+      contributionId,
+      storyId
+    ];
+
+    return db.query(query, values)
+      .then(res => {
+        console.log('Successfully added contribution to story');
+        return res.rows[0];
+      })
+      .catch(err => {
+        console.error('Error adding contribution to story:', err);
+        throw err;
+      });
+  };
+
 
 // Edit contribution
 
-const editContribution = (contribution_id) => {
+const editContribution = (contribution) => {
 
   const queryString = `UPDATE contributions
   SET contributions.content = $1 RETURNING *`;
-  const values = [contributions.id, contributions.user_id, contributions.content];
+  const values = [contribution.content, contribution.id, contribution.user_id];
 
   return db.query(queryString, values)
     .then(data => {
@@ -55,10 +116,10 @@ const editContribution = (contribution_id) => {
 
 // Delete contribution
 
-const deleteContribution = (contribution_id, user_id) => {
+const deleteContribution = (contribution) => {
 
   const queryString = `DELETE FROM contributions WHERE id = $1 AND user_id = $2`;
-  const values = [contributions.id, contributions.user_id];
+  const values = [contribution.id, contribution.user_id];
 
   return db.query(queryString, values)
     .then(data => {
@@ -71,10 +132,10 @@ const deleteContribution = (contribution_id, user_id) => {
 
 // Delete contribution when accepted
 
-const deleteWhenAccepted = (user_id, story_id) => {
+const deleteWhenAccepted = (contribution) => {
 
-  const queryString = `DELETE FROM contributions JOIN stories ON stories.id = story_id WHERE accepted_status = true AND user_id = $1 AND story_id = $2`;
-  const values = [contributions.user_id, contributions.story_id];
+  const queryString = `DELETE FROM contributions WHERE accepted_status = true AND user_id = $1 AND story_id = $2`;
+  const values = [contribution.user_id, contribution.story_id];
 
   return db.query(queryString, values)
     .then(data => {
@@ -87,11 +148,11 @@ const deleteWhenAccepted = (user_id, story_id) => {
 
 //Increment upvotes
 
-const upvoteContribution = () => {
+const upvoteContribution = (contribution) => {
 
   const queryString = `UPDATE contributions
   SET num_of_upvotes = num_of_upvotes + 1 WHERE user_id = $1`;
-  const values = [contributions.user_id];
+  const values = [contribution.user_id];
 
 
   return db.query(queryString, values)
@@ -118,4 +179,4 @@ const getContributions = (storyId, limit=5) => {
     })
 };
 
-module.exports = { addContributions, editContribution, getContributions, deleteContribution, deleteWhenAccepted, upvoteContribution };
+module.exports = { addContributions, editContribution, getContributions, acceptContribution, checkAllContributionsAccepted, deleteContribution, addContributionToStory, deleteWhenAccepted, upvoteContribution };
