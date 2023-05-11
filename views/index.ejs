@@ -9,19 +9,14 @@
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
-  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/primary.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
-
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+
   <script defer src="/scripts/app.js"></script>
-
-
   <script src="/scripts/upvote_counter.js"></script>
-  <script src="/scripts/publishstory.js"></script>
-  <script src="/scripts/addcontributiontostory.js"></script>
-
 
   <title>Home Page</title>
 </head>
@@ -44,10 +39,10 @@
               </h2>
               <p>
                 <%= story.content %>
-                <button class="publish-story">Publish story</button>
               </p>
 
-              <label class="contribute-button" data-story-id="<%= story.id %>">What happens next? Add your suggestion!</label>
+              <label class="contribute-button" data-story-id="<%= story.id %>">What happens next? Add your
+                suggestion!</label>
               <form action="/stories/<%= story.id %>/contributions" method="POST">
                 <input type="hidden" name="story_id" value="<%= story.id %>">
                 <textarea type="text" id="contribution-content" name="content"></textarea>
@@ -57,7 +52,7 @@
                 </output>
               </form>
 
-                <section id="contributions-container"></section>
+              <section id="contributions-container"></section>
 
 
             </div>
@@ -67,52 +62,8 @@
                 <p class="story-status">PUBLISHED</p>
                 <% } %>
 
-                  <% } %>
-          </div>
-      </div>
 
-      <div class="browse-contributions">
-        <% for (let contribution in locals.contributions) { %>
-          <div class="contribution-box">
-            <div class="user-avatar">
-              <i></i>
-            </div>
-            <div class="contribution-info">
-              <p>
-                <%= contribution.content %>
-              </p>
-            </div>
-          </div>
-          <% } %>
-      </div>
-
-      </div>
-      <article>
-        <div id="stories-form">
-          <!-- Errors Here-->
-          <div id="error-msg-guest" class="error"><i class="fa-solid fa-circle-exclamation"></i></div>
-          <form action="/stories" method="POST">
-            <label for="title">title</label>
-            <textarea type="text" id="story-title" name="title"></textarea>
-            <br></br>
-            <label for="content">story</label>
-            <textarea type="text" id="story-content" name="content"></textarea>
-            <br></br>
-            <button type="submit" value="'submit">bArk</button>
-            <output name="story-output" for="story">
-              <i id="upvote-button" class="fa-solid fa-angles-down"></i>
-            </output>
-      </article>
-
-      <section id="editing-container">
-        <% for (let story of stories) { %>
-
-                <% } %>
-               </div>
-             </div>
-
-                  <div class="browse-contributions">
-                <% for (let contribution in locals.contributions) { %>
+                <% for (let contribution of story.contributions) { %>
                   <div class="contribution-box">
                     <div class="user-avatar">
                       <i></i>
@@ -124,113 +75,60 @@
                       <button class="upvote-button">Upvote</button>
                       <i class="fa-sharp fa-solid fa-arrow-up"></i>
                       <p class="numofupvotes">0</p>
-                      <button class="accept-contribution">Accept contribution</button>
-                      <p class="published">POSTED</p>
-
                     </div>
                   </div>
                <% } %>
+               </div>
+             </div>
+             <% } %>
+
+
                 </div>
 
-
+        </div>
         <article>
-          <button type="button" name="edit-form" id="edit-slide-button">Edit Story</button>
-          <div class="editing-form">
-
-            <form action="/stories/edit/<%= story.id %>" method="POST">
-              <label for="story_id"><%= story.id %></label>
-              <input type="hidden" id="story_id" name="story_id" value="<%= story.id %>">
-              <label for="title">Edit Story Title</label>
-              <textarea type="text" id="edit-story-title" name="edit-title"><%= story.title %></textarea>
+          <div id="stories-form">
+            <form action="/stories" method="POST">
+              <label for="title">title</label>
+              <textarea type="text" id="story-title" name="title"></textarea>
               <br></br>
-              <label for="content">Edit Story</label>
-              <textarea type="text" id="edit-story-content" name="edit-content"><%= story.content %></textarea>
+              <label for="content">story</label>
+              <textarea type="text" id="story-content" name="content"></textarea>
               <br></br>
-              <button type="submit" class="update-button" data-story-id="<%= story.id %>">Update</button>
-              <button type="submit" class="delete-button" data-story-id="<%= story.id %>">Delete Story</button>
-              <button type="submit" class="publish-button" data-story-id="<%= story.id %>">Publish Story</button>
-              <output name="edit-story-output" for="edit-story"></output>
-            </form>
-          </div>
-        </article>
-
-        <% } %>
-      </section>
-
-
-        <section id="contributions-container">
-          <h2 class="contributions">What happens next?</h2>
-          <form id="new-contribution" action="/contributions" method="POST">
-            <textarea name="text" id="contribution-text"></textarea>
-            <div class="contribution-button-counter">
-
-              <button class="contribution-button" type="submit">bArk!</button>
-              <output name="counter" class="upvote-counter" for="contribution-text"></output>
-
-
-              <article>
-                <header class="contribution-header">
-                  <div class="handle">
-                    <p>@dobermann</p>
-                  </div>
-                </header>
-                <p class="contribution-body">'Because he was so fluffy, Sam was considered to be the best snuggler and
-                  the
-                  goodest boy.'</p>
-                <footer class="contribution-footer">
-                  <div class="days-ago">Posted 2 days ago</div>
-                  <div class="upvote-emoji">
-                    <i class="fa-sharp fa-solid fa-arrow-up"></i>
-                  </div>
-                </footer>
-              </article>
-        </section>
-    </main>
-
-          <div id="contributions-form">
-            <form action="/stories/contributions" method="POST">
-              <label for="contribution">What Happens Next?</label>
-              <textarea type="text" id="contribution-content" name="content"></textarea>
-              <br>
-              <button type="submit" value="submit">bArk</button>
-              <output name="contribution-output" for="contribution">
+              <button type="submit" value="'submit">bArk</button>
+              <output name="story-output" for="story">
                 <i id="upvote-button" class="fa-solid fa-angles-down"></i>
               </output>
-            </form>
-            <section id="contributions-container"></section>
-          </div>
-
+        </article>
 
         <section id="editing-container">
-          <button type="button" name="edit-form" id="edit-slide-button">Edit Story</button>
+          <% for (let story of stories) { %>
             <article>
+              <button type="button" name="edit-form" id="edit-slide-button">Edit Story</button>
               <div class="editing-form">
-                <form action="/:id" method="GET">
-                  <% for(let story of stories) { %>
-                    <form action="/stories" method="POST">
-                      <label for="story_id">
-                        <% story.id %>
-                      </label>
 
-                      <label for="title">Edit Story Title</label>
-                      <textarea type="text" id="edit-story-title" name="edit-title"><%=story.title%></textarea>
-                      <br></br>
-                      <label for="content">Edit Story</label>
-                      <textarea type="text" id="edit-story-content" name="edit-content"><%=story.content%></textarea>
-                      <br></br>
-                      <button type="submit" value="'submit">Re-Post</button>
-                      <output name="edit-story-output" for="edit-story"></output>
-                    </form>
+                <form action="/stories/edit/<%= story.id %>" method="POST">
+                  <label for="story_id">
+                    <%= story.id %>
+                  </label>
+                  <input type="hidden" id="story_id" name="story_id" value="<%= story.id %>">
+                  <label for="title">Edit Story Title</label>
+                  <textarea type="text" id="edit-story-title" name="edit-title"><%= story.title %></textarea>
+                  <br></br>
+                  <label for="content">Edit Story</label>
+                  <textarea type="text" id="edit-story-content" name="edit-content"><%= story.content %></textarea>
+                  <br></br>
+                  <button type="submit" class="update-button" data-story-id="<%= story.id %>">Update</button>
+                  <button type="submit" class="delete-button" data-story-id="<%= story.id %>">Delete Story</button>
+                  <button type="submit" class="publish-button" data-story-id="<%= story.id %>">Publish Story</button>
+                  <output name="edit-story-output" for="edit-story"></output>
                 </form>
-                <% } %>
-              </div>
               </div>
             </article>
-
         </section>
-
-      </main>
+        <% } %>
+    </main>
 
 </body>
 
-</html>
+  </html>
