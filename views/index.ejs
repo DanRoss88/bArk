@@ -39,6 +39,7 @@
               </h2>
               <p>
                 <%= story.content %>
+                <button class="publish-story">Publish</button>
               </p>
 
               <label class="contribute-button" data-story-id="<%= story.id %>">What happens next? Add your suggestion!</label>
@@ -74,6 +75,7 @@
                       <button class="upvote-button">Upvote</button>
                       <i class="fa-sharp fa-solid fa-arrow-up"></i>
                       <p class="numofupvotes">0</p>
+                      <button class="accept-contribution">Accept contribution</button>
                     </div>
                   </div>
                <% } %>
