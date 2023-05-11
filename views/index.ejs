@@ -9,8 +9,8 @@
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
-  <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="stylesheet" href="/styles/layout.css" />
+  <!-- <link rel="stylesheet" href="/styles/main.css" /> -->
+  <link rel="stylesheet" href="/styles/basic_css.css" />
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -25,7 +25,7 @@
 
     <main>
 
-      <div class="browse-stories">
+       <div class="browse-stories"> 
         <% for(let story of stories) { %>
           <div class="story-box">
             <div class="user-avatar">
@@ -45,6 +45,19 @@
                 <p class="story-status">PUBLISHED</p>
                 <% } %>
 
+
+                <% for (let contribution of story.contributions) { %>
+                  <div class="contribution-box">
+                    <div class="user-avatar">
+                      <i></i>
+                    </div>
+                    <div class="contribution-info">
+                      <p>
+                        <%= contribution.content %>
+                      </p>
+                    </div>
+                  </div>
+               <% } %>
           </div>
       </div>
       <% } %>
@@ -93,6 +106,7 @@
 
         </section>
 
+
         <section id="contributions-container">
           <h2 class="contributions">What happens next?</h2>
           <form id="new-contribution" action="/contributions" method="POST">
@@ -121,6 +135,49 @@
               </article>
         </section>
     </main>
+
+          <div id="contributions-form">
+            <form action="/stories/contributions" method="POST">
+              <label for="contribution">What Happens Next?</label>
+              <textarea type="text" id="contribution-content" name="content"></textarea>
+              <br>
+              <button type="submit" value="submit">bArk</button>
+              <output name="contribution-output" for="contribution">
+                <i id="upvote-button" class="fa-solid fa-angles-down"></i>
+              </output>
+            </form>
+            <section id="contributions-container"></section>
+          </div>
+    
+<section id="editing-container">
+          <article>
+          <div id="editing-form">
+            <!-- Errors Here-->
+            <div id="error-msg-guest" class="error"><i class="fa-solid fa-circle-exclamation"></i></div>
+              <form action="/:id" method="GET">
+                <% for(let story of stories) { %>
+            <form action="/stories" method="POST">
+              <label for="story_id"><% story.id %></label>
+
+              <label for="title">Edit Story Title</label>
+              <textarea type="text" id="edit-story-title" name="edit-title"><%=story.title%></textarea>
+              <br></br>
+              <label for="content">Edit Story</label>
+              <textarea type="text" id="edit-story-content" name="edit-content"><%=story.content%></textarea>
+              <br></br>
+              <button type="submit" value="'submit">Edit</button>
+              <output name="edit-story-output" for="edit-story"></output>
+
+          </form>
+      </form>
+      <% } %>
+    </div>
+        </article>
+</section>
+
+
+      </main>
+
 </body>
 
 </html>
