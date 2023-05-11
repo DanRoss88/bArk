@@ -9,19 +9,11 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  req.session.userid = req.body.userid;
-  res.redirect('/')
+
+  req.session.userid = 1;
+  res.redirect('/stories')
+
 });
 
-// router.get('/login/:id', (req, res) => {
-//   // using encrypted cookies
-//   const user_id = req.params.id;
-//   req.session.user_id = user_id;
-
-//   console.log('TEST:', `user_id set to ${req.session.user_id}`);
-
-//   // send the user somewhere
-//   res.redirect('/');
-// });
 
 module.exports = router;

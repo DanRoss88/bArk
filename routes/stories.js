@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { getStories, addStories, editStory, addContributionToStory, deleteStories, seeStories, publishStory, getUserStoriesByUserId } = require('../db/queries/stories');
+const { getContributions } = require('../db/queries/contributions');
+
 const bodyParser = require('body-parser');
 
 /// BROWSE ///
@@ -18,9 +20,15 @@ const bodyParser = require('body-parser');
 // ALL STORIES //
 router.get('/', async (req, res) => {
 
+  const userId = req.session.userid;
+  console.log('##0 USER:', userId);
+
   try {
-    const stories = await getStories(req.session.userid);
-    const templateVars = { stories: stories, user: req.session.userid };
+    const stories = await getStories(userId);
+    const storiesWithContributions = await Promise.all(stories.map(async story => ({...story, contributions: await getContributions(story.id)})));
+    console.log('#1 STORIES:', stories);
+    const templateVars = { stories: storiesWithContributions, user: userId };
+
     res.status(200).render('index', templateVars);
   } catch (err) {
     console.error(err);
@@ -29,11 +37,13 @@ router.get('/', async (req, res) => {
 });
 
 // CREATE NEW USER STORY //
+
 router.post('/', async (req, res) => {
+
   console.log("here");
+
   try {
-    await addStories({ ...req.body, user_id: req.session.userid });
-    //res.status(200).json(newStory);
+    await addStories({ ...req.body, user: req.session.userid });
     res.redirect('/stories');
   } catch (err) {
     console.error(err);
@@ -41,28 +51,28 @@ router.post('/', async (req, res) => {
   }
 });
 
-/// **** BROWSE *** ////
-router.get('/my-stories', async (req, res) => {
+/// **** BROWSE *** //// user-stories
+// router.get('/my-stories', async (req, res) => {
 
-  try {
-    const stories = await getStories(req.session.userid);
-    const templateVars = { stories: stories, user: req.session.userid };
-    res.status(200).render('mystories', templateVars);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error');
-  }
-});
+//   try {
+//     const stories = await getUserStoriesByUserId(req.session.userid);
+//     const templateVars = { stories , user: req.session.userid };
+//     res.status(200).render('mystories', templateVars);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Server error');
+//   }
+// });
 
 
 //EDIT STORY by story id//
-router.get('/:id', async (req, res) => {
+router.get('/edit/:id', async (req, res) => {
 
   try {
     const storyID = req.params.id;
     const story = await getUserStoriesByUserId(storyID);
     const templateVars = { story, user: req.session.userid };
-    res.status(200).render('/stories/:id', templateVars);
+    res.status(200).render('edit', templateVars);
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
@@ -70,12 +80,10 @@ router.get('/:id', async (req, res) => {
 });
 
 
-router.put('/stories/:id', async (req, res) => {
+router.put('/edit/:id', async (req, res) => {
 
   try {
-   // const updatedStory =
     await editStory({ ...req.body, story_id : req.params.id });
-    //res.status(200).json(updatedStory);
 res.redirect('/stories');
   } catch (err) {
     console.error(err);
@@ -101,33 +109,43 @@ res.redirect('/stories');
 // });
 
 // // DELETE STORY //
-// router.post('/stories/:id', async (req, res) => {
-//   const story_id = req.params.id;
+router.delete('/:id', async (req, res) => {
+  try {
+    const storyID = req.params.id;
+    const story = await deleteStory(storyID);
+    const templateVars = { story, user: req.session.userid };
+    res.status(200).render('story', templateVars);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
 
+// GET USER STORY //
+router.get('/:id', async (req, res) => {
+  const user_id = req.params.id;
+
+  try {
+    const stories = await seeStory(user_id);
+    res.status(200).json(stories);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
+// POST - Add a contribution to a user story
+// router.post('/:id/contributions', async (req, res) => {
 //   try {
-//     const deletedStory = await deleteStories(story_id);
-//     res.status(200).json(deletedStory);
-
+//     const storyID = req.params.id;
+//     const { content } = req.body;
+//     await addContributionToStory(storyID, content);
+//     res.redirect(`/stories/${storyID}`);
 //   } catch (err) {
 //     console.error(err);
 //     res.status(500).send('Server error');
 //   }
-//   res.redirect('/');
 // });
-
-// // GET USERS STORIES //
-// router.get('/users/:id/stories', async (req, res) => {
-//   const user_id = req.params.id;
-
-//   try {
-//     const stories = await seeStories(user_id);
-//     res.status(200).json(stories);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send('Server error');
-//   }
-// });
-
 
 // // PUBLISH STORY //
 // router.put('/stories/:id/publish', async (req, res) => {
