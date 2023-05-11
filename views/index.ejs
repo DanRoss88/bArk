@@ -17,6 +17,8 @@
 
   <script defer src="/scripts/app.js"></script>
   <script src="/scripts/upvote_counter.js"></script>
+  <script src="/scripts/publishstory.js"></script>
+  <script src="/scripts/addcontributiontostory.js"></script>
 
   <title>Home Page</title>
 </head>
@@ -26,7 +28,6 @@
   <%- include('partials/_header') %>
 
     <main>
-
       <div class="browse-stories">
         <% for(let story of stories) { %>
           <div class="story-box">
@@ -64,24 +65,26 @@
                 <% } %>
 
 
-                  <% for (let contribution of story.contributions) { %>
-                    <div class="contribution-box">
-                      <div class="user-avatar">
-                        <i></i>
-                      </div>
-                      <div class="contribution-info">
-                        <p>
-                          <%= contribution.content %>
-                        </p>
-                        <button class="upvote-button">Upvote</button>
-                        <i class="fa-sharp fa-solid fa-arrow-up"></i>
-                        <p class="numofupvotes">0</p>
-                      </div>
+                <% for (let contribution of story.contributions) { %>
+                  <div class="contribution-box">
+                    <div class="user-avatar">
+                      <i></i>
                     </div>
-                    <% } %>
-          </div>
-      </div>
-      <% } %>
+                    <div class="contribution-info">
+                      <p>
+                        <%= contribution.content %>
+                      </p>
+                      <button class="upvote-button">Upvote</button>
+                      <i class="fa-sharp fa-solid fa-arrow-up"></i>
+                      <p class="numofupvotes">0</p>
+                      <button class="accept-contribution" data-contribution-id="<%= contribution.id %>">Accept contribution</button>
+                      <p class="published">POSTED</p>
+                    </div>
+                  </div>
+               <% } %>
+               </div>
+             </div>
+             <% } %>
 
 
         </div>

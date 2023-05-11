@@ -1,6 +1,8 @@
 const express = require('express');
 
+
 const { addContributions, addContributionToStory, getContributions, deleteWhenAccepted, acceptContribution, editContribution, deleteContribution, upvoteContribution } = require('../db/queries/contributions');
+
 const router = express.Router();
 
 

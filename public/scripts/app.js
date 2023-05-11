@@ -1,6 +1,7 @@
 // Client facing scripts here
+const { publishStory } = require('../db/queries/stories');
 
-$(document).ready(function () {
+$(document).ready(function() {
 
 
   ///////// EDIT SLIDE DOWN //////
@@ -24,7 +25,7 @@ loginButton.addEventListener('click', () => {
 });
 
   ////// ACCEPT CONTRIBUTION //////////
-  $('.accept-btn').on('click', function (event) {
+  $(document).on('click', '.accept-contribution', function(event) {
     event.preventDefault();
 
     const contributionId = $(this).data('contribution-id');
@@ -32,15 +33,26 @@ loginButton.addEventListener('click', () => {
     $.ajax({
       method: 'POST',
       url: `/stories/contributions/${contributionId}/accept`,
-      success: function () {
+      success: function() {
         location.reload();
       },
-      error: function () {
+      error: function() {
         console.error('Error accepting contribution:');
         alert('There was an error accepting this contribution.');
       }
     });
   });
+
+////// PUBLISH STORY \\\\\\
+    $(".publish-button").on('click', function() {
+      const storyID = req.params.id;
+      if (!storyID) {
+        res.status().send('Story does not exist');
+      }
+      publishStory(storyID)
+      $(this).siblings(".published").text("PUBLISHED");
+
+    });
 
 
   ///////// PUBLISH STORY ///////////
@@ -66,4 +78,6 @@ loginButton.addEventListener('click', () => {
 
 
 });
+
+
 
