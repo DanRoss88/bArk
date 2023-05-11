@@ -9,12 +9,21 @@ $(document).ready(function() {
    const $form = $('#story-form').hide();
  */
   //////// NAVBAR BUTTON //////
-
-
   $("#bark-button").click(() => {
     $('#stories-form').slideToggle().find('textArea').focus();
 
   });
+
+///////// EDIT SLIDE DOWN //////
+let $editButton = $('.editing-form').hide();
+
+$('#edit-slide-button').click(() => {
+  $editButton.slideToggle('slow','swing').focus();
+});
+
+
+
+
   //////////*
   /*const createStoryElement = function(stories) {
     //TIMEAGO//
@@ -49,9 +58,16 @@ $(document).ready(function() {
   };
 
 ////************** RENDER Stories **************////
-  const renderStories = function(stories) {
+  // const renderStories = function(stories) {
 
-    const $storiesContainer = $('#stories-container').empty();
+  //   const $storiesContainer = $('#stories-container').empty();
+
+
+  //   for (const story of stories) {
+  //     const $story = createStoryElement(story);
+  //     $storiesContainer.append($story);
+  //   }
+  // };
 
     for (const story of stories) {
       const $story = createStoryElement(story);
@@ -59,6 +75,7 @@ $(document).ready(function() {
     }
   };
 });
+
 
 // CREATE Contribution Element
 
@@ -97,6 +114,23 @@ $(document).ready(function() {
   //   }
   // };
 
+
+
+
+// LOAD Contributions
+const loadContributions = () => {
+  $.ajax({
+    method: 'GET',
+    url:'/contributions'
+  }).then ((contributions) => {
+    renderContributions(contributions);
+  });
+};
+loadContributions();
+});
+
+
+
 // });
 
 // // LOAD Contributions
@@ -109,6 +143,7 @@ $(document).ready(function() {
 //   });
 // };
 // loadContributions();
+
 
 
 ////************* LOAD STORIES **************////
@@ -172,6 +207,9 @@ $(document).ready(function() {
 
 });
 
+*/
+
+
 ///////// EDIT SLIDE DOWN //////
 $("#edit-slide-button").click(() => {
   $('.editing-form').slideToggle('slow','swing').focus();
@@ -179,4 +217,5 @@ $("#edit-slide-button").click(() => {
 
 });
 )
+
 
