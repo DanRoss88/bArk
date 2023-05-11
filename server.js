@@ -52,7 +52,7 @@ app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/', homeRoute);
 app.use('/stories', storiesRoutes);
-app.use('/stories/contributions', contributionsRouter);
+app.use('/stories/:id/contributions', contributionsRouter);
 app.use('/login', loginRouter);
 app.use('/my-stories', mystoriesRouter);
 // Note: mount other resources here, using the same pattern above

@@ -1,6 +1,9 @@
-let count = 0;
+$(document).ready(function() {
 
-$("#upvote").click(function() {
-  count++;
-  $("#numofupvotes").text(count);
+$(".upvote-button").on('click', function() {
+  let count = parseInt($(this).siblings(".numofupvotes").text());
+  $(this).siblings(".numofupvotes").text(count + 1);
 });
+
+});
+
