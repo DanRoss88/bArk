@@ -1,3 +1,14 @@
+bArk
+=========
+
+## About
+
+Have you ever had a burning desire to write totally pawesome stories about your beloved puppers? 
+
+Welcome to bArk, the app that allows you to collaborate with other doggo-aficionados to create fun and exciting stories featuring your favourite canines! Whether you want to write your own stories, contribute to others' tails (pun intended), or just put your feet up and read, there is something for all dog lovers here!
+
+
+
 LHL Node Skeleton
 =========
 
@@ -42,3 +53,14 @@ The following steps are only for _one_ of the group members to perform.
 - Node 10.x or above
 - NPM 5.x or above
 - PG 6.x
+- body-Parser ^1.20.2
+- Chalk ^2.4.2
+- Cookie-Session ^2.0.0
+- dotenv ^2.0.0
+- EJS ^2.6.2
+- Express ^4.18.2
+- Morgan ^1.9.1
+- Node Sass Middleware ^1.0.1
+- Sass ^1.62.1
+- Nodemon ^2.0.22
+- Eslint ^8.40.0
