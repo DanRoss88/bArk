@@ -45,11 +45,16 @@ router.post('/', async (req, res) => {
 
 
 /// ACCEPT CONTRIBUTION ///
-router.post('/contributions/:id/accept', async (req, res) => {
+router.post('/:id/accept', async (req, res) => {
   const contributionId = req.params.id;
+  const userId = req.session.userid;
+  const storyId = req.body.storyId;
+  const content = req.body.content;
+  console.log('#2BODY', req.body);
   try {
-    const contribution = await acceptContribution(contributionId);
-    res.status(200).json(contribution);
+    await acceptContribution(contributionId);
+    await addContributionToStory(contributionId, storyId, content);
+    res.status(200).json({ message: 'Contribution accepted and added to the story' });
   } catch (err) {
     console.error('Error accepting contribution:', err);
     res.status(500).send('Server error accepting contribution');
@@ -58,19 +63,19 @@ router.post('/contributions/:id/accept', async (req, res) => {
 
 
 //// ADD CONTRIBUTION TO STORY /////
-router.post('/contributions', async (req, res) => {
-  const userId = req.session.userid;
-  const storyId = req.body.story_id;
-  const content = req.body.content;
+// router.post('/:id/accept', async (req, res) => {
+//   const userId = req.session.userid;
+//   const storyId = req.body.story_id;
+//   const content = req.body.content;
 
-  try {
-    const result = await addContributionToStory(userId, storyId, content);
-    res.status(200).json(result);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error');
-  }
-});
+//   try {
+//     const result = await addContributionToStory(userId, storyId, content);
+//     res.status(200).json(result);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Server error');
+//   }
+// });
 
 
 /// ** EDIT ** ///

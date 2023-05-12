@@ -68,22 +68,21 @@ const acceptContribution = (contribution_id) => {
 }
 
 // add contribution to story
-  const addContributionToStory = (contribution) => {
-    const { contributionId, storyId } = contribution;
+  const addContributionToStory = (contributionId, storyId) => {
+    // const { contributionId, storyId } = contribution;
 
     const query = `
       UPDATE stories
-      SET content = CONCAT(content, $1)
-      FROM contributions
-      WHERE contributions.id = $2
-      AND stories.id = $3
+      SET content = CONCAT(stories.content,
+        (SELECT content FROM contributions WHERE id = $1))
+        WHERE id = $2
     `;
 
     const values = [
-      contribution.content,
       contributionId,
       storyId
     ];
+    console.log('#1 VALUES:', values);
 
     return db.query(query, values)
       .then(res => {
@@ -168,7 +167,7 @@ const upvoteContribution = (contribution) => {
 
 const getContributions = (storyId, limit=5) => {
 
-  const queryString = `SELECT contributions.content FROM contributions WHERE story_id = $1 ORDER BY contributions.id DESC LIMIT $2;`
+  const queryString = `SELECT contributions.id, contributions.content FROM contributions WHERE story_id = $1 ORDER BY contributions.id DESC LIMIT $2;`
 
   return db.query(queryString, [storyId, limit])
     .then(data => {
