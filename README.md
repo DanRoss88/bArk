@@ -1,3 +1,13 @@
+bArk
+
+## About
+
+Have you ever had a burning desire to write totally pawesome stories about your beloved puppers? 
+
+Welcome to bArk, the app that allows you to collaborate with other doggo-aficionados to create fun and exciting stories featuring your favourite canines! Whether you want to create stories, contribute to others' tails (pun intended), or just put your feet up and read, there is something for all dog lovers here!
+
+
+
 LHL Node Skeleton
 =========
 
