@@ -1,6 +1,8 @@
 const express = require('express');
 
-const { addContributions, getContributions, deleteWhenAccepted, upvoteContribution, acceptContribution, addContributionToStory, checkAllContributionsAccepted } = require('../db/queries/contributions');
+
+const { addContributions, addContributionToStory, getContributions, deleteWhenAccepted, acceptContribution, editContribution, deleteContribution, upvoteContribution } = require('../db/queries/contributions');
+
 const router = express.Router();
 
 
@@ -33,7 +35,7 @@ router.post('/', async (req, res) => {
   };
 
   try {
-    const newContribution = await addContributions(contributions)
+    await addContributions(contributions);
     res.redirect('/stories');
   } catch (err) {
     console.error(err);
