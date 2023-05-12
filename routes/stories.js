@@ -8,17 +8,11 @@ const { getContributions } = require('../db/queries/contributions');
 ///BROWSE///
 // ALL STORIES //
 router.get('/', async (req, res) => {
-
   const userId = req.session.userid;
-
-
   try {
     const stories = await getStories(userId);
-
     const storiesWithContributions = await Promise.all(stories.map(async story => ({ ...story, contributions: await getContributions(story.id) })));
-
     const templateVars = { stories: storiesWithContributions, user: userId };
-
     res.status(200).render('index', templateVars);
   } catch (err) {
     console.error(err);
@@ -43,11 +37,8 @@ router.get('/', async (req, res) => {
 
 ////// CREATE NEW USER STORY ///////
 router.post('/', async (req, res) => {
-  console.log("here");
-
   try {
     await addStories({ ...req.body, user_id: req.session.userid });
-    //res.status(200).json(newStory);
     res.redirect('/stories');
   } catch (err) {
     console.error(err);
@@ -58,7 +49,6 @@ router.post('/', async (req, res) => {
 // GET USER STORY //
 router.get('/:id', async (req, res) => {
   const user_id = req.params.id;
-
   try {
     const stories = await seeStory(user_id);
     res.status(200).json(stories);
@@ -95,7 +85,6 @@ router.post('/edit/:id', async (req, res) => {
 // // DELETE STORY //
 router.post('/:id/delete', async (req, res) => {
   const storyID = req.params.id;
-
   try {
     const story = await deleteStory(storyID);
     const templateVars = { story, user: req.session.userid };

@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 const db = require('../connection');
 
 const addContributions = (contributions) => {
@@ -48,34 +49,7 @@ const acceptContribution = (contribution_id) => {
 }
 
 // add contribution to story
-
-
-  const addContributionToStory = (contributionId, storyId) => {
-
-    const query = `
-      UPDATE stories
-      SET content = CONCAT(stories.content,
-        (SELECT content FROM contributions WHERE id = $1))
-        WHERE id = $2
-
-    `;
-
-    const values = [
-      contributionId,
-      storyId
-    ];
-
-    return db.query(query, values)
-      .then(res => {
-        console.log('Successfully added contribution to story');
-        return res.rows[0];
-      })
-      .catch(err => {
-        console.error('Error adding contribution to story:', err);
-        throw err;
-      });
-  };
-
+const addContributionToStory = (contributionId, storyId) => {
 
   const query = `
     UPDATE stories
@@ -106,15 +80,15 @@ const acceptContribution = (contribution_id) => {
 
 const getContributions = (storyId, limit=5) => {
 
-  const queryString = `SELECT contributions.id, contributions.content FROM contributions WHERE story_id = $1 ORDER BY contributions.id DESC LIMIT $2;`
+const queryString = `SELECT contributions.id, contributions.content FROM contributions WHERE story_id = $1 ORDER BY contributions.id DESC LIMIT $2;`
 
-  return db.query(queryString, [storyId, limit])
-    .then(data => {
-      return data.rows;
-    })
-    .catch(err => {
-      return console.error(err.stack);
-    })
+return db.query(queryString, [storyId, limit])
+  .then(data => {
+    return data.rows;
+  })
+  .catch(err => {
+    return console.error(err.stack);
+  })
 };
 
 module.exports = { addContributions, getContributions, acceptContribution, checkAllContributionsAccepted, addContributionToStory };

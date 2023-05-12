@@ -1,5 +1,8 @@
 const db = require('../connection');
 
+///// STORY QUERIES /////
+
+//// GET ALL STORIES
 const getStories = () => {
   return db.query(`SELECT * FROM stories ORDER BY date_created DESC LIMIT 10;`)
     .then(data => {
@@ -10,6 +13,8 @@ const getStories = () => {
       throw err;
     })
 };
+
+//// GET USERS STORIES
 const getUserStoriesByUserId = (user_id, story) => {
   const queryString = `SELECT stories
   FROM stories
@@ -27,7 +32,7 @@ const getUserStoriesByUserId = (user_id, story) => {
     });
 };
 
-
+////// ADD STORY
 const addStories = (stories) => {
 
   const queryString = `INSERT INTO stories (user_id, title, content, published_status, date_created)
@@ -49,6 +54,7 @@ const addStories = (stories) => {
     });
 };
 
+///// UPDATE STORY
 const editStory = (story) => {
 
   const queryString = `UPDATE stories SET title = $1, content = $2 WHERE id = $3 RETURNING *;`;
@@ -63,6 +69,8 @@ const editStory = (story) => {
       throw err;
     });
 };
+
+//// GET INDIVIDUAL STORY
 const getStoryById = (storyId) => {
   const queryString = 'SELECT * FROM stories WHERE id = $1;';
   const values = [storyId];
@@ -76,7 +84,7 @@ const getStoryById = (storyId) => {
     });
 };
 
-
+///// DELETE STORY
 const deleteStory = (storyId) => {
   const queryString = `DELETE * FROM stories WHERE id = $1;`;
   const values = [storyId];
@@ -92,6 +100,7 @@ const deleteStory = (storyId) => {
     });
 };
 
+//////// SEE STORY
 const seeStory = (storyId) => {
   const query = 'SELECT * FROM stories WHERE id = $1;';
   const values = [storyId];
@@ -109,8 +118,7 @@ const seeStory = (storyId) => {
     });
 };
 
-
-
+//////// PUBLISH STORY
 const publishStory = (story_id) => {
   const queryString = 'UPDATE stories SET published_status = TRUE WHERE id = $1 RETURNING *;';
   const values = [story_id];
@@ -126,8 +134,7 @@ const publishStory = (story_id) => {
     });
 }
 
-
-
+///// SEE ALL STORIES WITH CONTRIBUTIONS
 const getStoriesWithContributions = async function (userId) {
   const queryString = `
     SELECT stories.*,
@@ -177,6 +184,7 @@ const getStoriesWithContributions = async function (userId) {
   }
 }
 
+//// ACCEPT CONTRIBUTION
 const acceptContribution = (contributionId) => {
   const queryString = `
     UPDATE contributions

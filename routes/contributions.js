@@ -7,9 +7,7 @@ const router = express.Router();
 
 
 /// *** BROWSE *** /// HOME ////
-
 router.get('/', async (req, res) => {
-
   try {
     const contributions = await getContributions();
     res.render('index', { contributions, stories:[] });
