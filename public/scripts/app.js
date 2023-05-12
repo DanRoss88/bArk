@@ -1,6 +1,4 @@
 // Client facing scripts here
-
-
 $(document).ready(function() {
 
 
@@ -30,12 +28,16 @@ loginButton.addEventListener('click', () => {
   $(document).on('click', '.accept-contribution', function(event) {
     event.preventDefault();
 
-    const contributionId = $(this).data('contribution-id');
+    const data = $(this).data();
+    const contributionId = data.contributionId;
+    const storyId = data.storyId;
 
     $.ajax({
       method: 'POST',
       url: `/stories/contributions/${contributionId}/accept`,
+      data: {storyId},
       success: function() {
+        console.log('#1 Successfully accepted');
         location.reload();
       },
       error: function() {
