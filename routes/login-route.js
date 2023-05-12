@@ -5,14 +5,12 @@ const router = express.Router();
 // GET LOGIN ROUTE
 
 router.get('/', (req, res) => {
-  res.render('login')
+  res.render('login');
 });
 
 router.post('/', (req, res) => {
-
   req.session.userid = 1;
-  res.redirect('/stories')
-
+  res.redirect('/stories');
 });
 
 
