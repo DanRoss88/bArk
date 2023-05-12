@@ -65,7 +65,7 @@
 
 
                 <% for (let contribution of story.contributions) { %>
-                  <% if (contribution.accepted_status) { %>
+                  <% if (!contribution.accepted_status) { %>
                   <div class="contribution-box">
                     <div class="user-avatar">
                       <i></i>
@@ -79,7 +79,6 @@
                       <p class="numofupvotes">0</p>
 
                       <button class="accept-contribution" id="<%= contribution.id %>" data-contribution-id="<%= contribution.id %>" data-story-id="<%= story.id %>">Accept contribution</button>
-                      <p class="published">POSTED</p>
                     </div>
                   </div>
                <% } %>

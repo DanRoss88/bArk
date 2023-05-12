@@ -1,24 +1,4 @@
 const db = require('../connection');
-const express = require('express');
-
-// Create new contribution
-
-// const newContribution = (user_id, story_id, content, accepted_status, num_of_upvotes) => {
-
-//   const queryString = `INSERT INTO contributions (user_id, story_id, content, accepted_status, num_of_upvotes)
-//   VALUES ($1, $2, $3, $4, $5) RETURNING *`;
-//   const values = [contributions.user_id, contributions.story_id, contributions.content, contributions.accepted_status, contributions.num_of_upvotes];
-
-//   return db.query(queryString, values)
-//     .then(data => {
-//       return data.rows[0];
-//     })
-//     .catch(err => {
-//       return console.error(err.stack);
-//     })
-// }
-
-// Add contribution
 
 const addContributions = (contributions) => {
 
@@ -69,7 +49,6 @@ const acceptContribution = (contribution_id) => {
 
 // add contribution to story
   const addContributionToStory = (contributionId, storyId) => {
-    // const { contributionId, storyId } = contribution;
 
     const query = `
       UPDATE stories
@@ -82,7 +61,6 @@ const acceptContribution = (contribution_id) => {
       contributionId,
       storyId
     ];
-    console.log('#1 VALUES:', values);
 
     return db.query(query, values)
       .then(res => {
@@ -96,72 +74,6 @@ const acceptContribution = (contribution_id) => {
   };
 
 
-// Edit contribution
-
-const editContribution = (contribution) => {
-
-  const queryString = `UPDATE contributions
-  SET contributions.content = $1 RETURNING *`;
-  const values = [contribution.content, contribution.id, contribution.user_id];
-
-  return db.query(queryString, values)
-    .then(data => {
-      return data.rows[0];
-    })
-    .catch(err => {
-      return console.error(err.stack);
-    })
-}
-
-// Delete contribution
-
-const deleteContribution = (contribution) => {
-
-  const queryString = `DELETE FROM contributions WHERE id = $1 AND user_id = $2`;
-  const values = [contribution.id, contribution.user_id];
-
-  return db.query(queryString, values)
-    .then(data => {
-      return data.rows;
-    })
-    .catch(err => {
-      return console.error(err.stack);
-    })
-}
-
-// Delete contribution when accepted
-
-const deleteWhenAccepted = (contribution) => {
-
-  const queryString = `DELETE FROM contributions WHERE accepted_status = true AND user_id = $1 AND story_id = $2`;
-  const values = [contribution.user_id, contribution.story_id];
-
-  return db.query(queryString, values)
-    .then(data => {
-      return data.rows;
-    })
-    .catch(err => {
-      return console.error(err.stack);
-    })
-}
-
-//Increment upvotes
-
-const upvoteContribution = (contribution) => {
-
-  const queryString = `UPDATE contributions
-  SET num_of_upvotes = num_of_upvotes + 1 WHERE user_id = $1`;
-  const values = [contribution.user_id];
-
-
-  return db.query(queryString, values)
-    .then(data => {
-      return data.rows;
-    })
-    .catch(err => {
-      return console.error(err.stack);
-    })
-}
 
 //See contributions
 
@@ -178,4 +90,4 @@ const getContributions = (storyId, limit=5) => {
     })
 };
 
-module.exports = { addContributions, editContribution, getContributions, acceptContribution, checkAllContributionsAccepted, deleteContribution, addContributionToStory, deleteWhenAccepted, upvoteContribution };
+module.exports = { addContributions, getContributions, acceptContribution, checkAllContributionsAccepted, addContributionToStory };

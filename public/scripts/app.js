@@ -1,5 +1,4 @@
 // Client facing scripts here
-// const { publishStory } = require('../db/queries/stories');
 
 $(document).ready(function() {
 
@@ -23,7 +22,6 @@ $(document).ready(function() {
     event.preventDefault();
 
     const data = $(this).data();
-    console.log('#3 DATA:', data);
     const contributionId = data.contributionId;
     const storyId = data.storyId;
 
