@@ -55,6 +55,7 @@ const acceptContribution = (contribution_id) => {
       SET content = CONCAT(stories.content,
         (SELECT content FROM contributions WHERE id = $1))
         WHERE id = $2
+
     `;
 
     const values = [
