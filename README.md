@@ -7,7 +7,12 @@ Have you ever had a burning desire to write totally pawesome stories about your 
 
 Welcome to bArk, the app that allows you to collaborate with other doggo-aficionados to create fun and exciting stories featuring your favourite canines! Whether you want to write your own stories, contribute to others' tails (pun intended), or just put your feet up and read, there is something for all dog lovers here!
 
+## Screenshots
 
+!["Screenshot of login page"](https://github.com/DanRoss88/bArk/blob/master/docs/bArk-Login.png?raw=true)
+!["Screenshot of Create New Story"](https://github.com/DanRoss88/bArk/blob/master/docs/bArk-create-new.png?raw=true)
+!["Screenshot of a Published Story"](https://github.com/DanRoss88/bArk/blob/master/docs/bArk-publish.png?raw=true)
+!["Screenshot of Contribution with Upvote and Accept Contribution Buttons"](https://github.com/DanRoss88/bArk/blob/master/docs/bArk-contribution-upvote.png?raw=true)
 
 LHL Node Skeleton
 =========
