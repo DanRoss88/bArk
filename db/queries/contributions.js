@@ -76,7 +76,7 @@ const acceptContribution = (contribution_id) => {
       SET content = CONCAT(content, $1)
       FROM contributions
       WHERE contributions.id = $2
-      AND stories.id = $3
+      AND contributions.story_id = stories.id
     `;
 
     const values = [
