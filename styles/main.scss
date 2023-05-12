@@ -1,17 +1,16 @@
-
 /* CSS styles */
 body {
-  font: Helvetica, sans serif;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background: #d8caee;
   background-image: url("/images/wallpaper.png");
-  font-size: 21px ;
+  font-size: 21px;
   font-weight: 500;
   opacity: 0.9;
-  background-size:180px;
+  background-size: 180px;
   font-family: 'Oswald', sans-serif;
   margin-bottom: 80px;
 }
@@ -20,7 +19,7 @@ main {
   width: 90%;
 }
 
-
+/// NAV BAR
 nav {
   display: flex;
   flex-direction: row;
@@ -30,7 +29,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   border: 3px solid #9A8BD9;
-
+  margin-bottom: 50px;
   border-radius: 15px;
   background-color: #D8CAEE;
   background-image: url("/images/bark_header.png");
@@ -39,15 +38,16 @@ nav {
 
 nav.nav-bar {
   font-family: 'Lobster', cursive;
-font-weight: bold;
-font-size: 30px;
+  font-weight: bold;
+  font-size: 30px;
 
 }
+
 span#register {
-padding-left: 15px;
+  padding-left: 15px;
 }
 
-  #bark-button  {
+#bark-button {
   cursor: pointer;
   transition: color cubic-bezier(0.19, 1, 0.22, 1);
   font-family: 'Amatic SC', cursive;
@@ -58,15 +58,17 @@ padding-left: 15px;
   color: rgb(90, 3, 51);
 }
 
-
+////// STORIES
 .story-section {
   border: 3px solid #9484d4;
   border-radius: 15px;
 }
+
 textarea {
   opacity: 0.6;
   font-family: 'Oswald', sans-serif;
 }
+
 button {
   border: 3px solid #9A8BD9;
   border-radius: 15px;
@@ -75,10 +77,12 @@ button {
   font-family: 'Amatic SC', cursive;
   font-size: 30px;
 }
+
 label.contribute-button {
-  padding:15px;
+  padding: 15px;
   font-family: 'Lobster', cursive;
 }
+
 textarea {
   border: none;
   border-bottom: 2px solid #9484d4;
@@ -94,13 +98,15 @@ h2 {
 }
 
 div.story-box {
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
+
 p.published {
   font-family: 'Lobster', cursive;
   font-size: 22px;
 }
+
 p.story-status {
   font-family: 'Lobster', cursive;
   font-size: 30px;
@@ -115,6 +121,7 @@ div.story-info form {
   background-color: #D8CAEE;
 }
 
+//// FORMS
 form {
   display: flex;
   flex-direction: column;
@@ -129,11 +136,36 @@ input {
 }
 
 form.form-inline {
-  background-color: white;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-shadow: 2px 2px 5px white;
+  border: 3px solid #9A8BD9;
+  border-radius: 15px;
   padding: 10px;
+  background-color: #D8CAEE;
+}
+
+form.form-inline input {
+  padding: 5px;
+  opacity: 0.9;
+}
+
+
+form.form-inline :hover {
+  color: rgb(90, 3, 51);
+}
+
+
+form.form-inline p {
+  font-family: 'Lobster', cursive;
+  font: size 35px;
+}
+
+h1 {
+  font-family: 'Lobster', cursive;
+  font-size: 65px;
 }
 
 .editing-form form {
@@ -142,6 +174,8 @@ form.form-inline {
   display: flex;
   flex-direction: column;
 }
+
+//// CONTRIBUTIONS
 div.contribution-box {
   display: flex;
   flex-direction: column;
@@ -149,9 +183,9 @@ div.contribution-box {
 }
 
 div.contribution-info {
-display: flex;
-flex-direction: column;
-align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
 }
 
@@ -168,6 +202,7 @@ p.story-status {
   flex-direction: row;
 }
 
+/// DISPLAY
 .browse-stories form {
   width: auto;
   padding: 10px;
@@ -197,34 +232,37 @@ p.story-status {
   justify-content: center;
 }
 
+//// EDIT SECTION
 div.editing-form {
   display: flex;
-    justify-content: space-between;
-    box-shadow: 2px 2px 5px white;
-    border: 3px solid #9A8BD9;
-    border-radius: 15px;
-    background-color: #D8CAEE;
+  justify-content: space-between;
+  box-shadow: 2px 2px 5px white;
+  border: 3px solid #9A8BD9;
+  border-radius: 15px;
+  background-color: #D8CAEE;
 }
 
 article.edit-article {
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 #edit-slide-button {
   display: block;
   margin: 0 auto;
-width: 90%;
-height:60px;
-padding-top: 15px;
-padding-bottom: 15px;;
+  width: 90%;
+  height: 60px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  ;
 
 }
 
 textarea#edit-story-content {
-padding:10px;
+  padding: 10px;
 
 }
+
 textarea#edit-story-title {
-  padding:10px;
+  padding: 10px;
 }

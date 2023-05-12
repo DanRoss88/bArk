@@ -65,7 +65,11 @@ console.log("click publish")
     });
   });
 
+///// DELETE STORY //// * STRETCH
 
+
+
+////// UPDATE STORY //// * STRETCH
 
 
 

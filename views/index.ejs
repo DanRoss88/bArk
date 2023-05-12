@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,21 +12,25 @@
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/primary.css" />
-  <!-- <link rel="stylesheet" href="/styles/layout.css" /> -->
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lobster&family=Oswald&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Lobster&family=Oswald&display=swap"
+    rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Lobster&family=Oswald&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Lobster&family=Oswald&display=swap"
+    rel="stylesheet">
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="/scripts/upvote_counter.js"></script>
   <script defer src="/scripts/app.js"></script>
+
   <title>Home Page</title>
+
 </head>
 
 
@@ -56,7 +61,7 @@
 
             <label class="contribute-button" data-story-id="<%= story.id %>">What happens next? Add your
               suggestion!</label>
-            <form action="/stories/<%= story.id %>/contributions" method="POST">
+            <form action="/stories/contributions" method="POST">
               <input type="hidden" name="story_id" value="<%= story.id %>">
               <textarea type="text" id="contribution-content" name="content"></textarea>
               <br>
@@ -99,15 +104,15 @@
                       </div>
                     </div>
                     <% } %>
-		<% } %>
+                      <% } %>
         </div>
     </div>
     <% } %>
-
-
+      </div>
       </div>
 
-      </div>
+
+
       <article>
         <div id="stories-form">
           <form action="/stories" method="POST">
@@ -123,26 +128,28 @@
             </output>
       </article>
 
-<button type="button" id="edit-slide-button">Edit Story</button>
-<% for (let story of stories) { %>
-  <section class="editing-container">
-    <article class="edit-article">
-      <form class="editing-form" action="/stories/edit/<%= story.id %>" method="POST">
-        <label for="story_id"> <b><%= story.id %></b></label>
-        <input type="hidden" id="story_id" name="story_id" value="<%= story.id %>">
-        <label for="title">Edit Story Title</label>
-        <textarea type="text" id="edit-story-title" name="edit-title"><%= story.title %></textarea>
-        <br></br>
-        <label for="content">Edit Story</label>
-        <textarea type="text" id="edit-story-content" name="edit-content"><%= story.content %></textarea>
-        <br></br>
-        <button type="submit" class="update-button" data-story-id="<%= story.id %>">Update</button>
-        <button type="submit" class="delete-button" data-story-id="<%= story.id %>">Delete Story</button>
-        <output name="edit-story-output" for="edit-story"></output>
-      </form>
-    </article>
-  </section>
-<% } %>
+      <button type="button" id="edit-slide-button">Edit Story</button>
+      <% for (let story of stories) { %>
+        <section class="editing-container">
+          <article class="edit-article">
+            <form class="editing-form" action="/stories/edit/<%= story.id %>" method="POST">
+              <label for="story_id"> <b>
+                  <%= story.id %>
+                </b></label>
+              <input type="hidden" id="story_id" name="story_id" value="<%= story.id %>">
+              <label for="title">Edit Story Title</label>
+              <textarea type="text" id="edit-story-title" name="edit-title"><%= story.title %></textarea>
+              <br></br>
+              <label for="content">Edit Story</label>
+              <textarea type="text" id="edit-story-content" name="edit-content"><%= story.content %></textarea>
+              <br></br>
+              <button type="submit" class="update-button" data-story-id="<%= story.id %>">Update</button>
+              <button type="submit" class="delete-button" data-story-id="<%= story.id %>">Delete Story</button>
+              <output name="edit-story-output" for="edit-story"></output>
+            </form>
+          </article>
+        </section>
+        <% } %>
 
   </main>
 </body>
